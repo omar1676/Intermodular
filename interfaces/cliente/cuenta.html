@@ -51,13 +51,16 @@
         <!-- Pestañas -->
         <div class="cli-pestanas" role="tablist" aria-label="Entrar o crear cuenta">
           <button class="cli-pestana cli-activo" type="button" role="tab"
+                  id="pestana-entrar" aria-controls="cli-form-entrar"
                   data-pestana="entrar" aria-selected="true">Entrar</button>
           <button class="cli-pestana" type="button" role="tab"
+                  id="pestana-alta" aria-controls="cli-form-alta"
                   data-pestana="alta" aria-selected="false">Crear cuenta</button>
         </div>
 
         <!-- Entrar -->
         <form class="cli-formulario" id="cli-form-entrar"
+              role="tabpanel" aria-labelledby="pestana-entrar"
               data-formulario="entrar" novalidate>
 
           <div class="cli-campo">
@@ -80,6 +83,7 @@
 
         <!-- Crear cuenta -->
         <form class="cli-formulario" id="cli-form-alta"
+              role="tabpanel" aria-labelledby="pestana-alta"
               data-formulario="alta" novalidate hidden>
 
           <div class="cli-campo">

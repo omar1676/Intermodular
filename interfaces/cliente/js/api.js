@@ -75,12 +75,55 @@ function buscarSku(sku) {
 
 // Navega a otra página con una transición suave de salida
 function navegarCon(destino) {
+  // Quien ha pedido menos movimiento no debe esperar la transición
+  const sinMovimiento = window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (sinMovimiento) {
+    window.location.href = destino;
+    return;
+  }
+
   document.body.classList.add("saliendo");
 
   setTimeout(function () {
     window.location.href = destino;
   }, 260);
 }
+
+/*
+ * Transición suave también al pulsar los enlaces del menú, para que
+ * moverse por la web no dé saltos bruscos.
+ *
+ * Se respetan a propósito el ctrl+clic, el clic con el botón central, los
+ * enlaces externos y los anclas: esos tienen que seguir funcionando como
+ * en cualquier otra web.
+ */
+document.addEventListener("click", function (evento) {
+  const enlace = evento.target.closest("a");
+
+  if (!enlace || evento.defaultPrevented) {
+    return;
+  }
+
+  // Abrir en otra pestaña, descargar o usar un boton distinto al izquierdo
+  const otraForma = evento.button !== 0 || evento.metaKey || evento.ctrlKey
+    || evento.shiftKey || evento.altKey;
+
+  if (otraForma || enlace.target === "_blank" || enlace.hasAttribute("download")) {
+    return;
+  }
+
+  const destino = enlace.getAttribute("href");
+
+  // Solo las páginas de nuestra propia web
+  if (!destino || destino.startsWith("#") || destino.includes(":")) {
+    return;
+  }
+
+  evento.preventDefault();
+  navegarCon(destino);
+});
 
 /*
  * Al volver con el botón "atrás" del navegador, algunos navegadores

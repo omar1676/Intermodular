@@ -34,6 +34,16 @@ function cambiarPestana(cual) {
 
   // Al cambiar de pestaña se limpia el mensaje anterior
   document.getElementById("cli-resultado").innerHTML = "";
+
+  // Y también los errores que hubieran quedado en el formulario anterior,
+  // para no mezclar avisos de un formulario con los del otro
+  document.querySelectorAll(".cli-error").forEach(function (hueco) {
+    hueco.textContent = "";
+  });
+
+  document.querySelectorAll(".cli-campo input").forEach(function (campo) {
+    campo.removeAttribute("aria-invalid");
+  });
 }
 
 /* ===== Validación ===== */
