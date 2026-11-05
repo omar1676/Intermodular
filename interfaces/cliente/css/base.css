@@ -58,8 +58,8 @@ body.cli.saliendo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 22px 6vw;
+  gap: 14px;
+  padding: 20px 6vw;
   border-bottom: 1px solid var(--cli-borde);
 }
 
@@ -69,6 +69,7 @@ body.cli.saliendo {
   letter-spacing: 6px;
   text-decoration: none;
   color: var(--cli-texto);
+  white-space: nowrap;
 }
 
 .cli-logo span {
@@ -77,11 +78,15 @@ body.cli.saliendo {
 
 .cli-nav {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .cli-nav a {
-  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 13px;
   border-radius: 8px;
   font-size: 14px;
   text-decoration: none;
@@ -93,6 +98,28 @@ body.cli.saliendo {
 .cli-nav a:focus-visible {
   color: var(--cli-texto);
   background: var(--cli-antracita-claro);
+}
+
+.cli-nav a[aria-current="page"] {
+  color: var(--cli-texto);
+}
+
+/* Contador de unidades del carrito */
+.cli-globo {
+  display: none;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  color: #19100a;
+  background: var(--cli-naranja);
+}
+
+/* carro.js le pone la clase cuando hay algo dentro */
+.cli-globo.cli-visible {
+  display: inline-block;
 }
 
 /* ===== Aviso académico (obligatorio en toda la web) ===== */
@@ -107,12 +134,27 @@ body.cli.saliendo {
   border-bottom: 1px solid rgba(255, 106, 0, .25);
 }
 
+/* Etiqueta para marcar cualquier cosa que sea de demostración */
+.cli-etiqueta-demo {
+  display: inline-block;
+  padding: 4px 9px;
+  border: 1px solid rgba(255, 106, 0, .45);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--cli-naranja-claro);
+  background: rgba(255, 106, 0, .1);
+}
+
 /* ===== Pie ===== */
 
 .cli-pie {
   padding: 34px 6vw;
   margin-top: 70px;
   font-size: 13px;
+  line-height: 1.6;
   color: var(--cli-texto-suave);
   text-align: center;
   border-top: 1px solid var(--cli-borde);
@@ -135,8 +177,8 @@ body.cli.saliendo {
   transition: transform .2s ease, box-shadow .2s ease;
 }
 
-.cli-boton:hover,
-.cli-boton:focus-visible {
+.cli-boton:hover:not(:disabled),
+.cli-boton:focus-visible:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 26px rgba(255, 106, 0, .35);
 }
@@ -158,6 +200,7 @@ body.cli.saliendo {
   padding: 13px 20px;
   border: 1px solid var(--cli-borde);
   border-radius: 10px;
+  font: inherit;
   font-size: 14px;
   text-decoration: none;
   color: var(--cli-texto-suave);
@@ -172,6 +215,12 @@ body.cli.saliendo {
   border-color: var(--cli-texto-suave);
 }
 
+.cli-boton-peligro:hover,
+.cli-boton-peligro:focus-visible {
+  color: #ff8d7a;
+  border-color: #7d3328;
+}
+
 /* ===== Mensajes de carga y error ===== */
 
 .cli-estado {
@@ -180,37 +229,72 @@ body.cli.saliendo {
   color: var(--cli-texto-suave);
 }
 
-/* Quien prefiera menos movimiento, no lo tiene */
+/* ===== Títulos de página ===== */
+
+.cli-titulo-pagina {
+  padding: 46px 6vw 0;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.cli-titulo-pagina h1 {
+  margin: 0;
+  font-size: clamp(27px, 4.6vw, 42px);
+  letter-spacing: -1px;
+}
+
+.cli-titulo-pagina p {
+  margin: 12px 0 0;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cli-texto-suave);
+}
+
+/* ===== Móvil ===== */
+
+@media (max-width: 680px) {
+  .cli-cabecera {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 5vw;
+  }
+
+  .cli-nav {
+    justify-content: center;
+  }
+
+  .cli-nav a {
+    padding: 10px 11px;
+    font-size: 13px;
+  }
+
+  .cli-logo {
+    font-size: 19px;
+    letter-spacing: 4px;
+  }
+}
+
+/* ===== Quien prefiera menos movimiento, no lo tiene ===== */
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
   }
+
+  /* Importante: las zapatillas del escaparate empiezan invisibles y es la
+     animación de entrada la que las muestra. Si desactivamos las
+     animaciones sin más, se quedarían invisibles para siempre. */
+  .cli-pieza,
+  .cli-fila-pedido {
+    opacity: 1 !important;
+  }
 }
 
-/* Apartados del menú que llegan en fases posteriores: se ven, pero no
-   enlazan a páginas que todavía no existen. */
-.cli-nav-proximo {
-  padding: 10px 14px;
-  font-size: 14px;
-  color: #4e4e58;
-  border: 1px dashed var(--cli-borde);
-  border-radius: 8px;
-  cursor: default;
-}
-
-@media (max-width: 680px) {
-  .cli-cabecera {
-    padding: 16px 5vw;
-  }
-
-  .cli-logo {
-    font-size: 18px;
-    letter-spacing: 4px;
-  }
-
-  /* En móvil el menú no se parte en dos líneas */
-  .cli-nav-proximo {
-    display: none;
-  }
+/* El atributo hidden de HTML debe ganar a cualquier display que pongamos
+   en nuestras clases. Sin esto, un elemento con class="cli-caja-aviso"
+   (que es display:flex) seguiría viéndose aunque tuviera hidden. */
+[hidden] {
+  display: none !important;
 }

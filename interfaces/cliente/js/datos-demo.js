@@ -1,28 +1,29 @@
 /*
- * NOVA Sneakers - Catálogo de demostración (solo fase 2)
+ * NOVA Sneakers - Catálogo de demostración
  *
- * Estos datos reproducen la MISMA FORMA que devolverá el backend
- * (interfaces/cliente-api) cuando lea PostgreSQL en la fase 5.
- * Los valores están copiados de acceso-datos/sql/05_datos_prueba.sql
- * para que el escaparate se vea con el catálogo real del proyecto.
+ * Datos ficticios, inventados para la práctica. Están escritos con la
+ * misma jerarquía que usamos en el proyecto:
  *
- * Jerarquía, igual que en la base de datos:
- *   modelos -> variantes (color) -> producto_sku (talla + sku) -> existencias
+ *   modelos -> variantes (color) -> producto_sku (talla + sku) -> stock
  *
- * Precio final = precio_base + suplemento_precio  (atributo derivado,
- * nunca almacenado; ver acceso-datos/documentacion/modelo_relacional.md)
+ * Los nombres, descripciones y precios coinciden con los del catálogo del
+ * proyecto intermodular para que la demostración sea coherente.
  *
- * El modelo X-NOVA (12.000 €) NO aparece aquí a propósito: en la base de
- * datos no tiene variantes ni tallas, porque se fabrica a medida mediante
- * la tabla configuraciones_xnova.
+ * El precio final es precio_base + suplemento_precio: es un valor
+ * calculado, nunca guardado, igual que en el modelo relacional.
  *
- * Los campos hex, hex2 y suela NO existen en la base de datos: solo sirven
- * para colorear la ilustración SVG del escaparate.
+ * Los campos hex, hex2 y suela solo sirven para colorear la ilustración
+ * SVG del escaparate.
+ *
+ * El modelo X-NOVA no aparece a propósito: es el concepto de fabricación
+ * a medida y no tiene colores ni tallas de catálogo.
  */
 
-// Genera las cinco tallas de una variante, igual que hace el CROSS JOIN
-// generate_series(40, 44) de 05_datos_prueba.sql, con 20 pares de stock.
-function tallasDemo(idVariante, primerSku) {
+// Genera las cinco tallas (40 a 44) de una variante, con 20 pares cada una.
+// En "agotadas" se indican las tallas que queremos dejar sin stock, para
+// que se vea en la web cómo aparece una talla no disponible.
+function tallasDemo(idVariante, primerSku, agotadas) {
+  const sinStock = agotadas || [];
   const tallas = [];
 
   for (let talla = 40; talla <= 44; talla++) {
@@ -31,9 +32,7 @@ function tallasDemo(idVariante, primerSku) {
       talla: talla,
       sku: "NOVA-" + idVariante + "-" + talla,
       activo: true,
-      // 20 pares por SKU, como el inventario inicial de la semilla.
-      // Para probar el estilo de "talla agotada", pon aquí un 0.
-      stock: 20
+      stock: sinStock.includes(talla) ? 0 : 20
     });
   }
 
@@ -44,14 +43,14 @@ const CATALOGO_DEMO = [
   {
     id_modelo: 1,
     nombre: "NOVA Origin",
-    descripcion: "Estilo clasico y minimalista",
+    descripcion: "Estilo clásico y minimalista. La silueta más limpia de la casa, pensada para llevar todos los días sin pensar en combinarla.",
     precio_base: 79.99,
     activo: true,
     variantes: [
       {
         id_variante: 1, color: "Blanco", suplemento_precio: 0,
         hex: "#f2efe9", hex2: "#cdc7bb", suela: "#ffffff",
-        tallas: tallasDemo(1, 1)
+        tallas: tallasDemo(1, 1, [44])
       },
       {
         id_variante: 2, color: "Negro", suplemento_precio: 0,
@@ -63,14 +62,14 @@ const CATALOGO_DEMO = [
   {
     id_modelo: 2,
     nombre: "NOVA Velocity",
-    descripcion: "Disenada para el movimiento",
+    descripcion: "Diseñada para el movimiento. Mediasuela alta y ligera, con un panel lateral que sujeta el pie en los apoyos rápidos.",
     precio_base: 119.90,
     activo: true,
     variantes: [
       {
         id_variante: 3, color: "Rojo", suplemento_precio: 0,
         hex: "#d93b2b", hex2: "#8e1f16", suela: "#f1efe9",
-        tallas: tallasDemo(3, 11)
+        tallas: tallasDemo(3, 11, [40, 41])
       },
       {
         id_variante: 4, color: "Azul", suplemento_precio: 0,
@@ -82,14 +81,14 @@ const CATALOGO_DEMO = [
   {
     id_modelo: 3,
     nombre: "NOVA Eclipse",
-    descripcion: "Estilo urbano con contrastes",
+    descripcion: "Estilo urbano con contrastes. Acabado mate en el cuerpo y suela a tono, para que destaque la silueta y no el color.",
     precio_base: 129.99,
     activo: true,
     variantes: [
       {
         id_variante: 5, color: "Negro", suplemento_precio: 0,
         hex: "#23232a", hex2: "#0e0e12", suela: "#3a3a44",
-        tallas: tallasDemo(5, 21)
+        tallas: tallasDemo(5, 21, [42])
       },
       {
         id_variante: 6, color: "Gris", suplemento_precio: 0,
@@ -101,7 +100,7 @@ const CATALOGO_DEMO = [
   {
     id_modelo: 4,
     nombre: "NOVA Archive",
-    descripcion: "Inspirada en la estetica retro Y2K",
+    descripcion: "Inspirada en la estética retro Y2K. Proporciones anchas, puntera reforzada y materiales con aire de principios de los dos mil.",
     precio_base: 109.90,
     activo: true,
     variantes: [
@@ -113,14 +112,14 @@ const CATALOGO_DEMO = [
       {
         id_variante: 8, color: "Beige", suplemento_precio: 0,
         hex: "#dbc7a6", hex2: "#b09a75", suela: "#f1e9d8",
-        tallas: tallasDemo(8, 36)
+        tallas: tallasDemo(8, 36, [40])
       }
     ]
   },
   {
     id_modelo: 5,
     nombre: "NOVA Aura",
-    descripcion: "Diseno ligero y contemporaneo",
+    descripcion: "Diseño ligero y contemporáneo. La más cómoda del catálogo: poco peso, mucho acolchado en el cuello y colores suaves.",
     precio_base: 99.99,
     activo: true,
     variantes: [
@@ -139,19 +138,20 @@ const CATALOGO_DEMO = [
   {
     id_modelo: 6,
     nombre: "NOVA Pulse",
-    descripcion: "Estilo tecnico y futurista",
+    descripcion: "Estilo técnico y futurista. Líneas marcadas y acabado brillante: es la que mejor recoge la luz naranja del escaparate.",
     precio_base: 114.90,
     activo: true,
     variantes: [
       {
         id_variante: 11, color: "Verde", suplemento_precio: 0,
         hex: "#44b074", hex2: "#23724a", suela: "#eceae4",
-        tallas: tallasDemo(11, 51)
+        tallas: tallasDemo(11, 51, [43, 44])
       },
       {
+        // Este color está agotado entero, para que se vea cómo lo avisa la web
         id_variante: 12, color: "Negro", suplemento_precio: 0,
         hex: "#26262c", hex2: "#111115", suela: "#2f2f37",
-        tallas: tallasDemo(12, 56)
+        tallas: tallasDemo(12, 56, [40, 41, 42, 43, 44])
       }
     ]
   }

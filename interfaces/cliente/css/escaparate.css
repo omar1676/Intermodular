@@ -5,12 +5,14 @@
  * repisa y debajo hay una tira de luz naranja intensa. Sin tarjetas
  * blancas, sin recuadros y con muy pocos elementos.
  *
- * Todo con CSS: degradados, box-shadow y transform. Nada de 3D ni librerías.
+ * Todo con CSS: degradados, box-shadow, transform y translate.
+ * Nada de 3D ni librerías.
  */
 
 /* ===== Entradilla ===== */
 
 .cli-intro {
+  position: relative;
   padding: 58px 6vw 20px;
   text-align: center;
 }
@@ -68,6 +70,8 @@
     rgba(255, 106, 0, .12) 42%,
     transparent 72%
   );
+  /* La luz "respira" muy despacio: da sensación de neón encendido */
+  animation: cli-respirar 7s ease-in-out infinite;
 }
 
 /* La tira de luz: fina, muy brillante y con halo alrededor */
@@ -94,6 +98,11 @@
     0 0 90px 30px rgba(255, 106, 0, .16);
 }
 
+@keyframes cli-respirar {
+  0%, 100% { opacity: .82; }
+  50%      { opacity: 1; }
+}
+
 /* ===== Cada zapatilla del escaparate ===== */
 
 .cli-pieza {
@@ -113,12 +122,17 @@
   /* Aparición escalonada; el retardo lo pone catalogo.js */
   opacity: 0;
   animation: cli-entrar .6s ease forwards;
+
+  /* Ojo: la animación de entrada usa la propiedad "translate" y el
+     hover usa "transform". Son propiedades distintas a propósito: una
+     animación con fill-mode forwards gana al hover en la cascada, así
+     que si las dos usaran "transform" la zapatilla no se levantaría. */
   transition: transform .45s cubic-bezier(.2, .7, .3, 1);
 }
 
 @keyframes cli-entrar {
-  from { opacity: 0; transform: translateY(26px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; translate: 0 26px; }
+  to   { opacity: 1; translate: 0 0; }
 }
 
 /* La zapatilla es la protagonista: grande y bien recortada */

@@ -28,7 +28,7 @@ function piezaHtml(modelo, posicion) {
     ? `<img class="zap" src="${textoSeguro(modelo.imagen)}"
             alt="Zapatilla ${textoSeguro(modelo.nombre)}" loading="lazy">`
     : svgZapatilla(variante.hex, variante.hex2, variante.suela,
-                   modelo.nombre, "m" + modelo.id_modelo);
+                   modelo.nombre, "m" + modelo.id_modelo, true);
 
   const colores = modelo.variantes.length === 1
     ? "1 color"

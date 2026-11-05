@@ -7,22 +7,28 @@
  * La misma silueta se recolorea con los colores de cada variante, así que
  * seis modelos y doce colores pesan prácticamente nada.
  *
- * Si más adelante conseguimos fotografías con licencia comprobada, basta
- * con añadir el campo "imagen" al modelo: el catálogo da prioridad a la
- * foto y usa este SVG solo como respaldo (ver catalogo.js).
+ * Si algún día conseguimos fotografías con licencia comprobada, basta con
+ * añadir el campo "imagen" al modelo: el catálogo da prioridad a la foto y
+ * usa este SVG solo como respaldo (ver catalogo.js).
  */
 
 // principal: color del cuerpo | sombra: color inferior del degradado
 // suela: color de la mediasuela | nombre: texto alternativo accesible
 // clave: sufijo único para los IDs internos del SVG (si se repiten, los
 //        degradados de unas zapatillas se pisan con los de otras)
-function svgZapatilla(principal, sombra, suela, nombre, clave) {
+// decorativa: true cuando el texto de al lado ya dice qué zapatilla es,
+//        para que el lector de pantalla no lo repita dos veces
+function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
   const idCuerpo = "cuerpo-" + clave;
   const idSuela = "suela-" + clave;
 
+  const accesibilidad = decorativa
+    ? 'aria-hidden="true" focusable="false"'
+    : 'role="img" aria-label="Zapatilla ' + nombre + '"';
+
   return `
 <svg class="zap" viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg"
-     role="img" aria-label="Zapatilla ${nombre}">
+     ${accesibilidad}>
   <defs>
     <linearGradient id="${idCuerpo}" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="${principal}"/>
