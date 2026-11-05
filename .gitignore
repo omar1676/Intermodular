@@ -1,0 +1,24 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno: nunca se suben al repositorio
+.env
+.env.local
+*.env
+!.env.example
+
+# Correos generados en modo de pruebas (fase 6)
+interfaces/cliente-api/correos-pruebas/
+
+# Registros y temporales
+*.log
+npm-debug.log*
+
+# Sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/

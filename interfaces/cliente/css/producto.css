@@ -1,0 +1,299 @@
+/*
+ * NOVA Sneakers - Vista de detalle de una zapatilla
+ *
+ * Al elegir una zapatilla se muestra mucho más grande, sobre la misma
+ * repisa iluminada del escaparate, con el nombre, el precio, las tallas
+ * y la descripción al lado. Volver al catálogo está siempre a un clic.
+ */
+
+.cli-detalle {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 46px;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 26px 6vw 40px;
+}
+
+/* ===== Lado izquierdo: la zapatilla en grande ===== */
+
+.cli-escena {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 10px 54px;
+}
+
+/* Misma repisa iluminada que en el escaparate, más intensa */
+.cli-escena::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: auto 0 0 0;
+  height: 290px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 62% 100% at 50% 100%,
+    rgba(255, 106, 0, .4) 0%,
+    rgba(255, 106, 0, .14) 44%,
+    transparent 72%
+  );
+}
+
+.cli-escena::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 4%;
+  right: 4%;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cli-naranja) 16%,
+    var(--cli-naranja-claro) 50%,
+    var(--cli-naranja) 84%,
+    transparent
+  );
+  box-shadow:
+    0 0 16px 4px rgba(255, 106, 0, .7),
+    0 0 52px 16px rgba(255, 106, 0, .36),
+    0 0 110px 36px rgba(255, 106, 0, .18);
+}
+
+.cli-escena .zap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 34px 28px rgba(0, 0, 0, .7));
+  /* Entra creciendo, como si se acercase al cristal */
+  animation: cli-acercar .5s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+@keyframes cli-acercar {
+  from { opacity: 0; transform: scale(.86) translateY(22px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ===== Lado derecho: la información ===== */
+
+.cli-ficha h1 {
+  margin: 14px 0 0;
+  font-size: clamp(28px, 4.4vw, 44px);
+  letter-spacing: -1px;
+  line-height: 1.07;
+}
+
+.cli-ficha-precio {
+  margin: 14px 0 0;
+  font-size: 27px;
+  font-weight: 600;
+  color: var(--cli-naranja-claro);
+}
+
+.cli-ficha-desc {
+  margin: 18px 0 0;
+  max-width: 440px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--cli-texto-suave);
+}
+
+.cli-bloque {
+  margin-top: 30px;
+}
+
+.cli-bloque h2 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--cli-texto-suave);
+}
+
+/* ===== Colores ===== */
+
+.cli-colores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cli-color {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 10px 15px 10px 11px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--cli-texto-suave);
+  background: var(--cli-antracita);
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+
+.cli-color:hover {
+  border-color: var(--cli-texto-suave);
+  color: var(--cli-texto);
+}
+
+.cli-color.cli-activo {
+  color: var(--cli-texto);
+  border-color: var(--cli-naranja);
+  box-shadow: 0 0 0 1px var(--cli-naranja), 0 0 18px rgba(255, 106, 0, .25);
+}
+
+.cli-muestra {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22);
+  flex-shrink: 0;
+}
+
+/* ===== Tallas ===== */
+
+.cli-tallas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  gap: 9px;
+  max-width: 400px;
+}
+
+.cli-talla {
+  min-height: 50px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--cli-texto);
+  background: var(--cli-antracita);
+  cursor: pointer;
+  transition: border-color .2s ease, transform .15s ease;
+}
+
+.cli-talla:hover:not(:disabled) {
+  border-color: var(--cli-texto-suave);
+  transform: translateY(-2px);
+}
+
+.cli-talla.cli-activo {
+  color: #19100a;
+  border-color: var(--cli-naranja);
+  background: linear-gradient(180deg, var(--cli-naranja-claro), var(--cli-naranja));
+  font-weight: 700;
+}
+
+/* Talla sin stock: se ve, pero tachada y no se puede elegir */
+.cli-talla:disabled {
+  color: #4e4e58;
+  background: transparent;
+  border-style: dashed;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.cli-nota-talla {
+  margin: 11px 0 0;
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+  min-height: 19px;
+}
+
+/* ===== Cantidad ===== */
+
+.cli-cantidad {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--cli-antracita);
+}
+
+.cli-cantidad button {
+  width: 50px;
+  height: 50px;
+  border: 0;
+  font-size: 20px;
+  color: var(--cli-texto);
+  background: transparent;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.cli-cantidad button:hover:not(:disabled) {
+  background: var(--cli-antracita-claro);
+}
+
+.cli-cantidad button:disabled {
+  color: #4e4e58;
+  cursor: not-allowed;
+}
+
+.cli-cantidad output {
+  min-width: 46px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* ===== Acciones ===== */
+
+.cli-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.cli-pendiente {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+}
+
+/* ===== Barra superior de la ficha ===== */
+
+.cli-volver-barra {
+  padding: 22px 6vw 0;
+}
+
+/* ===== Móvil y tablet ===== */
+
+@media (max-width: 900px) {
+  .cli-detalle {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 14px 5vw 30px;
+  }
+
+  .cli-escena {
+    padding: 20px 0 42px;
+  }
+
+  .cli-ficha {
+    padding-top: 10px;
+  }
+
+  .cli-tallas {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    max-width: none;
+  }
+
+  .cli-acciones .cli-boton {
+    flex: 1 1 100%;
+  }
+}

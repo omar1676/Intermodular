@@ -1,0 +1,216 @@
+/*
+ * NOVA Sneakers - Estilos comunes de la web de clientes
+ *
+ * Todas las clases llevan el prefijo "cli-" para no chocar nunca con el
+ * panel de administración de Álvaro, que usa el prefijo "adm-".
+ * Son carpetas y hojas de estilo independientes: su código no se toca.
+ *
+ * Solo CSS3. Sin Tailwind, sin frameworks y sin CDN.
+ */
+
+:root {
+  /* Fondo del escaparate: negro con un toque de gris antracita */
+  --cli-negro: #08080a;
+  --cli-antracita: #16161b;
+  --cli-antracita-claro: #1f1f26;
+
+  /* Luz naranja del escaparate */
+  --cli-naranja: #ff6a00;
+  --cli-naranja-claro: #ffa14d;
+
+  /* Texto */
+  --cli-texto: #f2f2f4;
+  --cli-texto-suave: #8e8e99;
+  --cli-borde: #2a2a32;
+
+  /* Tipografía del sistema: ninguna fuente externa que cargar */
+  --cli-fuente: "Segoe UI", system-ui, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.cli {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--cli-fuente);
+  color: var(--cli-texto);
+  background: var(--cli-negro);
+  /* Dos resplandores suaves para que el fondo no sea un negro plano */
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% 0%, #1c1c23 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, #14141a 0%, transparent 70%);
+  background-attachment: fixed;
+
+  /* Transición de entrada y salida entre páginas */
+  opacity: 1;
+  transition: opacity .26s ease;
+}
+
+body.cli.saliendo {
+  opacity: 0;
+}
+
+/* ===== Cabecera minimalista ===== */
+
+.cli-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 6vw;
+  border-bottom: 1px solid var(--cli-borde);
+}
+
+.cli-logo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-decoration: none;
+  color: var(--cli-texto);
+}
+
+.cli-logo span {
+  color: var(--cli-naranja);
+}
+
+.cli-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.cli-nav a {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--cli-texto-suave);
+  transition: color .2s ease, background .2s ease;
+}
+
+.cli-nav a:hover,
+.cli-nav a:focus-visible {
+  color: var(--cli-texto);
+  background: var(--cli-antracita-claro);
+}
+
+/* ===== Aviso académico (obligatorio en toda la web) ===== */
+
+.cli-aviso-demo {
+  margin: 0;
+  padding: 10px 6vw;
+  font-size: 13px;
+  text-align: center;
+  color: var(--cli-naranja-claro);
+  background: rgba(255, 106, 0, .09);
+  border-bottom: 1px solid rgba(255, 106, 0, .25);
+}
+
+/* ===== Pie ===== */
+
+.cli-pie {
+  padding: 34px 6vw;
+  margin-top: 70px;
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+  text-align: center;
+  border-top: 1px solid var(--cli-borde);
+}
+
+/* ===== Botones ===== */
+
+.cli-boton {
+  display: inline-block;
+  padding: 15px 26px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  color: #19100a;
+  background: linear-gradient(180deg, var(--cli-naranja-claro), var(--cli-naranja));
+  cursor: pointer;
+  /* Altura mínima cómoda para el dedo en móvil */
+  min-height: 48px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cli-boton:hover,
+.cli-boton:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(255, 106, 0, .35);
+}
+
+.cli-boton:disabled {
+  color: var(--cli-texto-suave);
+  background: var(--cli-antracita-claro);
+  border: 1px solid var(--cli-borde);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cli-boton-sec {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 13px 20px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--cli-texto-suave);
+  background: transparent;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.cli-boton-sec:hover,
+.cli-boton-sec:focus-visible {
+  color: var(--cli-texto);
+  border-color: var(--cli-texto-suave);
+}
+
+/* ===== Mensajes de carga y error ===== */
+
+.cli-estado {
+  padding: 70px 6vw;
+  text-align: center;
+  color: var(--cli-texto-suave);
+}
+
+/* Quien prefiera menos movimiento, no lo tiene */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Apartados del menú que llegan en fases posteriores: se ven, pero no
+   enlazan a páginas que todavía no existen. */
+.cli-nav-proximo {
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #4e4e58;
+  border: 1px dashed var(--cli-borde);
+  border-radius: 8px;
+  cursor: default;
+}
+
+@media (max-width: 680px) {
+  .cli-cabecera {
+    padding: 16px 5vw;
+  }
+
+  .cli-logo {
+    font-size: 18px;
+    letter-spacing: 4px;
+  }
+
+  /* En móvil el menú no se parte en dos líneas */
+  .cli-nav-proximo {
+    display: none;
+  }
+}

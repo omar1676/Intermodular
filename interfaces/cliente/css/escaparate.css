@@ -1,0 +1,254 @@
+/*
+ * NOVA Sneakers - Escaparate y catálogo
+ *
+ * La idea es un escaparate de tienda: las zapatillas se apoyan sobre una
+ * repisa y debajo hay una tira de luz naranja intensa. Sin tarjetas
+ * blancas, sin recuadros y con muy pocos elementos.
+ *
+ * Todo con CSS: degradados, box-shadow y transform. Nada de 3D ni librerías.
+ */
+
+/* ===== Entradilla ===== */
+
+.cli-intro {
+  padding: 58px 6vw 20px;
+  text-align: center;
+}
+
+.cli-intro h1 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 56px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.05;
+}
+
+.cli-intro h1 em {
+  font-style: normal;
+  color: var(--cli-naranja);
+}
+
+.cli-intro p {
+  max-width: 480px;
+  margin: 16px auto 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cli-texto-suave);
+}
+
+/* ===== El escaparate ===== */
+
+.cli-escaparate {
+  padding: 30px 6vw 20px;
+}
+
+/* Cada fila es una repisa con su luz debajo */
+.cli-fila {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding-bottom: 42px;
+  margin-bottom: 88px;
+}
+
+/* Resplandor difuso que sube desde la repisa hacia las zapatillas */
+.cli-fila::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: -2%;
+  right: -2%;
+  bottom: -6px;
+  height: 230px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 100% at 50% 100%,
+    rgba(255, 106, 0, .34) 0%,
+    rgba(255, 106, 0, .12) 42%,
+    transparent 72%
+  );
+}
+
+/* La tira de luz: fina, muy brillante y con halo alrededor */
+.cli-fila::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 3%;
+  right: 3%;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--cli-naranja) 18%,
+    var(--cli-naranja-claro) 50%,
+    var(--cli-naranja) 82%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 14px 3px rgba(255, 106, 0, .65),
+    0 0 44px 12px rgba(255, 106, 0, .34),
+    0 0 90px 30px rgba(255, 106, 0, .16);
+}
+
+/* ===== Cada zapatilla del escaparate ===== */
+
+.cli-pieza {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 10px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+
+  /* Aparición escalonada; el retardo lo pone catalogo.js */
+  opacity: 0;
+  animation: cli-entrar .6s ease forwards;
+  transition: transform .45s cubic-bezier(.2, .7, .3, 1);
+}
+
+@keyframes cli-entrar {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* La zapatilla es la protagonista: grande y bien recortada */
+.cli-pieza .zap {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 24px 20px rgba(0, 0, 0, .65));
+  transition: filter .45s ease;
+}
+
+/* Al pasar por encima se levanta y recoge más luz naranja */
+.cli-pieza:hover,
+.cli-pieza:focus-visible {
+  transform: translateY(-16px) scale(1.05);
+  outline: none;
+}
+
+.cli-pieza:hover .zap,
+.cli-pieza:focus-visible .zap {
+  filter:
+    drop-shadow(0 30px 24px rgba(0, 0, 0, .7))
+    drop-shadow(0 10px 26px rgba(255, 106, 0, .55));
+}
+
+.cli-pieza:focus-visible .cli-pieza-nombre {
+  color: var(--cli-naranja-claro);
+}
+
+.cli-pieza-nombre {
+  margin: 20px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cli-pieza-precio {
+  margin: 7px 0 0;
+  font-size: 14px;
+  color: var(--cli-texto-suave);
+}
+
+.cli-pieza-colores {
+  margin: 11px 0 0;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--cli-naranja-claro);
+  opacity: .85;
+}
+
+/* ===== Tablet: dos columnas ===== */
+
+@media (max-width: 1000px) {
+  .cli-fila {
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 74px;
+  }
+}
+
+/* ===== Móvil: una columna, con luz propia bajo cada zapatilla ===== */
+
+@media (max-width: 680px) {
+  .cli-escaparate {
+    padding: 18px 5vw 10px;
+  }
+
+  .cli-fila {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-bottom: 0;
+    margin-bottom: 18px;
+  }
+
+  /* La repisa compartida estorba cuando solo hay una columna */
+  .cli-fila::before,
+  .cli-fila::after {
+    display: none;
+  }
+
+  /* Cada zapatilla pasa a tener su propia repisa iluminada */
+  .cli-pieza {
+    padding: 22px 10px 40px;
+    margin-bottom: 34px;
+  }
+
+  .cli-pieza::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    height: 150px;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 58% 100% at 50% 100%,
+      rgba(255, 106, 0, .32) 0%,
+      rgba(255, 106, 0, .1) 45%,
+      transparent 72%
+    );
+  }
+
+  .cli-pieza::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 14px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--cli-naranja) 20%,
+      var(--cli-naranja-claro) 50%,
+      var(--cli-naranja) 80%,
+      transparent
+    );
+    box-shadow:
+      0 0 12px 3px rgba(255, 106, 0, .6),
+      0 0 38px 10px rgba(255, 106, 0, .3);
+  }
+
+  /* En pantalla táctil no hay "hover": el dedo pulsa y entra */
+  .cli-pieza:hover {
+    transform: none;
+  }
+
+  .cli-pieza:active {
+    transform: scale(.97);
+  }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA Sneakers · Escaparate</title>
+  <meta name="description" content="Escaparate de zapatillas NOVA Sneakers. Proyecto academico de 2.o DAM.">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/escaparate.css">
+</head>
+
+<body class="cli">
+
+  <p class="cli-aviso-demo">
+    Proyecto académico de 2.º DAM · Tienda de demostración: no se realizan
+    pagos ni envíos reales
+  </p>
+
+  <header class="cli-cabecera">
+    <a class="cli-logo" href="index.html">NOVA<span>.</span></a>
+    <nav class="cli-nav" aria-label="Navegación principal">
+      <a href="index.html" aria-current="page">Escaparate</a>
+      <span class="cli-nav-proximo" title="Disponible en la fase 4">Cuenta</span>
+      <span class="cli-nav-proximo" title="Disponible en la fase 5">Carrito</span>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="cli-intro">
+      <h1>Elige tus <em>NOVA</em></h1>
+      <p>
+        Seis modelos fabricados en nuestra nave de Madrid.
+        Toca cualquier zapatilla para verla en grande.
+      </p>
+    </section>
+
+    <section class="cli-escaparate" aria-label="Catálogo de zapatillas">
+      <div id="cli-filas" class="cli-estado">Cargando el catálogo…</div>
+    </section>
+
+  </main>
+
+  <footer class="cli-pie">
+    NOVA Sneakers · Sneaker Factory · Proyecto intermodular 2.º DAM<br>
+    Las ilustraciones de las zapatillas son dibujos propios hechos para este
+    proyecto: no se utiliza ninguna marca ni fotografía de terceros.
+  </footer>
+
+  <script src="js/datos-demo.js"></script>
+  <script src="js/zapatilla-svg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/catalogo.js"></script>
+
+</body>
+
+</html>
