@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA Sneakers · Cuenta</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+
+<body class="cli">
+
+  <p class="cli-aviso-demo">
+    Proyecto académico de 2.º DAM · Tienda de demostración: no se realizan
+    pagos ni envíos reales
+  </p>
+
+  <header class="cli-cabecera">
+    <a class="cli-logo" href="index.html">NOVA<span>.</span></a>
+    <nav class="cli-nav" aria-label="Navegación principal">
+      <a href="index.html">Escaparate</a>
+      <a href="carrito.html">Carrito <span class="cli-globo" data-contador-carro>0</span></a>
+      <a href="pedidos.html">Mis pedidos</a>
+      <a href="cuenta.html" aria-current="page">Cuenta</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="cli-titulo-pagina">
+      <h1>Tu cuenta</h1>
+      <p>Entra con tu correo o crea una cuenta nueva.</p>
+    </div>
+
+    <div class="cli-pagina">
+      <div class="cli-cuenta">
+
+        <div class="cli-caja-aviso">
+          <span class="cli-etiqueta-demo">Demo</span>
+          <div>
+            Estas pantallas son <strong>solo la interfaz</strong>. No hay
+            autenticación de ninguna clase: no se envía nada a ningún
+            servidor, no se guarda ninguna contraseña y no se crea ninguna
+            sesión. Lo único que funciona de verdad es la validación de los
+            campos.
+          </div>
+        </div>
+
+        <!-- Pestañas -->
+        <div class="cli-pestanas" role="tablist" aria-label="Entrar o crear cuenta">
+          <button class="cli-pestana cli-activo" type="button" role="tab"
+                  data-pestana="entrar" aria-selected="true">Entrar</button>
+          <button class="cli-pestana" type="button" role="tab"
+                  data-pestana="alta" aria-selected="false">Crear cuenta</button>
+        </div>
+
+        <!-- Entrar -->
+        <form class="cli-formulario" id="cli-form-entrar"
+              data-formulario="entrar" novalidate>
+
+          <div class="cli-campo">
+            <label for="entrar-email">Correo electrónico</label>
+            <input type="email" id="entrar-email" name="email"
+                   autocomplete="email" placeholder="tu.correo@ejemplo.com">
+            <span class="cli-error" id="error-entrar-email"></span>
+          </div>
+
+          <div class="cli-campo">
+            <label for="entrar-clave">Contraseña</label>
+            <input type="password" id="entrar-clave" name="clave"
+                   autocomplete="current-password" placeholder="Tu contraseña">
+            <span class="cli-error" id="error-entrar-clave"></span>
+          </div>
+
+          <button class="cli-boton" type="submit">Entrar</button>
+
+        </form>
+
+        <!-- Crear cuenta -->
+        <form class="cli-formulario" id="cli-form-alta"
+              data-formulario="alta" novalidate hidden>
+
+          <div class="cli-campo">
+            <label for="alta-nombre">Nombre completo</label>
+            <input type="text" id="alta-nombre" name="nombre"
+                   autocomplete="name" placeholder="Nombre y apellidos">
+            <span class="cli-error" id="error-alta-nombre"></span>
+          </div>
+
+          <div class="cli-campo">
+            <label for="alta-email">Correo electrónico</label>
+            <input type="email" id="alta-email" name="email"
+                   autocomplete="email" placeholder="tu.correo@ejemplo.com">
+            <span class="cli-error" id="error-alta-email"></span>
+          </div>
+
+          <div class="cli-campo">
+            <label for="alta-clave">Contraseña</label>
+            <input type="password" id="alta-clave" name="clave"
+                   autocomplete="new-password"
+                   placeholder="Ocho caracteres, con letras y números">
+            <span class="cli-error" id="error-alta-clave"></span>
+          </div>
+
+          <div class="cli-campo">
+            <label for="alta-repetir">Repite la contraseña</label>
+            <input type="password" id="alta-repetir" name="repetir"
+                   autocomplete="new-password" placeholder="La misma contraseña">
+            <span class="cli-error" id="error-alta-repetir"></span>
+          </div>
+
+          <button class="cli-boton" type="submit">Crear cuenta</button>
+
+        </form>
+
+        <p class="cli-resultado" id="cli-resultado" role="status"></p>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="cli-pie">
+    NOVA Sneakers · Sneaker Factory · Proyecto intermodular 2.º DAM
+  </footer>
+
+  <script src="js/datos-demo.js"></script>
+  <script src="js/zapatilla-svg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/carro.js"></script>
+  <script src="js/cuenta.js"></script>
+
+</body>
+
+</html>
