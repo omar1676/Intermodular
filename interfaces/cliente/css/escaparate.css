@@ -265,3 +265,10 @@
     transform: scale(.96);
   }
 }
+
+/* Debajo de las destacadas, el paso al catálogo completo */
+.cli-mas {
+  margin: 0;
+  padding: 34px 0 6px;
+  text-align: center;
+}

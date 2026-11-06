@@ -1,11 +1,10 @@
-/* Escaparate: el marcado de las doce piezas */
+/* El marcado de las doce piezas, tal y como lo dibuja piezas.js */
 
 require("./entorno.js").cargar([
   "datos-demo.js",
   "zapatilla-svg.js",
   "api.js",
-  "piezas.js",
-  "escaparate.js"
+  "piezas.js"
 ]);
 
 let fallos = 0;
@@ -15,7 +14,7 @@ function comprobar(n, c, d) {
 }
 const cuenta = (re) => (html.match(re) || []).length;
 
-pintarEscaparate(CATALOGO_DEMO);
+pintarPiezas(document.getElementById("cli-rejilla"), piezasDelCatalogo(CATALOGO_DEMO));
 const html = __nodos["cli-rejilla"].innerHTML;
 
 // --- Estructura del muro ---
@@ -62,7 +61,7 @@ comprobar("sin fotos, se dibujan las 12", cuenta(/<img/g) === 0, cuenta(/<img/g)
 
 FOTOS[1] = "img/origin-blanco.png";
 FOTOS[12] = "  img/pulse-negro.png  ";   // con espacios, a ver si los quita
-pintarEscaparate(CATALOGO_DEMO);
+pintarPiezas(document.getElementById("cli-rejilla"), piezasDelCatalogo(CATALOGO_DEMO));
 const conFoto = __nodos["cli-rejilla"].innerHTML;
 const cuenta2 = (re) => (conFoto.match(re) || []).length;
 

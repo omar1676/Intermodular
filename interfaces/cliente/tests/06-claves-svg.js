@@ -8,8 +8,7 @@ require("./entorno.js").cargar([
   "pedidos-datos.js",
   "carrito.js",
   "pedidos.js",
-  "piezas.js",
-  "escaparate.js"
+  "piezas.js"
 ]);
 
 /*
@@ -54,8 +53,8 @@ pintarPedidos();
 r = todosDistintos(__nodos["cli-zona-pedidos"].innerHTML);
 comprobar("ningun id repetido", r.distintos === r.total, r.distintos + " de " + r.total);
 
-console.log("\nESCAPARATE: las doce piezas");
-pintarEscaparate(CATALOGO_DEMO);
+console.log("\nCATALOGO: las doce piezas a la vez");
+pintarPiezas(document.getElementById("cli-rejilla"), piezasDelCatalogo(CATALOGO_DEMO));
 r = todosDistintos(__nodos["cli-rejilla"].innerHTML);
 comprobar("ningun id repetido", r.distintos === r.total, r.distintos + " de " + r.total);
 
