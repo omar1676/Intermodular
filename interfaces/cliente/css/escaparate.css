@@ -1,23 +1,6 @@
-/*
- * NOVA Sneakers - Escaparate · Omar
- *
- * Pared de galería: un gris neutro a todo ancho, iluminado por el centro,
- * y las zapatillas apoyadas en repisas finas de color claro.
- *
- * IMPORTANTE, porque es el error que cometimos antes: en la referencia la
- * luz naranja NO está en la web. Es una tira LED que el autor del vídeo
- * tiene detrás del monitor, en su habitación. La página en sí no tiene
- * ni un solo acento de color: es gris, blanca y nada más.
- *
- * Por eso aquí el escaparate no lleva luz de color. El dorado del
- * proyecto se queda donde toca, en la marca y en los botones, y la pared
- * se mantiene neutra para que las zapatillas sean lo único con color.
- *
- * El otro rasgo de la referencia es la escala: rótulos diminutos y
- * zapatillas grandes. La tipografía no compite con el producto.
- */
+/* NOVA Sneakers · Escaparate · Omar */
 
-/* ===== La pared: ocupa el ancho completo, es la portada ===== */
+/* La pared: ocupa el ancho completo, es la portada */
 
 .cli-escaparate {
   padding: 0;
@@ -35,7 +18,7 @@
       #2c2c2e 100%);
 }
 
-/* ===== Entradilla: diminuta, como en la referencia ===== */
+/* Entradilla: diminuta, como en la referencia */
 
 .cli-intro {
   position: relative;
@@ -62,7 +45,7 @@
   color: var(--cli-texto-suave);
 }
 
-/* ===== La rejilla ===== */
+/* La rejilla */
 
 .cli-rejilla {
   position: relative;
@@ -74,7 +57,7 @@
   gap: clamp(34px, 3.6vw, 62px) clamp(14px, 2vw, 34px);
 }
 
-/* ===== Cada zapatilla sobre su repisa ===== */
+/* Cada zapatilla sobre su repisa */
 
 .cli-pieza {
   position: relative;
@@ -93,10 +76,7 @@
   opacity: 0;
   animation: cli-entrar .5s ease forwards;
 
-  /* Ojo: la animación de entrada usa la propiedad "translate" y el
-     hover usa "transform". Son propiedades distintas a propósito: una
-     animación con fill-mode forwards gana al hover en la cascada, así
-     que si las dos usaran "transform" la zapatilla no se levantaría. */
+  /* Ojo: la animación de entrada usa la propiedad "translate" y el hover usa "transform". */
   transition: transform .35s ease;
 }
 
@@ -105,8 +85,7 @@
   to   { opacity: 1; translate: 0 0; }
 }
 
-/* Hueco donde se apoya la zapatilla. Sin relleno: la zapatilla es la
-   protagonista y ocupa el ancho entero de su hueco. */
+/* Hueco donde se apoya la zapatilla. */
 .cli-hueco {
   position: relative;
   display: block;
@@ -121,17 +100,14 @@
   transition: transform .35s ease;
 }
 
-/* Las fotografías no vienen todas del mismo tamaño. Con una proporción
-   fija y object-fit todas ocupan el mismo hueco, y alineadas abajo se
-   apoyan en la repisa en vez de flotar a alturas distintas. */
+/* Las fotografías no vienen todas del mismo tamaño. */
 .cli-pieza img.zap {
   aspect-ratio: 412 / 200;
   object-fit: contain;
   object-position: center bottom;
 }
 
-/* La repisa: una pletina de metacrilato, traslúcida, con el canto
-   superior cogiendo la luz de la sala */
+/* La repisa: metacrilato traslucido */
 .cli-balda {
   position: relative;
   z-index: 1;
@@ -152,9 +128,7 @@
   transition: background .3s ease, box-shadow .3s ease;
 }
 
-/* Al señalar una zapatilla SE ENCIENDE SU REPISA. Es el gesto que define
-   el escaparate de la referencia: la pieza elegida queda iluminada desde
-   abajo y las demás se quedan en penumbra. */
+/* Al señalar una zapatilla SE ENCIENDE SU REPISA. */
 .cli-pieza:hover .cli-balda,
 .cli-pieza:focus-visible .cli-balda {
   background: linear-gradient(180deg,
@@ -206,7 +180,7 @@
   color: var(--cli-dorado);
 }
 
-/* ===== Rótulo: pequeño y discreto, debajo de la repisa ===== */
+/* Rótulo: pequeño y discreto, debajo de la repisa */
 
 .cli-pieza-rotulo {
   display: flex;
@@ -254,7 +228,7 @@
   opacity: .4;
 }
 
-/* ===== Portátil: cuatro por fila ===== */
+/* Portátil: cuatro por fila */
 
 @media (max-width: 1180px) {
   .cli-rejilla {
@@ -262,7 +236,7 @@
   }
 }
 
-/* ===== Tablet: tres por fila ===== */
+/* Tablet: tres por fila */
 
 @media (max-width: 860px) {
   .cli-rejilla {
@@ -270,7 +244,7 @@
   }
 }
 
-/* ===== Móvil: dos por fila, como el teléfono de la referencia ===== */
+/* Móvil: dos por fila, como el teléfono de la referencia */
 
 @media (max-width: 580px) {
   .cli-muro {

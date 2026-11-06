@@ -1,27 +1,6 @@
-/*
- * NOVA Sneakers - Catálogo de demostración · Omar
- *
- * Datos ficticios, inventados para la práctica. Están escritos con la
- * misma jerarquía que usamos en el proyecto:
- *
- *   modelos -> variantes (color) -> producto_sku (talla + sku) -> stock
- *
- * Los nombres, descripciones y precios coinciden con los del catálogo del
- * proyecto intermodular para que la demostración sea coherente.
- *
- * El precio final es precio_base + suplemento_precio: es un valor
- * calculado, nunca guardado, igual que en el modelo relacional.
- *
- * Los campos hex, hex2 y suela solo sirven para colorear la ilustración
- * SVG del escaparate.
- *
- * El modelo X-NOVA no aparece a propósito: es el concepto de fabricación
- * a medida y no tiene colores ni tallas de catálogo.
- */
+/* NOVA Sneakers · Catalogo de demostracion · Omar */
 
 // Genera las cinco tallas (40 a 44) de una variante, con 20 pares cada una.
-// En "agotadas" se indican las tallas que queremos dejar sin stock, para
-// que se vea en la web cómo aparece una talla no disponible.
 function tallasDemo(idVariante, primerSku, agotadas) {
   const sinStock = agotadas || [];
   const tallas = [];
@@ -39,21 +18,7 @@ function tallasDemo(idVariante, primerSku, agotadas) {
   return tallas;
 }
 
-/*
- * FOTOGRAFÍAS
- *
- * Este es el ÚNICO sitio donde hay que tocar para poner fotos reales.
- *
- * Deja el archivo en interfaces/cliente/img/ y escribe aquí su nombre.
- * Lo que quede en blanco se dibuja en SVG, así que se pueden ir
- * añadiendo de una en una. Si el nombre está mal escrito o el archivo
- * no existe, la web lo detecta y dibuja la zapatilla en su lugar: no
- * aparece nunca el icono de imagen rota.
- *
- * Las fotos deberían ir todas de perfil y mirando al mismo lado, con el
- * fondo recortado (PNG o WebP con transparencia), para que se apoyen
- * bien sobre la repisa.
- */
+/* FOTOS: el unico sitio donde se ponen las fotos reales. Instrucciones en img/LEEME.md */
 const FOTOS = {
   1:  "",   // NOVA Origin · Blanco
   2:  "",   // NOVA Origin · Negro

@@ -1,30 +1,6 @@
-/*
- * NOVA Sneakers - Zapatilla renderizada en SVG · Omar
- *
- * Dibujo propio hecho para este proyecto: no se usa ninguna marca,
- * logotipo ni fotografía de terceros, así que no hay problema de derechos.
- *
- * No es un icono plano. La silueta se monta por capas, como una foto de
- * producto en estudio:
- *
- *   1. sombra proyectada sobre la repisa (desenfocada de verdad)
- *   2. cuerpo con degradado de volumen
- *   3. luz cenital, oclusión en el apoyo y brillo especular en el empeine
- *   4. rebote cálido que sube desde la tira LED del escaparate
- *   5. mediasuela con brillo superior y canto cálido
- *   6. suela exterior con tacos y reflejo del LED
- *
- * Todas las capas van recortadas con clipPath contra la propia silueta,
- * que es lo que hace que la luz parezca envolver la zapatilla en vez de
- * quedar pegada encima.
- *
- * Si algún día conseguimos fotografías con licencia comprobada, basta con
- * añadir el campo "imagen" al modelo: el catálogo da prioridad a la foto y
- * usa este SVG solo como respaldo (ver catalogo.js).
- */
+/* NOVA Sneakers · Dibujo SVG de la zapatilla · Omar */
 
-// Contornos compartidos por todas las zapatillas. Se recolorean, no se
-// vuelven a dibujar.
+// Contornos compartidos por todas las zapatillas.
 const ZAPA_CUERPO =
   "M 36 148 C 52 116 98 96 152 93 C 198 90 240 96 272 86 " +
   "C 292 80 300 62 310 52 C 320 42 342 42 352 53 " +
@@ -39,12 +15,7 @@ const ZAPA_SUELA =
   "C 399 193 391 196 382 196 L 46 196 " +
   "C 30 196 22 187 26 178 C 29 172 34 170 40 170 Z";
 
-// principal: color del cuerpo | sombra: color inferior del degradado
-// suela: color de la mediasuela | nombre: texto alternativo accesible
-// clave: sufijo único para los IDs internos del SVG (si se repiten, los
-//        degradados de unas zapatillas se pisan con los de otras)
-// decorativa: true cuando el texto de al lado ya dice qué zapatilla es,
-//        para que el lector de pantalla no lo repita dos veces
+// Parametros: colores, nombre, clave unica para los IDs y si es decorativa
 function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
   // Un identificador por cada recurso interno, con el sufijo de la pieza
   const id = function (parte) {
@@ -101,13 +72,13 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
     <clipPath id="${id("recMedia")}"><path d="${ZAPA_MEDIASUELA}"/></clipPath>
   </defs>
 
-  <!-- ===== Sombra sobre la repisa ===== -->
+  <!-- Sombra sobre la repisa -->
   <ellipse cx="212" cy="210" rx="152" ry="9" fill="#000000" opacity=".5"
            filter="url(#${id("borron")})"/>
   <ellipse cx="206" cy="205" rx="92" ry="6" fill="#000000" opacity=".5"
            filter="url(#${id("borron")})"/>
 
-  <!-- ===== Cuerpo ===== -->
+  <!-- Cuerpo -->
   <path d="${ZAPA_CUERPO}" fill="url(#${id("cuerpo")})"/>
 
   <g clip-path="url(#${id("recCuerpo")})">
@@ -141,7 +112,7 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
           opacity=".6"/>
   </g>
 
-  <!-- ===== Cordones ===== -->
+  <!-- Cordones -->
   <g stroke="#000000" stroke-opacity=".22" stroke-width="6"
      stroke-linecap="round">
     <path d="M 222 100 L 244 113"/>
@@ -157,7 +128,7 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
     <path d="M 270 88 L 290 98"/>
   </g>
 
-  <!-- ===== Boca del tobillo ===== -->
+  <!-- Boca del tobillo -->
   <path d="M 278 86 C 296 74 318 62 338 60 C 350 59 358 63 360 72"
         fill="none" stroke="#000000" stroke-opacity=".34" stroke-width="8"
         stroke-linecap="round"/>
@@ -169,7 +140,7 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
   <rect x="330" y="42" width="27" height="13" rx="6.5"
         fill="#000000" opacity=".3"/>
 
-  <!-- ===== Mediasuela ===== -->
+  <!-- Mediasuela -->
   <path d="${ZAPA_MEDIASUELA}" fill="url(#${id("media")})"/>
 
   <g clip-path="url(#${id("recMedia")})">
@@ -181,7 +152,7 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
     <rect x="0" y="158" width="420" height="22" fill="url(#${id("calida")})"/>
   </g>
 
-  <!-- ===== Suela exterior ===== -->
+  <!-- Suela exterior -->
   <path d="${ZAPA_SUELA}" fill="#141418"/>
 
   <g stroke="#000000" stroke-opacity=".45" stroke-width="3">

@@ -1,20 +1,9 @@
-/*
- * NOVA Sneakers - Carrito de demostración · Omar
- *
- * El carrito se guarda en localStorage, que es almacenamiento del propio
- * navegador. NO es una base de datos: no hay servidor, nadie más lo ve y
- * se borra al limpiar los datos del navegador. En la web se avisa de esto.
- *
- * Decisión importante que podemos defender en clase: en el carrito solo
- * se guardan el SKU y la cantidad. Ni nombres ni precios. Cada vez que se
- * dibuja el carrito, el precio se vuelve a calcular desde el catálogo, así
- * que es imposible que un precio guardado quede desfasado o manipulado.
- */
+/* NOVA Sneakers · Carrito (datos) · Omar */
 
 const CARRO_CLAVE = "nova_carrito_demo";
 const CARRO_MAX_POR_LINEA = 5;
 
-// Lee el carrito. Si no hay nada o está corrupto, devuelve lista vacía.
+// Lee el carrito.
 function carroLeer() {
   try {
     const bruto = localStorage.getItem(CARRO_CLAVE);
@@ -48,11 +37,7 @@ function carroGuardar(lineas) {
   pintarContadorCarro();
 }
 
-/*
- * Máximo que se puede llevar de un SKU: nunca más de lo que queda en el
- * catálogo ficticio y nunca más del tope por línea. Si está agotado
- * devuelve 0, que es la forma de decir "esto no se puede añadir".
- */
+/* Maximo por SKU: lo que quede en stock, con tope de 5 */
 function carroTope(sku) {
   const encontrado = buscarSku(sku);
 
@@ -64,8 +49,7 @@ function carroTope(sku) {
   return Math.min(encontrado.talla.stock, CARRO_MAX_POR_LINEA);
 }
 
-// Añade unidades de un SKU. Si ya estaba, suma sin pasar del tope.
-// Devuelve true si ha añadido algo.
+// Añade unidades de un SKU.
 function carroAnadir(sku, cantidad) {
   const tope = carroTope(sku);
 

@@ -1,57 +1,20 @@
-/*
- * NOVA Sneakers - Estilos comunes de la web de clientes · Omar
- *
- * Todas las clases llevan el prefijo "cli-" para no chocar nunca con el
- * panel de administración de Álvaro, que usa el prefijo "adm-".
- * Son carpetas y hojas de estilo independientes: su código no se toca.
- *
- * Solo CSS3. Sin Tailwind, sin frameworks y sin CDN.
- */
+/* NOVA Sneakers · Estilos comunes · Omar */
 
-/*
- * Paleta del proyecto.
- *
- * Hereda la estructura del panel de administración de Álvaro
- * (interfaces/admin/styles.css, variables --adm-*): los mismos papeles,
- * el mismo acento dorado, la misma tipografía y los mismos colores de
- * estado. Se copian aquí con el prefijo --cli- en vez de importar su
- * hoja, porque su archivo no se toca y porque las dos interfaces deben
- * poder desplegarse por separado.
- *
- * Lo que SÍ cambia respecto al suyo son los grises. El administrador es
- * una herramienta de trabajo y usa un casi negro (#0f0f10); la tienda es
- * un escaparate y usa gris espacial, que es el color de la pared del
- * local. Mismo idioma, distinto tono:
- *
- *   papel            administrador   tienda
- *   ---------------  -------------   -------
- *   fondo            #0f0f10         #2e3035
- *   panel            #18181b         #383b40
- *   borde            #2a2a2e         #4a4d54
- *   texto            #e7e7ea         #f0f0f2
- *   texto suave      #8d8d95         #a8a9b0
- *   acento (dorado)  #c9a24b         #c9a24b   <- idéntico
- *
- * El texto suave se aclara a propósito: sobre gris espacial, el #8d8d95
- * del administrador se quedaba en 3,2:1 de contraste y no llegaba al
- * mínimo accesible. Con #a8a9b0 sube a 5,6:1.
- */
+/* Paleta del proyecto. */
 :root {
   --cli-fondo: #2f2f31;
   --cli-panel: #3a3a3d;
   --cli-panel-claro: #444447;
   --cli-borde: #4b4b4f;
 
-  /* Acento del proyecto: dorado, no naranja. Es el color de marca que ya
-     usa el administrador en los estados y en las barras. */
+  /* Acento del proyecto: dorado, no naranja. */
   --cli-dorado: #c9a24b;
   --cli-dorado-claro: #e3c27e;
 
   --cli-texto: #f0f0f1;
   --cli-texto-suave: #a9a9ad;
 
-  /* Estados de pedido: los mismos colores que las etiquetas .adm-estado,
-     para que un pedido "enviado" se vea igual en las dos webs. */
+  /* Estados de pedido: los mismos colores que el panel de Alvaro */
   --cli-pendiente: #c9a24b;
   --cli-preparacion: #e0a458;
   --cli-enviado: #6aa3ff;
@@ -72,8 +35,7 @@ body.cli {
   font-family: var(--cli-fuente);
   color: var(--cli-texto);
   background: var(--cli-fondo);
-  /* La página entera es la pared de la galería: gris neutro iluminado
-     por el centro. Sin tintes de color: el color lo ponen las zapatillas. */
+  /* La página entera es la pared de la galería: gris neutro iluminado por el centro. */
   background-image:
     radial-gradient(ellipse 85% 60% at 50% 30%, #3b3b3e 0%, transparent 74%),
     radial-gradient(ellipse 80% 50% at 50% 100%, #272729 0%, transparent 74%);
@@ -88,11 +50,9 @@ body.cli.saliendo {
   opacity: 0;
 }
 
-/* ===== Cabecera minimalista ===== */
+/* Cabecera minimalista */
 
-/* Diminuta a propósito: en una galería el rótulo no compite con lo
-   expuesto. Marca pequeña a la izquierda, navegación pequeña a la
-   derecha, y una línea apenas visible como separación. */
+/* Diminuta a propósito: en una galería el rótulo no compite con lo expuesto. */
 .cli-cabecera {
   display: flex;
   align-items: center;
@@ -162,10 +122,9 @@ body.cli.saliendo {
   display: inline-block;
 }
 
-/* ===== Aviso académico (obligatorio en toda la web) ===== */
+/* Aviso académico (obligatorio en toda la web) */
 
-/* Discreto: tiene que leerse, pero no ser lo primero que grita en la
-   página. Gris sobre gris, sin banda de color. */
+/* Discreto: tiene que leerse, pero no ser lo primero que grita en la página. */
 .cli-aviso-demo {
   margin: 0;
   padding: 7px clamp(18px, 4vw, 48px);
@@ -191,7 +150,7 @@ body.cli.saliendo {
   background: rgba(201, 162, 75, .1);
 }
 
-/* ===== Pie ===== */
+/* Pie */
 
 .cli-pie {
   padding: 24px clamp(18px, 4vw, 48px);
@@ -204,7 +163,7 @@ body.cli.saliendo {
   border-top: 1px solid rgba(255, 255, 255, .07);
 }
 
-/* ===== Botones ===== */
+/* Botones */
 
 .cli-boton {
   display: inline-block;
@@ -265,7 +224,7 @@ body.cli.saliendo {
   border-color: #7d3328;
 }
 
-/* ===== Mensajes de carga y error ===== */
+/* Mensajes de carga y error */
 
 .cli-estado {
   padding: 70px 6vw;
@@ -273,7 +232,7 @@ body.cli.saliendo {
   color: var(--cli-texto-suave);
 }
 
-/* ===== Títulos de página ===== */
+/* Títulos de página */
 
 .cli-titulo-pagina {
   padding: 46px 6vw 0;
@@ -295,7 +254,7 @@ body.cli.saliendo {
   color: var(--cli-texto-suave);
 }
 
-/* ===== Móvil ===== */
+/* Móvil */
 
 @media (max-width: 680px) {
   .cli-cabecera {
@@ -319,7 +278,7 @@ body.cli.saliendo {
   }
 }
 
-/* ===== Quien prefiera menos movimiento, no lo tiene ===== */
+/* Quien prefiera menos movimiento, no lo tiene */
 
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -327,18 +286,14 @@ body.cli.saliendo {
     transition: none !important;
   }
 
-  /* Importante: las zapatillas del escaparate empiezan invisibles y es la
-     animación de entrada la que las muestra. Si desactivamos las
-     animaciones sin más, se quedarían invisibles para siempre. */
+  /* Empiezan invisibles: sin animacion hay que devolverles la opacidad */
   .cli-pieza,
   .cli-fila-pedido {
     opacity: 1 !important;
   }
 }
 
-/* El atributo hidden de HTML debe ganar a cualquier display que pongamos
-   en nuestras clases. Sin esto, un elemento con class="cli-caja-aviso"
-   (que es display:flex) seguiría viéndose aunque tuviera hidden. */
+/* El atributo hidden de HTML debe ganar a cualquier display que pongamos en nuestras clases. */
 [hidden] {
   display: none !important;
 }

@@ -1,13 +1,4 @@
-/*
- * NOVA Sneakers - Capa de acceso a datos del frontend · Omar
- *
- * Todo el frontend pide los datos AQUÍ y en ningún otro sitio. Hoy los
- * saca de datos-demo.js; el día que exista un servidor bastará con
- * cambiar MODO, sin tocar el resto de las páginas.
- *
- * IMPORTANTE para la defensa en clase: esta web es solo frontend. No hay
- * servidor, no hay base de datos y no hay autenticación de verdad.
- */
+/* NOVA Sneakers · Acceso a datos y utilidades · Omar */
 
 const API = {
   // "demo" es el único modo que funciona ahora mismo.
@@ -30,9 +21,7 @@ const API = {
   }
 };
 
-/*
- * Utilidades compartidas por todas las páginas
- */
+/* Utilidades compartidas por todas las páginas */
 
 // Precio final = precio_base + suplemento_precio
 function precioFinal(modelo, variante) {
@@ -57,8 +46,6 @@ function textoSeguro(valor) {
 }
 
 // Busca un SKU en todo el catálogo y devuelve modelo, variante y talla.
-// El carrito guarda solo el SKU y la cantidad, así que el nombre y el
-// precio se vuelven a calcular siempre desde el catálogo.
 function buscarSku(sku) {
   for (const modelo of CATALOGO_DEMO) {
     for (const variante of modelo.variantes) {
@@ -73,13 +60,7 @@ function buscarSku(sku) {
   return null;
 }
 
-/*
- * Fotografías
- *
- * Devuelve la ruta de la foto de un color, o "" si todavía no hay foto y
- * hay que dibujar el SVG. La tabla FOTOS está en datos-demo.js, que es el
- * único sitio donde se escriben los nombres de archivo.
- */
+/* Ruta de la foto de un color, o "" si hay que dibujarla */
 function fotoVariante(variante) {
   if (typeof FOTOS === "undefined" || !variante) {
     return "";
@@ -90,13 +71,7 @@ function fotoVariante(variante) {
   return typeof ruta === "string" ? ruta.trim() : "";
 }
 
-/*
- * Si una foto no carga (nombre mal escrito, archivo que falta), se
- * sustituye por el dibujo en lugar de dejar el icono de imagen rota.
- *
- * El evento "error" de las imágenes no burbujea, así que hay que
- * escucharlo en fase de captura: ese es el tercer argumento en true.
- */
+/* Si una foto no carga, se dibuja la zapatilla en su lugar */
 function respaldoDeFotos(contenedor, dibujar) {
   contenedor.addEventListener("error", function (evento) {
     const imagen = evento.target;
@@ -131,14 +106,7 @@ function navegarCon(destino) {
   }, 260);
 }
 
-/*
- * Transición suave también al pulsar los enlaces del menú, para que
- * moverse por la web no dé saltos bruscos.
- *
- * Se respetan a propósito el ctrl+clic, el clic con el botón central, los
- * enlaces externos y los anclas: esos tienen que seguir funcionando como
- * en cualquier otra web.
- */
+/* Transicion suave al pulsar los enlaces del menu */
 document.addEventListener("click", function (evento) {
   const enlace = evento.target.closest("a");
 
@@ -165,11 +133,7 @@ document.addEventListener("click", function (evento) {
   navegarCon(destino);
 });
 
-/*
- * Al volver con el botón "atrás" del navegador, algunos navegadores
- * restauran la página tal y como estaba, es decir, con la clase
- * "saliendo" puesta y por tanto invisible. Esto lo arregla.
- */
+/* Al volver con "atras" hay que quitar la clase de salida */
 window.addEventListener("pageshow", function () {
   document.body.classList.remove("saliendo");
 });

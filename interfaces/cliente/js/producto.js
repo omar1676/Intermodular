@@ -1,12 +1,4 @@
-/*
- * NOVA Sneakers - Vista de detalle · Omar
- *
- * Muestra la zapatilla elegida mucho más grande, con sus colores, sus
- * tallas y su descripción, y permite añadirla al carrito.
- *
- * Todo es ficticio: no hay servidor ni base de datos. El carrito se
- * guarda solo en este navegador.
- */
+/* NOVA Sneakers · Detalle (pantalla) · Omar */
 
 // Estado de la pantalla
 let modeloActual = null;
@@ -36,7 +28,7 @@ function colorAgotado() {
   });
 }
 
-/* ===== Dibujado ===== */
+/* Dibujado */
 
 function pintarZapatilla() {
   const variante = varianteActual();
@@ -44,8 +36,7 @@ function pintarZapatilla() {
   const nombre = modeloActual.nombre + " " + variante.color;
   const foto = fotoVariante(variante);
 
-  // Aquí la zapatilla es la imagen principal de la página, así que
-  // lleva texto alternativo de verdad, no va como decorativa.
+  // Aqui la zapatilla es la imagen principal: lleva texto alternativo
   if (foto) {
     escena.innerHTML =
       '<img class="zap" src="' + textoSeguro(foto) + '"' +
@@ -157,7 +148,7 @@ function actualizar() {
   pintarAcciones();
 }
 
-/* ===== Estructura de la página ===== */
+/* Estructura de la página */
 
 function pintarEstructura() {
   const detalle = document.getElementById("cli-detalle");
@@ -201,7 +192,7 @@ function pintarEstructura() {
     </div>`;
 }
 
-/* ===== Interacción ===== */
+/* Interacción */
 
 function anadirAlCarrito() {
   const talla = tallaActual();
@@ -235,8 +226,7 @@ function activarEventos() {
     const color = evento.target.closest(".cli-color");
     const talla = evento.target.closest(".cli-talla");
 
-    // Cambio de color: se redibuja la zapatilla y se reinicia la talla,
-    // porque el stock es distinto en cada variante
+    // Al cambiar de color se reinicia la talla: el stock es distinto
     if (color) {
       indiceVariante = Number(color.dataset.variante);
       tallaElegida = null;
@@ -278,7 +268,7 @@ function activarEventos() {
   });
 }
 
-/* ===== Arranque ===== */
+/* Arranque */
 
 async function iniciar() {
   const detalle = document.getElementById("cli-detalle");
@@ -299,8 +289,7 @@ async function iniciar() {
   try {
     modeloActual = await API.modelo(idModelo);
 
-    // El escaparate enseña cada color por separado, así que puede pedir
-    // que el detalle se abra ya con ese color elegido
+    // El escaparate puede pedir que se abra ya con un color elegido
     const color = Number(parametros.get("color"));
 
     if (Number.isInteger(color) && color >= 0 &&
