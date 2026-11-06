@@ -8,23 +8,48 @@
  * Solo CSS3. Sin Tailwind, sin frameworks y sin CDN.
  */
 
+/*
+ * Paleta del proyecto.
+ *
+ * Son EXACTAMENTE los mismos valores que el panel de administración
+ * (interfaces/admin/styles.css, variables --adm-*). Se repiten aquí con
+ * el prefijo --cli- en vez de importar su hoja, porque su archivo no se
+ * toca y porque las dos interfaces deben poder desplegarse por separado.
+ *
+ *   --adm-fondo  #0f0f10  ->  --cli-fondo
+ *   --adm-panel  #18181b  ->  --cli-panel
+ *   --adm-borde  #2a2a2e  ->  --cli-borde
+ *   --adm-texto  #e7e7ea  ->  --cli-texto
+ *   --adm-texto-suave #8d8d95 -> --cli-texto-suave
+ *   --adm-dorado #c9a24b  ->  --cli-dorado
+ *
+ * Si Álvaro cambia un color, se cambia aquí el mismo y las dos webs
+ * vuelven a ir a juego.
+ */
 :root {
-  /* Fondo del escaparate: negro con un toque de gris antracita */
-  --cli-negro: #08080a;
-  --cli-antracita: #16161b;
-  --cli-antracita-claro: #1f1f26;
+  --cli-fondo: #0f0f10;
+  --cli-panel: #18181b;
+  --cli-panel-claro: #202024;
+  --cli-borde: #2a2a2e;
 
-  /* Luz naranja del escaparate */
-  --cli-naranja: #ff6a00;
-  --cli-naranja-claro: #ffa14d;
+  /* Acento del proyecto: dorado, no naranja. Es el color de marca que ya
+     usa el administrador en los estados y en las barras. */
+  --cli-dorado: #c9a24b;
+  --cli-dorado-claro: #e3c27e;
 
-  /* Texto */
-  --cli-texto: #f2f2f4;
-  --cli-texto-suave: #8e8e99;
-  --cli-borde: #2a2a32;
+  --cli-texto: #e7e7ea;
+  --cli-texto-suave: #8d8d95;
 
-  /* Tipografía del sistema: ninguna fuente externa que cargar */
-  --cli-fuente: "Segoe UI", system-ui, Arial, sans-serif;
+  /* Estados de pedido: los mismos colores que las etiquetas .adm-estado,
+     para que un pedido "enviado" se vea igual en las dos webs. */
+  --cli-pendiente: #c9a24b;
+  --cli-preparacion: #e0a458;
+  --cli-enviado: #6aa3ff;
+  --cli-entregado: #5fc58a;
+  --cli-cancelado: #e66a6a;
+
+  /* Misma tipografía que el administrador */
+  --cli-fuente: Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -36,11 +61,11 @@ body.cli {
   min-height: 100vh;
   font-family: var(--cli-fuente);
   color: var(--cli-texto);
-  background: var(--cli-negro);
+  background: var(--cli-fondo);
   /* Dos resplandores suaves para que el fondo no sea un negro plano */
   background-image:
-    radial-gradient(ellipse 70% 50% at 50% 0%, #1c1c23 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, #14141a 0%, transparent 70%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, #18181b 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, #131316 0%, transparent 70%);
   background-attachment: fixed;
 
   /* Transición de entrada y salida entre páginas */
@@ -73,7 +98,7 @@ body.cli.saliendo {
 }
 
 .cli-logo span {
-  color: var(--cli-naranja);
+  color: var(--cli-dorado);
 }
 
 .cli-nav {
@@ -97,7 +122,7 @@ body.cli.saliendo {
 .cli-nav a:hover,
 .cli-nav a:focus-visible {
   color: var(--cli-texto);
-  background: var(--cli-antracita-claro);
+  background: var(--cli-panel-claro);
 }
 
 .cli-nav a[aria-current="page"] {
@@ -113,8 +138,8 @@ body.cli.saliendo {
   font-size: 12px;
   font-weight: 700;
   text-align: center;
-  color: #19100a;
-  background: var(--cli-naranja);
+  color: #141208;
+  background: var(--cli-dorado);
 }
 
 /* carro.js le pone la clase cuando hay algo dentro */
@@ -129,23 +154,23 @@ body.cli.saliendo {
   padding: 10px 6vw;
   font-size: 13px;
   text-align: center;
-  color: var(--cli-naranja-claro);
-  background: rgba(255, 106, 0, .09);
-  border-bottom: 1px solid rgba(255, 106, 0, .25);
+  color: var(--cli-dorado-claro);
+  background: rgba(201, 162, 75, .09);
+  border-bottom: 1px solid rgba(201, 162, 75, .25);
 }
 
 /* Etiqueta para marcar cualquier cosa que sea de demostración */
 .cli-etiqueta-demo {
   display: inline-block;
   padding: 4px 9px;
-  border: 1px solid rgba(255, 106, 0, .45);
+  border: 1px solid rgba(201, 162, 75, .45);
   border-radius: 20px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: var(--cli-naranja-claro);
-  background: rgba(255, 106, 0, .1);
+  color: var(--cli-dorado-claro);
+  background: rgba(201, 162, 75, .1);
 }
 
 /* ===== Pie ===== */
@@ -169,8 +194,8 @@ body.cli.saliendo {
   border-radius: 10px;
   font: inherit;
   font-weight: 600;
-  color: #19100a;
-  background: linear-gradient(180deg, var(--cli-naranja-claro), var(--cli-naranja));
+  color: #141208;
+  background: linear-gradient(180deg, var(--cli-dorado-claro), var(--cli-dorado));
   cursor: pointer;
   /* Altura mínima cómoda para el dedo en móvil */
   min-height: 48px;
@@ -180,12 +205,12 @@ body.cli.saliendo {
 .cli-boton:hover:not(:disabled),
 .cli-boton:focus-visible:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(255, 106, 0, .35);
+  box-shadow: 0 10px 26px rgba(201, 162, 75, .35);
 }
 
 .cli-boton:disabled {
   color: var(--cli-texto-suave);
-  background: var(--cli-antracita-claro);
+  background: var(--cli-panel-claro);
   border: 1px solid var(--cli-borde);
   cursor: not-allowed;
   transform: none;
@@ -217,7 +242,7 @@ body.cli.saliendo {
 
 .cli-boton-peligro:hover,
 .cli-boton-peligro:focus-visible {
-  color: #ff8d7a;
+  color: #e66a6a;
   border-color: #7d3328;
 }
 

@@ -1,7 +1,7 @@
 /*
  * NOVA Sneakers - Carrito, cuenta y Mis pedidos
  *
- * Mismo lenguaje visual que el escaparate: fondo oscuro, acentos naranjas
+ * Mismo lenguaje visual que el escaparate: fondo oscuro, acentos dorados
  * y nada de tarjetas blancas. Los paneles son gris antracita con un borde
  * muy fino, para que sigan siendo el fondo y no el protagonista.
  */
@@ -20,17 +20,17 @@
   gap: 12px;
   padding: 16px 18px;
   margin: 0 0 26px;
-  border: 1px solid rgba(255, 106, 0, .28);
-  border-left: 3px solid var(--cli-naranja);
+  border: 1px solid rgba(201, 162, 75, .28);
+  border-left: 3px solid var(--cli-dorado);
   border-radius: 10px;
   font-size: 14px;
   line-height: 1.6;
   color: var(--cli-texto-suave);
-  background: rgba(255, 106, 0, .06);
+  background: rgba(201, 162, 75, .06);
 }
 
 .cli-caja-aviso strong {
-  color: var(--cli-naranja-claro);
+  color: var(--cli-dorado-claro);
 }
 
 /* ===== Panel genérico ===== */
@@ -39,7 +39,7 @@
   padding: 22px;
   border: 1px solid var(--cli-borde);
   border-radius: 12px;
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
 }
 
 /* ===== Mensaje de lista vacía ===== */
@@ -81,7 +81,7 @@
   padding: 14px 18px 14px 14px;
   border: 1px solid var(--cli-borde);
   border-radius: 12px;
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
   transition: border-color .2s ease;
 }
 
@@ -110,7 +110,7 @@
   filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .6));
 }
 
-/* Pizca de luz naranja también aquí, para no perder el hilo visual */
+/* Pizca de luz dorada también aquí, para no perder el hilo visual */
 .cli-carro-foto::after {
   content: "";
   position: absolute;
@@ -118,8 +118,8 @@
   right: 12%;
   bottom: 2px;
   height: 1px;
-  background: var(--cli-naranja);
-  box-shadow: 0 0 10px 2px rgba(255, 106, 0, .55);
+  background: var(--cli-dorado);
+  box-shadow: 0 0 10px 2px rgba(201, 162, 75, .55);
 }
 
 .cli-carro-info h3 {
@@ -169,7 +169,7 @@
 
 .cli-quitar:hover,
 .cli-quitar:focus-visible {
-  color: #ff8d7a;
+  color: #e66a6a;
   border-color: #7d3328;
 }
 
@@ -181,7 +181,7 @@
   padding: 22px;
   border: 1px solid var(--cli-borde);
   border-radius: 12px;
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
 }
 
 .cli-resumen h2 {
@@ -215,7 +215,7 @@
 
 .cli-resumen-total strong {
   font-size: 26px;
-  color: var(--cli-naranja-claro);
+  color: var(--cli-dorado-claro);
 }
 
 .cli-resumen .cli-boton {
@@ -254,7 +254,7 @@
   margin-bottom: 22px;
   border: 1px solid var(--cli-borde);
   border-radius: 12px;
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
 }
 
 .cli-pestana {
@@ -275,8 +275,8 @@
 }
 
 .cli-pestana.cli-activo {
-  color: #19100a;
-  background: linear-gradient(180deg, var(--cli-naranja-claro), var(--cli-naranja));
+  color: #141208;
+  background: linear-gradient(180deg, var(--cli-dorado-claro), var(--cli-dorado));
 }
 
 /* Formularios */
@@ -319,8 +319,8 @@
 
 .cli-campo input:focus {
   outline: none;
-  border-color: var(--cli-naranja);
-  box-shadow: 0 0 0 3px rgba(255, 106, 0, .16);
+  border-color: var(--cli-dorado);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, .16);
 }
 
 /* Solo marcamos en rojo cuando el campo se ha tocado y está mal */
@@ -332,7 +332,7 @@
   display: block;
   margin-top: 6px;
   font-size: 12.5px;
-  color: #ff8d7a;
+  color: #e66a6a;
   min-height: 16px;
 }
 
@@ -344,17 +344,17 @@
 .cli-resultado {
   margin: 20px 0 0;
   padding: 15px 17px;
-  border: 1px solid rgba(255, 106, 0, .3);
+  border: 1px solid rgba(201, 162, 75, .3);
   border-radius: 10px;
   font-size: 14px;
   line-height: 1.6;
   color: var(--cli-texto-suave);
-  background: rgba(255, 106, 0, .07);
+  background: rgba(201, 162, 75, .07);
   animation: cli-aparecer .3s ease both;
 }
 
 .cli-resultado strong {
-  color: var(--cli-naranja-claro);
+  color: var(--cli-dorado-claro);
 }
 
 /* ===================================================================
@@ -370,7 +370,7 @@
 .cli-fila-pedido {
   border: 1px solid var(--cli-borde);
   border-radius: 12px;
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
   overflow: hidden;
 
   opacity: 0;
@@ -407,7 +407,7 @@
   margin-left: auto;
   font-size: 18px;
   font-weight: 600;
-  color: var(--cli-naranja-claro);
+  color: var(--cli-dorado-claro);
 }
 
 /* Estado del pedido */
@@ -421,10 +421,13 @@
   color: var(--cli-texto-suave);
 }
 
-.cli-chip-pendiente    { color: #e8c45c; border-color: #5d4d1f; }
-.cli-chip-preparacion  { color: #6fb3e8; border-color: #244a66; }
-.cli-chip-enviado      { color: #8e7ce8; border-color: #3b3270; }
-.cli-chip-entregado    { color: #5fc08a; border-color: #255239; }
+/* Los mismos colores que las etiquetas .adm-estado del administrador: un
+   pedido "enviado" tiene que verse igual en las dos webs del proyecto. */
+.cli-chip-pendiente    { color: var(--cli-pendiente);    border-color: #5d4d1f; }
+.cli-chip-preparacion  { color: var(--cli-preparacion);  border-color: #6a4a22; }
+.cli-chip-enviado      { color: var(--cli-enviado);      border-color: #27416e; }
+.cli-chip-entregado    { color: var(--cli-entregado);    border-color: #255239; }
+.cli-chip-cancelado    { color: var(--cli-cancelado);    border-color: #6b2a2a; }
 
 .cli-pedido-lineas {
   display: flex;
@@ -567,7 +570,7 @@
   }
 }
 
-/* Mientras no haya mensaje, el recuadro naranja no debe verse vacío */
+/* Mientras no haya mensaje, el recuadro dorado no debe verse vacío */
 .cli-resultado:empty {
   display: none;
 }

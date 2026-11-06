@@ -136,7 +136,7 @@ function carroTotal() {
   }, 0);
 }
 
-// Pone el número de unidades en el globo naranja de la cabecera
+// Pone el número de unidades en el globo dorado de la cabecera
 function pintarContadorCarro() {
   const unidades = carroUnidades();
   const globos = document.querySelectorAll("[data-contador-carro]");
