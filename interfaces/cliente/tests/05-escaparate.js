@@ -5,7 +5,7 @@ require("./entorno.js").cargar([
   "zapatilla-svg.js",
   "api.js",
   "piezas.js",
-  "catalogo.js"
+  "escaparate.js"
 ]);
 
 let fallos = 0;

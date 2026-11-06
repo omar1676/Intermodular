@@ -8,7 +8,7 @@ Solo hace falta tener Node instalado. **No hay dependencias, ni
 
 ## Cómo se ejecutan
 
-Las seis de golpe, desde esta carpeta:
+Todas de golpe, desde esta carpeta:
 
 ```
 node ejecutar.js
@@ -20,7 +20,7 @@ Una sola, cuando estás tocando esa parte:
 node 01-carrito-datos.js
 ```
 
-Si todo va bien, la última línea dice `129 comprobaciones en 6 archivos, 0
+Si todo va bien, la última línea dice `148 comprobaciones en 7 archivos, 0
 fallidas` y el programa termina con código 0. Si algo falla, sale `FALLO`
 en la línea de la comprobación y el código de salida es 1.
 
@@ -34,8 +34,9 @@ en la línea de la comprobación y el código de salida es 1.
 | `04-cuenta.js` | Validaciones y que no se guarde ninguna contraseña | 20 |
 | `05-escaparate.js` | Marcado de las 12 piezas y la tabla `FOTOS` | 28 |
 | `06-claves-svg.js` | Que no se repita ningún identificador de degradado | 5 |
+| `07-catalogo.js` | La página del catálogo completo: las 12 variantes, enlaces y precios | 19 |
 | `entorno.js` | El DOM y el `localStorage` de mentira, y el cargador | — |
-| `ejecutar.js` | Lanza las seis y suma | — |
+| `ejecutar.js` | Lanza todas y suma | — |
 
 ## Cómo funciona `entorno.js`
 
