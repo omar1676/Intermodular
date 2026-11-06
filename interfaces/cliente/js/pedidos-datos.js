@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Pedidos de demostración
+ * NOVA Sneakers - Pedidos de demostración · Omar
  *
  * MUY IMPORTANTE para la defensa en clase: aquí no hay ninguna base de
  * datos ni ningún servidor. Hay dos clases de pedidos:

@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Capa de acceso a datos del frontend
+ * NOVA Sneakers - Capa de acceso a datos del frontend · Omar
  *
  * Todo el frontend pide los datos AQUÍ y en ningún otro sitio. Hoy los
  * saca de datos-demo.js; el día que exista un servidor bastará con

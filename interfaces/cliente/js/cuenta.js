@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Entrar y crear cuenta
+ * NOVA Sneakers - Entrar y crear cuenta · Omar
  *
  * ESTO ES SOLO LA INTERFAZ. No hay autenticación de ninguna clase:
  *

@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Vista de detalle
+ * NOVA Sneakers - Vista de detalle · Omar
  *
  * Muestra la zapatilla elegida mucho más grande, con sus colores, sus
  * tallas y su descripción, y permite añadirla al carrito.

@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Estilos comunes de la web de clientes
+ * NOVA Sneakers - Estilos comunes de la web de clientes · Omar
  *
  * Todas las clases llevan el prefijo "cli-" para no chocar nunca con el
  * panel de administración de Álvaro, que usa el prefijo "adm-".
@@ -11,34 +11,44 @@
 /*
  * Paleta del proyecto.
  *
- * Son EXACTAMENTE los mismos valores que el panel de administración
- * (interfaces/admin/styles.css, variables --adm-*). Se repiten aquí con
- * el prefijo --cli- en vez de importar su hoja, porque su archivo no se
- * toca y porque las dos interfaces deben poder desplegarse por separado.
+ * Hereda la estructura del panel de administración de Álvaro
+ * (interfaces/admin/styles.css, variables --adm-*): los mismos papeles,
+ * el mismo acento dorado, la misma tipografía y los mismos colores de
+ * estado. Se copian aquí con el prefijo --cli- en vez de importar su
+ * hoja, porque su archivo no se toca y porque las dos interfaces deben
+ * poder desplegarse por separado.
  *
- *   --adm-fondo  #0f0f10  ->  --cli-fondo
- *   --adm-panel  #18181b  ->  --cli-panel
- *   --adm-borde  #2a2a2e  ->  --cli-borde
- *   --adm-texto  #e7e7ea  ->  --cli-texto
- *   --adm-texto-suave #8d8d95 -> --cli-texto-suave
- *   --adm-dorado #c9a24b  ->  --cli-dorado
+ * Lo que SÍ cambia respecto al suyo son los grises. El administrador es
+ * una herramienta de trabajo y usa un casi negro (#0f0f10); la tienda es
+ * un escaparate y usa gris espacial, que es el color de la pared del
+ * local. Mismo idioma, distinto tono:
  *
- * Si Álvaro cambia un color, se cambia aquí el mismo y las dos webs
- * vuelven a ir a juego.
+ *   papel            administrador   tienda
+ *   ---------------  -------------   -------
+ *   fondo            #0f0f10         #2e3035
+ *   panel            #18181b         #383b40
+ *   borde            #2a2a2e         #4a4d54
+ *   texto            #e7e7ea         #f0f0f2
+ *   texto suave      #8d8d95         #a8a9b0
+ *   acento (dorado)  #c9a24b         #c9a24b   <- idéntico
+ *
+ * El texto suave se aclara a propósito: sobre gris espacial, el #8d8d95
+ * del administrador se quedaba en 3,2:1 de contraste y no llegaba al
+ * mínimo accesible. Con #a8a9b0 sube a 5,6:1.
  */
 :root {
-  --cli-fondo: #0f0f10;
-  --cli-panel: #18181b;
-  --cli-panel-claro: #202024;
-  --cli-borde: #2a2a2e;
+  --cli-fondo: #2e3035;
+  --cli-panel: #383b40;
+  --cli-panel-claro: #42454b;
+  --cli-borde: #4a4d54;
 
   /* Acento del proyecto: dorado, no naranja. Es el color de marca que ya
      usa el administrador en los estados y en las barras. */
   --cli-dorado: #c9a24b;
   --cli-dorado-claro: #e3c27e;
 
-  --cli-texto: #e7e7ea;
-  --cli-texto-suave: #8d8d95;
+  --cli-texto: #f0f0f2;
+  --cli-texto-suave: #a8a9b0;
 
   /* Estados de pedido: los mismos colores que las etiquetas .adm-estado,
      para que un pedido "enviado" se vea igual en las dos webs. */
@@ -64,8 +74,8 @@ body.cli {
   background: var(--cli-fondo);
   /* Dos resplandores suaves para que el fondo no sea un negro plano */
   background-image:
-    radial-gradient(ellipse 70% 50% at 50% 0%, #18181b 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, #131316 0%, transparent 70%);
+    radial-gradient(ellipse 80% 55% at 50% 0%, #3b3e44 0%, transparent 72%),
+    radial-gradient(ellipse 70% 45% at 50% 100%, #24262a 0%, transparent 72%);
   background-attachment: fixed;
 
   /* Transición de entrada y salida entre páginas */

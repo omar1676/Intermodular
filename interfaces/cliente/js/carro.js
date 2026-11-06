@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Carrito de demostración
+ * NOVA Sneakers - Carrito de demostración · Omar
  *
  * El carrito se guarda en localStorage, que es almacenamiento del propio
  * navegador. NO es una base de datos: no hay servidor, nadie más lo ve y

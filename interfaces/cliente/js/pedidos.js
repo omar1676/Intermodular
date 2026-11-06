@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Mis pedidos
+ * NOVA Sneakers - Mis pedidos · Omar
  *
  * Lista los pedidos de ejemplo y los que se hayan creado en esta
  * demostración. Cada pedido dice de dónde sale, para que no haya ninguna
