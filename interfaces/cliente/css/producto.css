@@ -293,7 +293,10 @@
     max-width: none;
   }
 
-  .cli-acciones .cli-boton {
+  .cli-acciones .cli-boton,
+  .cli-acciones .cli-boton-sec {
     flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
   }
 }
