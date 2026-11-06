@@ -20,7 +20,6 @@ const API = {
 
 /* Utilidades compartidas por todas las páginas */
 
-// Precio final = precio_base + suplemento_precio
 function precioFinal(modelo, variante) {
   return Number(modelo.precio_base) + Number(variante.suplemento_precio);
 }

@@ -44,6 +44,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `js/api.js` | Única puerta de acceso a los datos, más utilidades comunes |
 | `js/carro.js` | Carrito: añadir, cambiar, quitar, totales y contador |
 | `js/pedidos-datos.js` | Pedidos de ejemplo y creación de pedidos de demostración |
+| `js/piezas.js` | Dibuja las zapatillas del catálogo, para quien las necesite |
 | `js/catalogo.js` | Dibuja el escaparate |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
@@ -190,9 +191,9 @@ que algo está agotado.
 ## Pruebas
 
 No hay navegador en el entorno de desarrollo, así que el JavaScript se
-prueba con Node sobre un DOM y un `localStorage` simulados. Las pruebas
-viven fuera del repositorio: no se publican, porque son herramienta de
-desarrollo y no parte de la web.
+prueba con Node sobre un DOM y un `localStorage` simulados. Están en
+`tests/`, y se ejecutan con `node ejecutar.js` desde esa carpeta. No hacen
+falta dependencias. Hay más detalle en `tests/README.md`.
 
 | Batería | Qué comprueba |
 |---|---|

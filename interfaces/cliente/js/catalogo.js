@@ -6,7 +6,6 @@ function pintarEscaparate(modelos) {
   pintarPiezas(contenedor, piezasDelCatalogo(modelos));
 }
 
-// Arranque
 async function iniciar() {
   const contenedor = document.getElementById("cli-rejilla");
 
