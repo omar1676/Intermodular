@@ -25,7 +25,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 | Página | Qué hace |
 |---|---|
-| `index.html` | Escaparate: doce acabados, cada uno sobre su repisa |
+| `index.html` | Portada: seis modelos destacados y el paso al catálogo |
 | `catalogo.html` | Catálogo completo: las mismas doce piezas en su propia página |
 | `producto.html` | Detalle: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
@@ -46,7 +46,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `js/carro.js` | Carrito: añadir, cambiar, quitar, totales y contador |
 | `js/pedidos-datos.js` | Pedidos de ejemplo y creación de pedidos de demostración |
 | `js/piezas.js` | Dibuja las zapatillas del catálogo, para quien las necesite |
-| `js/escaparate.js` | Dibuja el escaparate |
+| `js/escaparate.js` | Dibuja la portada: elige las seis destacadas |
 | `js/catalogo.js` | Dibuja el catálogo completo |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
@@ -55,10 +55,12 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 ## Qué hace cada pantalla
 
-**Escaparate.** Doce piezas sobre una pared gris. Al señalar o enfocar una
-zapatilla **se enciende su repisa** y la luz le sube por la suela; las demás
-se quedan apagadas. Los colores sin ninguna talla disponible salen atenuados
-y con la palabra «Agotado».
+**Portada.** Seis piezas sobre una pared gris, una por modelo, y debajo el
+paso al catálogo completo. Al señalar o enfocar una zapatilla **se enciende
+su repisa** y la luz le sube por la suela; las demás se quedan apagadas.
+
+**Catálogo.** Las doce piezas, los dos acabados de cada modelo. Los colores
+sin ninguna talla disponible salen atenuados y con la palabra «Agotado».
 
 **Detalle.** La zapatilla entra acercándose. Al pulsar un color se redibuja,
 se reinicia la talla y vuelve a acercarse. Las tallas sin existencias salen
@@ -87,9 +89,11 @@ creados.
   espacial.
 - **Sin tarjetas blancas.** Es una pared de tienda: gris neutro, cada
   zapatilla sobre su repisa, y la luz solo en la pieza que estás mirando.
-- **El escaparate enseña colores, no modelos.** Seis modelos con dos
-  acabados cada uno dan las doce piezas, igual que en una tienda real. Al
-  pulsar una, el detalle se abre con ese color ya elegido
+- **La portada enseña modelos; el catálogo, colores.** La portada pone uno
+  de cada modelo para que se vea la gama de un vistazo; el catálogo abre
+  los dos acabados de cada uno, que son las doce piezas. Las dos páginas
+  usan la misma función de dibujo: lo único que cambia es qué piezas se le
+  pasan. Al pulsar una, el detalle se abre con ese color ya elegido
   (`producto.html?modelo=1&color=0`).
 - **La zapatilla es un SVG por capas, no un icono plano.** Luz cenital,
   oclusión en el apoyo, brillo especular en el empeine, sombra proyectada

@@ -1,9 +1,23 @@
-/* NOVA Sneakers · Escaparate (pantalla) · Omar */
+/* NOVA Sneakers · Portada (pantalla) · Omar */
 
-// Dibuja el muro entero: las doce piezas del catálogo
+// Una zapatilla por modelo: nos quedamos con su primer color
+function destacadas(modelos) {
+  return piezasDelCatalogo(modelos).filter(function (pieza) {
+    return pieza.indice === 0;
+  });
+}
+
 function pintarEscaparate(modelos) {
   const contenedor = document.getElementById("cli-rejilla");
-  pintarPiezas(contenedor, piezasDelCatalogo(modelos));
+  pintarPiezas(contenedor, destacadas(modelos));
+
+  // Cuántos acabados hay en total lo dicen los datos, no el HTML
+  const enlace = document.getElementById("cli-ir-catalogo");
+
+  if (enlace) {
+    enlace.textContent = "Ver los " + piezasDelCatalogo(modelos).length +
+      " acabados del catálogo";
+  }
 }
 
 async function iniciar() {
