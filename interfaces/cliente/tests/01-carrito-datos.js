@@ -14,45 +14,59 @@ function ok(n, c, d) {
   if (!c) fallos++;
 }
 
+// Todo lo que sigue sale del catalogo, para no reescribir la prueba cada
+// vez que cambien los productos.
+const UNO = CATALOGO_DEMO[0];
+const OTRO = CATALOGO_DEMO[3];
+const SKU_UNO = UNO.variantes[0].tallas.find(function (t) { return t.stock > 0; }).sku;
+const SKU_OTRO = OTRO.variantes[0].tallas.find(function (t) { return t.stock > 0; }).sku;
+const PRECIO_UNO = precioFinal(UNO, UNO.variantes[0]);
+const PRECIO_OTRO = precioFinal(OTRO, OTRO.variantes[0]);
+
+// La primera talla sin existencias que haya en el catalogo
+let SKU_AGOTADO = null;
+CATALOGO_DEMO.forEach(function (m) { m.variantes.forEach(function (v) { v.tallas.forEach(function (t) {
+  if (t.stock === 0 && SKU_AGOTADO === null) SKU_AGOTADO = t.sku;
+}); }); });
+
 console.log("\n=== CARRITO ===");
 
 carroVaciar();
 ok("empieza vacio", carroUnidades() === 0 && carroTotal() === 0);
 
-ok("anade 2 pares", carroAnadir("NOVA-1-42", 2) === true && carroUnidades() === 2, carroUnidades());
+ok("anade 2 pares", carroAnadir(SKU_UNO, 2) === true && carroUnidades() === 2, carroUnidades());
 
-carroAnadir("NOVA-1-42", 2);
+carroAnadir(SKU_UNO, 2);
 ok("suma sobre la linea existente (no duplica)", carroLeer().length === 1 && carroUnidades() === 4, carroUnidades());
 
-carroAnadir("NOVA-1-42", 10);
+carroAnadir(SKU_UNO, 10);
 ok("respeta el tope de 5 por linea", carroUnidades() === 5, carroUnidades());
 
-ok("NO anade una talla agotada", carroAnadir("NOVA-1-44", 1) === false, "stock de NOVA-1-44 = " + buscarSku("NOVA-1-44").talla.stock);
+ok("NO anade una talla agotada", carroAnadir(SKU_AGOTADO, 1) === false, SKU_AGOTADO + " tiene " + buscarSku(SKU_AGOTADO).talla.stock);
 ok("el carrito sigue con una sola linea", carroLeer().length === 1);
 
 ok("NO anade un SKU inventado", carroAnadir("NOVA-999-99", 1) === false);
 
-carroAnadir("NOVA-4-41", 1);
+carroAnadir(SKU_OTRO, 1);
 ok("dos lineas distintas", carroLeer().length === 2 && carroUnidades() === 6, carroUnidades());
 
-// 5 x 79.99 (Origin) + 1 x 119.90 (Velocity) = 399.95 + 119.90
-const esperado = 5 * 79.99 + 1 * 119.90;
+const esperado = 5 * PRECIO_UNO + 1 * PRECIO_OTRO;
 ok("total correcto", Math.abs(carroTotal() - esperado) < 0.001, carroTotal().toFixed(2) + " vs " + esperado.toFixed(2));
 
-carroCambiarCantidad("NOVA-4-41", 3);
+carroCambiarCantidad(SKU_OTRO, 3);
 ok("cambia la cantidad", carroUnidades() === 8, carroUnidades());
 
-carroCambiarCantidad("NOVA-4-41", 99);
+carroCambiarCantidad(SKU_OTRO, 99);
 ok("al cambiar tambien respeta el tope", carroUnidades() === 10, carroUnidades());
 
-carroCambiarCantidad("NOVA-4-41", 0);
+carroCambiarCantidad(SKU_OTRO, 0);
 ok("cantidad 0 quita la linea", carroLeer().length === 1, carroLeer().length);
 
-carroQuitar("NOVA-1-42");
+carroQuitar(SKU_UNO);
 ok("quitar deja el carrito vacio", carroUnidades() === 0);
 
 // Precios: el carrito no guarda importes
-carroAnadir("NOVA-2-40", 1);
+carroAnadir(SKU_UNO, 1);
 const guardado = JSON.parse(__almacen.get("nova_carrito_demo"));
 ok("solo guarda sku y cantidad", Object.keys(guardado[0]).sort().join(",") === "cantidad,sku", Object.keys(guardado[0]).join(","));
 ok("no guarda ningun precio", !JSON.stringify(guardado).includes("precio"));
@@ -79,16 +93,18 @@ ok("ordenados del mas nuevo al mas viejo", new Date(pedidosTodos()[0].fecha) > n
 
 // Total del ejemplo 1: 1 x 79.99 + 2 x 129.99 = 339.97
 const ej = pedidosTodos().find(p => p.referencia === "WEB-DEMO-000001");
-ok("total del pedido de ejemplo", Math.abs(pedidoTotal(ej) - 339.97) < 0.001, pedidoTotal(ej).toFixed(2));
-ok("unidades del pedido de ejemplo", pedidoUnidades(ej) === 3, pedidoUnidades(ej));
+const sumaEj = ej.lineas.reduce(function (s, l) { return s + l.precio_unitario * l.cantidad; }, 0);
+ok("total del pedido de ejemplo", Math.abs(pedidoTotal(ej) - sumaEj) < 0.001, pedidoTotal(ej).toFixed(2));
+const unidadesEj = ej.lineas.reduce(function (s, l) { return s + l.cantidad; }, 0);
+ok("unidades del pedido de ejemplo", pedidoUnidades(ej) === unidadesEj, pedidoUnidades(ej));
 ok("todos los SKU de los ejemplos existen", pedidosTodos().every(p => p.lineas.every(l => buscarSku(l.sku) !== null)));
 
 ok("siguiente referencia libre", referenciaNueva() === refNumero(EJEMPLOS + 1), referenciaNueva());
 
 // Crear un pedido desde el carrito
 carroVaciar();
-carroAnadir("NOVA-1-42", 2);
-carroAnadir("NOVA-6-40", 1);
+carroAnadir(SKU_UNO, 2);
+carroAnadir(SKU_OTRO, 1);
 const nuevo = crearPedidoDemo(carroLeer());
 
 ok("crea el pedido", nuevo !== null && nuevo.referencia === refNumero(EJEMPLOS + 1), nuevo && nuevo.referencia);
@@ -96,7 +112,7 @@ ok("un carrito de 2 lineas da UN solo pedido", nuevo.lineas.length === 2, nuevo.
 ok("el pedido nace pendiente", nuevo.estado === "pendiente");
 ok("marcado como creado en la demostracion", nuevo.origen === "demostracion");
 ok("el pedido SI guarda el precio unitario", nuevo.lineas.every(l => typeof l.precio_unitario === "number"));
-ok("total del pedido nuevo", Math.abs(pedidoTotal(nuevo) - (2 * 79.99 + 129.99)) < 0.001, pedidoTotal(nuevo).toFixed(2));
+ok("total del pedido nuevo", Math.abs(pedidoTotal(nuevo) - (2 * PRECIO_UNO + PRECIO_OTRO)) < 0.001, pedidoTotal(nuevo).toFixed(2));
 ok("ahora hay uno mas", pedidosTodos().length === EJEMPLOS + 1, pedidosTodos().length);
 ok("la siguiente referencia avanza", referenciaNueva() === refNumero(EJEMPLOS + 2), referenciaNueva());
 

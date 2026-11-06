@@ -59,7 +59,8 @@ function piezaHtml(pieza, posicion) {
         <span class="cli-pieza-nombre">${textoSeguro(modelo.nombre)}</span>
         ${pie}
       </span>
-      <span class="cli-pieza-color">${textoSeguro(variante.color)}</span>`;
+      <span class="cli-pieza-color">${textoSeguro(variante.color)}</span>
+      <span class="cli-pieza-reclamo">${textoSeguro(modelo.descripcion)}</span>`;
 
   // El retardo escalonado hace que las zapatillas aparezcan una tras otra
   const retardo = (posicion * 0.05).toFixed(2);

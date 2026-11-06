@@ -20,7 +20,7 @@ Una sola, cuando estás tocando esa parte:
 node 01-carrito-datos.js
 ```
 
-Si todo va bien, la última línea dice `212 comprobaciones en 8 archivos, 0
+Si todo va bien, la última línea dice `218 comprobaciones en 8 archivos, 0
 fallidas` y el programa termina con código 0. Si algo falla, sale `FALLO`
 en la línea de la comprobación y el código de salida es 1.
 
@@ -32,10 +32,10 @@ en la línea de la comprobación y el código de salida es 1.
 | `02-carrito-pantalla.js` | Dibujado de las líneas y que un doble clic no cree dos pedidos | 19 |
 | `03-pedidos-pantalla.js` | Dibujado, aviso de pedido nuevo, borrado, los cuatro ejemplos y los cinco estados | 56 |
 | `04-cuenta.js` | Validaciones y que no se guarde ninguna contraseña | 20 |
-| `05-piezas.js` | Marcado de las 12 piezas, la tabla `FOTOS` y la carga del catálogo | 34 |
+| `05-piezas.js` | Marcado de las piezas, las fotografías y la carga del catálogo | 27 |
 | `06-claves-svg.js` | Que no se repita ningún identificador de degradado | 5 |
-| `07-catalogo.js` | El catálogo: las 12 variantes, enlaces, precios y su hoja de estilos | 22 |
-| `08-portada.js` | La portada: ocho piezas 4×2, los seis modelos, y el paso al catálogo | 20 |
+| `07-catalogo.js` | El catálogo: los 20 modelos, enlaces, precios y su hoja de estilos | 37 |
+| `08-portada.js` | La portada: las ocho destacadas y que ya no ofrece el catálogo | 18 |
 | `entorno.js` | El DOM y el `localStorage` de mentira, y el cargador | — |
 | `ejecutar.js` | Lanza todas y suma | — |
 

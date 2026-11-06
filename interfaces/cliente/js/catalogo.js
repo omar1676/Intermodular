@@ -11,7 +11,7 @@ function pintarCatalogo(modelos) {
   const cuenta = document.getElementById("cli-cuenta-catalogo");
 
   if (cuenta) {
-    cuenta.textContent = modelos.length + " modelos · " + piezas.length + " acabados";
+    cuenta.textContent = piezas.length + " modelos, uno por fotografía";
   }
 }
 

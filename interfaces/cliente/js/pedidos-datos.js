@@ -13,8 +13,8 @@ const PEDIDOS_EJEMPLO = [
     estado: "entregado",
     origen: "ejemplo",
     lineas: [
-      { sku: "NOVA-1-42", cantidad: 1, precio_unitario: 79.99 },
-      { sku: "NOVA-6-43", cantidad: 2, precio_unitario: 129.99 }
+      { sku: "NOVA-1-42", cantidad: 1, precio_unitario: 139.9 },
+      { sku: "NOVA-6-43", cantidad: 2, precio_unitario: 109.9 }
     ]
   },
   {
@@ -23,7 +23,7 @@ const PEDIDOS_EJEMPLO = [
     estado: "en_preparacion",
     origen: "ejemplo",
     lineas: [
-      { sku: "NOVA-4-41", cantidad: 1, precio_unitario: 119.90 }
+      { sku: "NOVA-4-41", cantidad: 1, precio_unitario: 149.9 }
     ]
   },
   {
@@ -33,7 +33,7 @@ const PEDIDOS_EJEMPLO = [
     origen: "ejemplo",
     lineas: [
       { sku: "NOVA-2-43", cantidad: 1, precio_unitario: 79.99 },
-      { sku: "NOVA-11-42", cantidad: 1, precio_unitario: 114.90 }
+      { sku: "NOVA-11-42", cantidad: 1, precio_unitario: 119.9 }
     ]
   },
   {
@@ -42,7 +42,7 @@ const PEDIDOS_EJEMPLO = [
     estado: "cancelado",
     origen: "ejemplo",
     lineas: [
-      { sku: "NOVA-9-40", cantidad: 1, precio_unitario: 99.99 }
+      { sku: "NOVA-9-40", cantidad: 1, precio_unitario: 142.9 }
     ]
   }
 ];

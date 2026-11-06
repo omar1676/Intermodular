@@ -1,4 +1,4 @@
-/* Portada: ocho piezas en dos filas de cuatro */
+/* Portada: ocho destacadas en dos filas de cuatro */
 
 require("./entorno.js").cargar([
   "datos-demo.js",
@@ -19,68 +19,56 @@ pintarEscaparate(CATALOGO_DEMO);
 const html = __nodos["cli-rejilla"].innerHTML;
 const cuenta = (re) => (html.match(re) || []).length;
 const piezas = destacadas(CATALOGO_DEMO);
+const marcados = CATALOGO_DEMO.filter(function (m) { return m.destacado; });
 
 console.log("=== OCHO PIEZAS ===");
 
 comprobar("dibuja 8 piezas", cuenta(/class="cli-pieza[ "]/g) === 8, cuenta(/class="cli-pieza[ "]/g));
-comprobar("las que dice la constante", piezas.length === PIEZAS_PORTADA, PIEZAS_PORTADA);
-comprobar("ocho, no las doce del catalogo",
+comprobar("las ocho caben en dos filas de cuatro", piezas.length % 4 === 0, piezas.length);
+comprobar("son menos que el catálogo entero",
   piezas.length < piezasDelCatalogo(CATALOGO_DEMO).length,
   piezas.length + " de " + piezasDelCatalogo(CATALOGO_DEMO).length);
 
-console.log("\n=== ESTAN LOS SEIS MODELOS ===");
+console.log("\n=== LAS QUE EL CATÁLOGO MARCA ===");
 
-const modelos = [];
-html.replace(/data-modelo="(\d+)"/g, function (m, id) { modelos.push(id); return m; });
-
-comprobar("los seis modelos salen", new Set(modelos).size === 6, new Set(modelos).size);
-comprobar("ninguno sale mas de dos veces",
-  CATALOGO_DEMO.every(function (modelo) {
-    return modelos.filter(function (id) { return id === String(modelo.id_modelo); }).length <= 2;
-  }));
-comprobar("aparecen los seis nombres",
-  CATALOGO_DEMO.every(function (modelo) { return html.includes(modelo.nombre); }));
-
-console.log("\n=== Y DOS COLORES MAS ===");
-
-const segundos = piezas.filter(function (pieza) { return pieza.indice > 0; });
-comprobar("hay dos piezas de segundo color", segundos.length === 2, segundos.length);
-comprobar("seis son el primer color de su modelo",
-  piezas.filter(function (pieza) { return pieza.indice === 0; }).length === 6);
+comprobar("son exactamente las marcadas como destacado",
+  piezas.length === marcados.length, marcados.length + " marcados");
+comprobar("y están todas",
+  marcados.every(function (m) { return html.includes('data-modelo="' + m.id_modelo + '"'); }));
+comprobar("no se cuela ninguna sin marcar",
+  CATALOGO_DEMO.filter(function (m) { return !m.destacado; })
+    .every(function (m) { return !html.includes('data-modelo="' + m.id_modelo + '"'); }));
+comprobar("aparecen sus nombres",
+  marcados.every(function (m) { return html.includes(m.nombre); }));
 
 console.log("\n=== NINGUNA AGOTADA ===");
 
-comprobar("no se destaca ningun color agotado",
-  piezas.every(function (pieza) { return !colorSinExistencias(pieza.variante); }));
-comprobar("y por eso NOVA Pulse Negro se queda fuera",
-  !piezas.some(function (pieza) { return pieza.variante.id_variante === 12; }));
+comprobar("no se destaca nada agotado",
+  piezas.every(function (p) { return !colorSinExistencias(p.variante); }));
 comprobar("no sale la palabra Agotado", cuenta(/>Agotado</g) === 0, cuenta(/>Agotado</g));
 comprobar("las ocho llevan precio", cuenta(/cli-pieza-precio/g) === 8, cuenta(/cli-pieza-precio/g));
 
-console.log("\n=== SIGUE SIENDO LA MISMA FUNCION DE DIBUJO ===");
+console.log("\n=== YA NO SE OFRECE EL CATÁLOGO DESDE AQUÍ ===");
+
+const portada = require("fs").readFileSync(__dirname + "/../index.html", "utf8");
+comprobar("la portada no lleva el botón al catálogo", !portada.includes("cli-ir-catalogo"));
+comprobar("y el catálogo se alcanza por el menú", portada.includes('href="catalogo.html"'));
+
+console.log("\n=== SIGUE SIENDO LA MISMA FUNCIÓN DE DIBUJO ===");
 
 const aparte = document.getElementById("rejilla-de-prueba");
 pintarPiezas(aparte, destacadas(CATALOGO_DEMO));
 comprobar("la portada no dibuja por su cuenta", aparte.innerHTML === html,
   aparte.innerHTML.length + " vs " + html.length + " caracteres");
 
-console.log("\n=== EL PASO AL CATALOGO COMPLETO ===");
-
-comprobar("el enlace cuenta los acabados de los datos",
-  __nodos["cli-ir-catalogo"].textContent === "Ver los 12 acabados del catálogo",
-  __nodos["cli-ir-catalogo"].textContent);
-
 console.log("\n=== LO DE SIEMPRE ===");
 
 comprobar("se quita el estado de carga",
   __nodos["cli-rejilla"].className === "cli-rejilla", __nodos["cli-rejilla"].className);
-comprobar("cada pieza lleva su repisa", cuenta(/class="cli-balda"/g) === 8, cuenta(/class="cli-balda"/g));
-comprobar("cada pieza lleva modelo y color", cuenta(/data-modelo="\d+"/g) === 8 && cuenta(/data-color="\d+"/g) === 8);
-comprobar("precios con formato español", html.includes("79,99") && html.includes("129,99"));
-comprobar("ningun id de degradado repetido", (function () {
-  const ids = html.match(/id="(cuerpo|suela|media|luz|ocluir|calida|borron|recCuerpo|recMedia)-[^"]+"/g) || [];
-  return ids.length > 0 && new Set(ids).size === ids.length;
-})());
+comprobar("cada pieza lleva su repisa", cuenta(/class="cli-balda"/g) === 8);
+comprobar("cada pieza lleva modelo y acabado",
+  cuenta(/data-modelo="\d+"/g) === 8 && cuenta(/data-color="\d+"/g) === 8);
+comprobar("todas se pintan con su fotografía", cuenta(/<img/g) === 8, cuenta(/<img/g));
 comprobar("sin undefined ni NaN", !/undefined|NaN/.test(html));
 
 console.log("\n" + (fallos === 0 ? "PORTADA CORRECTA" : fallos + " FALLOS"));
