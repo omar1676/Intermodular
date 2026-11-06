@@ -1,0 +1,274 @@
+/* NOVA Sneakers · Escaparate · Omar */
+
+/* La pared: ocupa el ancho completo, es la portada */
+
+.cli-escaparate {
+  padding: 0;
+}
+
+.cli-muro {
+  position: relative;
+  padding: clamp(26px, 3vw, 44px) clamp(18px, 4vw, 48px) clamp(50px, 5vw, 78px);
+
+  /* Luz de sala: la pared se abre por el centro y cae hacia los bordes */
+  background:
+    radial-gradient(ellipse 78% 64% at 50% 40%,
+      #3d3d40 0%,
+      #363638 42%,
+      #2c2c2e 100%);
+}
+
+/* Entradilla: diminuta, como en la referencia */
+
+.cli-intro {
+  position: relative;
+  z-index: 2;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 0 clamp(30px, 3.4vw, 52px);
+}
+
+.cli-intro h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: .2px;
+  line-height: 1.4;
+  color: var(--cli-texto);
+}
+
+.cli-intro p {
+  max-width: 420px;
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--cli-texto-suave);
+}
+
+/* La rejilla */
+
+.cli-rejilla {
+  position: relative;
+  z-index: 2;
+  max-width: 1500px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(34px, 3.6vw, 62px) clamp(14px, 2vw, 34px);
+}
+
+/* Cada zapatilla sobre su repisa */
+
+.cli-pieza {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  /* Aparición escalonada; el retardo lo pone piezas.js */
+  opacity: 0;
+  animation: cli-entrar .5s ease forwards;
+
+  /* Ojo: la animación de entrada usa la propiedad "translate" y el hover usa "transform". */
+  transition: transform .35s ease;
+}
+
+@keyframes cli-entrar {
+  from { opacity: 0; translate: 0 18px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+/* Hueco donde se apoya la zapatilla. */
+.cli-hueco {
+  position: relative;
+  display: block;
+}
+
+.cli-pieza .zap {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform .35s ease;
+}
+
+/* Las fotografías no vienen todas del mismo tamaño. */
+.cli-pieza img.zap {
+  aspect-ratio: 412 / 200;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+/* La repisa: metacrilato traslucido */
+.cli-balda {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 80%;
+  height: 7px;
+  margin: -10px auto 0;
+  border-radius: 1px 1px 2px 2px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, .42) 0%,
+    rgba(226, 232, 238, .2) 28%,
+    rgba(178, 188, 198, .1) 62%,
+    rgba(0, 0, 0, .24) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .62),
+    0 7px 13px rgba(0, 0, 0, .4);
+  backdrop-filter: blur(1px);
+  transition: background .3s ease, box-shadow .3s ease;
+}
+
+/* Al señalar una zapatilla se enciende su repisa. */
+.cli-pieza:hover .cli-balda,
+.cli-pieza:focus-visible .cli-balda {
+  background: linear-gradient(180deg,
+    #fff8ea 0%,
+    var(--cli-dorado-claro) 42%,
+    var(--cli-dorado) 100%);
+  box-shadow:
+    0 0 10px 2px rgba(227, 194, 126, .9),
+    0 0 32px 9px rgba(201, 162, 75, .55),
+    0 0 72px 24px rgba(201, 162, 75, .26),
+    0 7px 13px rgba(0, 0, 0, .4);
+}
+
+/* Y la luz de la repisa sube y baña la zapatilla */
+.cli-hueco::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: -12%;
+  right: -12%;
+  bottom: -8px;
+  height: 130px;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 100% at 50% 100%,
+    rgba(201, 162, 75, .42) 0%,
+    rgba(201, 162, 75, .14) 44%,
+    transparent 72%);
+  transition: opacity .3s ease;
+}
+
+.cli-pieza:hover .cli-hueco::after,
+.cli-pieza:focus-visible .cli-hueco::after {
+  opacity: 1;
+}
+
+/* Al pasar por encima, la zapatilla se levanta de la repisa */
+.cli-pieza:hover,
+.cli-pieza:focus-visible {
+  outline: none;
+}
+
+.cli-pieza:hover .zap,
+.cli-pieza:focus-visible .zap {
+  transform: translateY(-7px);
+}
+
+.cli-pieza:focus-visible .cli-pieza-nombre {
+  color: var(--cli-dorado);
+}
+
+/* Rótulo: pequeño y discreto, debajo de la repisa */
+
+.cli-pieza-rotulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 15px 0 0;
+}
+
+.cli-pieza-nombre {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--cli-texto);
+  transition: color .2s ease;
+}
+
+.cli-pieza-precio {
+  flex-shrink: 0;
+  font-size: 10px;
+  letter-spacing: .4px;
+  color: var(--cli-texto-suave);
+}
+
+.cli-pieza-color {
+  display: block;
+  margin: 3px 0 0;
+  font-size: 10px;
+  letter-spacing: .4px;
+  color: var(--cli-texto-suave);
+}
+
+/* Un color entero sin existencias */
+.cli-pieza-agotado {
+  flex-shrink: 0;
+  font-size: 10px;
+  letter-spacing: .4px;
+  color: var(--cli-texto-suave);
+}
+
+.cli-pieza.cli-sin-stock .zap,
+.cli-pieza.cli-sin-stock .cli-balda {
+  opacity: .4;
+}
+
+/* Portátil: cuatro por fila */
+
+@media (max-width: 1180px) {
+  .cli-rejilla {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tablet: tres por fila */
+
+@media (max-width: 860px) {
+  .cli-rejilla {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Móvil: dos por fila, como el teléfono de la referencia */
+
+@media (max-width: 580px) {
+  .cli-muro {
+    padding: 22px 5vw 42px;
+  }
+
+  .cli-rejilla {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 18px;
+  }
+
+  /* En pantalla táctil no hay "hover": el dedo pulsa y entra */
+  .cli-pieza:hover .zap {
+    transform: none;
+  }
+
+  .cli-pieza:active .zap {
+    transform: scale(.96);
+  }
+}
+
+/* Debajo de las destacadas, el paso al catálogo completo */
+.cli-mas {
+  margin: 0;
+  padding: 34px 0 6px;
+  text-align: center;
+}

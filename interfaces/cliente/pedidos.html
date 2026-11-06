@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar">
+  <title>NOVA Sneakers · Mis pedidos</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+
+<body class="cli">
+
+  <p class="cli-aviso-demo">
+    Tienda de demostración: no se realizan
+    pagos ni envíos reales
+  </p>
+
+  <header class="cli-cabecera">
+    <a class="cli-logo" href="index.html">
+      <img src="img/nova-logo.png" alt="NOVA Sneakers" width="480" height="160">
+    </a>
+    <nav class="cli-nav" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="carrito.html">Carrito <span class="cli-globo" data-contador-carro>0</span></a>
+      <a href="pedidos.html" aria-current="page">Mis pedidos</a>
+      <a href="cuenta.html">Cuenta</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="cli-titulo-pagina">
+      <h1>Mis pedidos</h1>
+      <p>Todos los pedidos de esta pantalla son ficticios.</p>
+    </div>
+
+    <div class="cli-pagina">
+
+      <div class="cli-caja-aviso" id="cli-aviso-nuevo" hidden></div>
+
+      <div class="cli-caja-aviso">
+        <span class="cli-etiqueta-demo">Demo</span>
+        <div>
+          Esta pantalla <strong>no consulta ninguna base de datos</strong>.
+          Los pedidos marcados como <strong>ejemplo</strong> están escritos
+          a mano en el código de la web. Los que creas desde el carrito se
+          guardan solo en este navegador. Ninguno se ha cobrado ni se va a
+          enviar.
+        </div>
+      </div>
+
+      <div id="cli-zona-pedidos"></div>
+
+      <div class="cli-acciones-carro">
+        <button class="cli-boton-sec cli-boton-peligro" type="button"
+                id="cli-borrar-pedidos" hidden></button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="cli-pie">
+    NOVA Sneakers · Sneaker Factory · Omar
+  </footer>
+
+  <script src="js/datos-demo.js"></script>
+  <script src="js/zapatilla-svg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/carro.js"></script>
+  <script src="js/pedidos-datos.js"></script>
+  <script src="js/pedidos.js"></script>
+
+</body>
+
+</html>
