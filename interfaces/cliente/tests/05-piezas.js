@@ -76,5 +76,31 @@ comprobar("un id inventado no revienta", dibujoPorVariante(999) === "", JSON.str
 FOTOS[1] = "";
 FOTOS[12] = "";
 
+// --- Carga del catálogo, que ahora comparten la portada y el catálogo ---
+
+const hueco = document.getElementById("hueco-de-prueba");
+const catalogoDeVerdad = API.catalogo;
+
+comprobar("devuelve los modelos cuando todo va bien",
+  catalogoParaPintar(hueco) === CATALOGO_DEMO);
+
+API.catalogo = function () { return []; };
+hueco.textContent = "";
+comprobar("catálogo vacío: devuelve null", catalogoParaPintar(hueco) === null);
+comprobar("catálogo vacío: lo dice por escrito",
+  hueco.textContent.includes("Todavía no hay zapatillas"), hueco.textContent);
+
+API.catalogo = function () { throw new Error("sin datos"); };
+hueco.textContent = "";
+const silencio = console.error;
+console.error = function () {};
+comprobar("si la carga falla: devuelve null", catalogoParaPintar(hueco) === null);
+console.error = silencio;
+comprobar("si la carga falla: avisa al usuario",
+  hueco.textContent.includes("No se ha podido cargar"), hueco.textContent);
+
+API.catalogo = catalogoDeVerdad;
+comprobar("el API queda como estaba", API.catalogo() === CATALOGO_DEMO);
+
 console.log("\n" + (fallos === 0 ? "MARCADO CORRECTO" : fallos + " FALLOS"));
 process.exit(fallos ? 1 : 0);
