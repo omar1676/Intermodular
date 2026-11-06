@@ -46,23 +46,22 @@
   content: "";
   position: absolute;
   z-index: 1;
-  left: 4%;
-  right: 4%;
+  /* Un tubo de luz encendido debajo de la zapatilla, como en la
+     referencia: núcleo casi blanco y halo cálido alrededor. */
+  left: 6%;
+  right: 6%;
   bottom: 0;
-  height: 3px;
-  border-radius: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--cli-dorado) 16%,
-    var(--cli-dorado-claro) 50%,
-    var(--cli-dorado) 84%,
-    transparent
-  );
+  height: 7px;
+  border-radius: 4px;
+  background: linear-gradient(180deg,
+    #fffaf0 0%,
+    #ffeac4 28%,
+    var(--cli-dorado-claro) 64%,
+    var(--cli-dorado) 100%);
   box-shadow:
-    0 0 16px 4px rgba(201, 162, 75, .7),
-    0 0 52px 16px rgba(201, 162, 75, .36),
-    0 0 110px 36px rgba(201, 162, 75, .18);
+    0 0 14px 3px rgba(227, 194, 126, .85),
+    0 0 48px 15px rgba(201, 162, 75, .45),
+    0 0 110px 36px rgba(201, 162, 75, .2);
 }
 
 .cli-escena .zap {

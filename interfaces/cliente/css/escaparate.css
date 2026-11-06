@@ -130,21 +130,65 @@
   object-position: center bottom;
 }
 
-/* La repisa: una pletina clara y fina, más estrecha que la zapatilla */
+/* La repisa: una pletina de metacrilato, traslúcida, con el canto
+   superior cogiendo la luz de la sala */
 .cli-balda {
   position: relative;
   z-index: 1;
   display: block;
-  width: 72%;
-  height: 5px;
-  margin: -9px auto 0;
-  border-radius: 1px;
+  width: 80%;
+  height: 7px;
+  margin: -10px auto 0;
+  border-radius: 1px 1px 2px 2px;
   background: linear-gradient(180deg,
-    #cfd0d3 0%,
-    #a3a4a8 38%,
-    #76777c 72%,
-    #4e4f53 100%);
-  box-shadow: 0 7px 13px rgba(0, 0, 0, .42);
+    rgba(255, 255, 255, .42) 0%,
+    rgba(226, 232, 238, .2) 28%,
+    rgba(178, 188, 198, .1) 62%,
+    rgba(0, 0, 0, .24) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .62),
+    0 7px 13px rgba(0, 0, 0, .4);
+  backdrop-filter: blur(1px);
+  transition: background .3s ease, box-shadow .3s ease;
+}
+
+/* Al señalar una zapatilla SE ENCIENDE SU REPISA. Es el gesto que define
+   el escaparate de la referencia: la pieza elegida queda iluminada desde
+   abajo y las demás se quedan en penumbra. */
+.cli-pieza:hover .cli-balda,
+.cli-pieza:focus-visible .cli-balda {
+  background: linear-gradient(180deg,
+    #fff8ea 0%,
+    var(--cli-dorado-claro) 42%,
+    var(--cli-dorado) 100%);
+  box-shadow:
+    0 0 10px 2px rgba(227, 194, 126, .9),
+    0 0 32px 9px rgba(201, 162, 75, .55),
+    0 0 72px 24px rgba(201, 162, 75, .26),
+    0 7px 13px rgba(0, 0, 0, .4);
+}
+
+/* Y la luz de la repisa sube y baña la zapatilla */
+.cli-hueco::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: -12%;
+  right: -12%;
+  bottom: -8px;
+  height: 130px;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 100% at 50% 100%,
+    rgba(201, 162, 75, .42) 0%,
+    rgba(201, 162, 75, .14) 44%,
+    transparent 72%);
+  transition: opacity .3s ease;
+}
+
+.cli-pieza:hover .cli-hueco::after,
+.cli-pieza:focus-visible .cli-hueco::after {
+  opacity: 1;
 }
 
 /* Al pasar por encima, la zapatilla se levanta de la repisa */
