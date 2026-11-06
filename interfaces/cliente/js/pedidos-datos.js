@@ -1,24 +1,4 @@
-/*
- * NOVA Sneakers - Pedidos de demostración · Omar
- *
- * MUY IMPORTANTE para la defensa en clase: aquí no hay ninguna base de
- * datos ni ningún servidor. Hay dos clases de pedidos:
- *
- *  1. Los EJEMPLOS, escritos a mano en este archivo. Son fijos y sirven
- *     para que la pantalla "Mis pedidos" no esté vacía al abrirla.
- *
- *  2. Los que se crean al pulsar "Finalizar pedido" en el carrito. Se
- *     guardan en localStorage, que es almacenamiento del propio
- *     navegador: solo existen en este ordenador y desaparecen al borrar
- *     los datos de navegación.
- *
- * Todos los pedidos llevan el prefijo WEB-DEMO- precisamente para que
- * quede claro que son de demostración.
- *
- * Detalle que sí es buena práctica: el carrito NO guarda precios (los
- * recalcula del catálogo), pero un pedido SÍ guarda el precio unitario,
- * porque un pedido es una foto de lo que valía en ese momento.
- */
+/* NOVA Sneakers · Pedidos (datos) · Omar */
 
 const PEDIDOS_CLAVE = "nova_pedidos_demo";
 const PEDIDOS_PREFIJO = "WEB-DEMO-";
@@ -89,7 +69,6 @@ function referenciaNueva() {
 }
 
 // Crea un pedido de demostración a partir de las líneas del carrito.
-// Devuelve el pedido creado, o null si el carrito estaba vacío.
 function crearPedidoDemo(lineasCarro) {
   if (!lineasCarro || lineasCarro.length === 0) {
     return null;

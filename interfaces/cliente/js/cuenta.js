@@ -1,22 +1,9 @@
-/*
- * NOVA Sneakers - Entrar y crear cuenta · Omar
- *
- * ESTO ES SOLO LA INTERFAZ. No hay autenticación de ninguna clase:
- *
- *  - No se envía nada a ningún servidor, porque no hay servidor.
- *  - No se guarda ninguna contraseña en ningún sitio. Ni en localStorage,
- *    ni en sessionStorage, ni en una cookie. En cuanto se envía el
- *    formulario, los campos de contraseña se vacían.
- *  - No se crea ninguna sesión ni ningún "usuario conectado" falso.
- *
- * Lo único real que hay aquí es la validación de los datos que se
- * escriben, que es trabajo de frontend y sí tiene sentido mostrar.
- */
+/* NOVA Sneakers · Cuenta (pantalla) · Omar */
 
 // Comprobación de correo sencilla: algo, arroba, algo, punto, algo
 const PATRON_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-/* ===== Pestañas ===== */
+/* Pestañas */
 
 function cambiarPestana(cual) {
   const pestanas = document.querySelectorAll(".cli-pestana");
@@ -35,8 +22,7 @@ function cambiarPestana(cual) {
   // Al cambiar de pestaña se limpia el mensaje anterior
   document.getElementById("cli-resultado").innerHTML = "";
 
-  // Y también los errores que hubieran quedado en el formulario anterior,
-  // para no mezclar avisos de un formulario con los del otro
+  // Limpia los errores del formulario anterior
   document.querySelectorAll(".cli-error").forEach(function (hueco) {
     hueco.textContent = "";
   });
@@ -46,7 +32,7 @@ function cambiarPestana(cual) {
   });
 }
 
-/* ===== Validación ===== */
+/* Validación */
 
 // Escribe (o borra) el mensaje de error de un campo
 function marcarError(campo, mensaje) {
@@ -129,7 +115,7 @@ function validarRegistro() {
   return correcto;
 }
 
-/* ===== Envío (que no envía nada) ===== */
+/* Envío (que no envía nada) */
 
 function vaciarClaves(formulario) {
   formulario.querySelectorAll('input[type="password"]').forEach(function (campo) {

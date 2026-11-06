@@ -1,10 +1,4 @@
-/*
- * NOVA Sneakers - Carrito, cuenta y Mis pedidos · Omar
- *
- * Mismo lenguaje visual que el escaparate: fondo oscuro, acentos dorados
- * y nada de tarjetas blancas. Los paneles son gris antracita con un borde
- * muy fino, para que sigan siendo el fondo y no el protagonista.
- */
+/* NOVA Sneakers · Carrito, cuenta y Mis pedidos · Omar */
 
 .cli-pagina {
   max-width: 1240px;
@@ -12,7 +6,7 @@
   padding: 30px 6vw 20px;
 }
 
-/* ===== Aviso de que esto es una demostración ===== */
+/* Aviso de que esto es una demostración */
 
 .cli-caja-aviso {
   display: flex;
@@ -33,7 +27,7 @@
   color: var(--cli-dorado-claro);
 }
 
-/* ===== Panel genérico ===== */
+/* Panel genérico */
 
 .cli-panel {
   padding: 22px;
@@ -42,7 +36,7 @@
   background: var(--cli-panel);
 }
 
-/* ===== Mensaje de lista vacía ===== */
+/* Mensaje de lista vacía */
 
 .cli-vacio {
   padding: 60px 20px;
@@ -56,9 +50,7 @@
   color: var(--cli-texto-suave);
 }
 
-/* ===================================================================
-   CARRITO
-   =================================================================== */
+/* CARRITO */
 
 .cli-carro {
   display: grid;
@@ -173,7 +165,7 @@
   border-color: #7d3328;
 }
 
-/* ===== Resumen del pedido ===== */
+/* Resumen del pedido */
 
 .cli-resumen {
   position: sticky;
@@ -236,9 +228,7 @@
   margin-top: 16px;
 }
 
-/* ===================================================================
-   CUENTA (login y registro) - solo interfaz
-   =================================================================== */
+/* CUENTA (login y registro) - solo interfaz */
 
 .cli-cuenta {
   max-width: 470px;
@@ -357,9 +347,7 @@
   color: var(--cli-dorado-claro);
 }
 
-/* ===================================================================
-   MIS PEDIDOS
-   =================================================================== */
+/* MIS PEDIDOS */
 
 .cli-pedidos {
   display: flex;
@@ -421,8 +409,7 @@
   color: var(--cli-texto-suave);
 }
 
-/* Los mismos colores que las etiquetas .adm-estado del administrador: un
-   pedido "enviado" tiene que verse igual en las dos webs del proyecto. */
+/* Mismos colores de estado que el panel de Alvaro */
 .cli-chip-pendiente    { color: var(--cli-pendiente);    border-color: #5d4d1f; }
 .cli-chip-preparacion  { color: var(--cli-preparacion);  border-color: #6a4a22; }
 .cli-chip-enviado      { color: var(--cli-enviado);      border-color: #27416e; }
@@ -483,7 +470,7 @@
   border-top: 1px solid #222228;
 }
 
-/* ===== Latido del botón al añadir al carrito ===== */
+/* Latido del botón al añadir al carrito */
 
 .cli-latido {
   animation: cli-latido .4s ease;
@@ -495,9 +482,7 @@
   100% { scale: 1; }
 }
 
-/* ===================================================================
-   RESPONSIVE
-   =================================================================== */
+/* RESPONSIVE */
 
 /* Cuenta: el título se centra sobre la tarjeta del formulario (que va centrada) */
 @media (min-width: 681px) {
@@ -511,8 +496,7 @@
   }
 }
 
-/* Pantallas medianas: el resumen pasa debajo de la lista para que el
-   nombre de la zapatilla tenga sitio */
+/* Pantallas medianas: el resumen baja debajo de la lista */
 @media (max-width: 1180px) {
   .cli-carro {
     grid-template-columns: 1fr;
@@ -523,8 +507,7 @@
   }
 }
 
-/* Tablet y móvil: la línea del carrito pasa a dos filas: foto + datos
-   arriba, cantidad e importe abajo */
+/* Tablet y movil: la linea del carrito pasa a dos filas */
 @media (max-width: 860px) {
   .cli-carro-linea {
     grid-template-columns: 84px 1fr 104px;

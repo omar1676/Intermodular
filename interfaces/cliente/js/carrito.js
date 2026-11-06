@@ -1,13 +1,4 @@
-/*
- * NOVA Sneakers - Carrito · Omar
- *
- * Permite cambiar cantidades, quitar líneas, vaciar el carrito y crear un
- * pedido de demostración.
- *
- * El carrito guarda solo el SKU y la cantidad. El nombre, el color, la
- * talla y el precio se vuelven a leer del catálogo cada vez que se dibuja,
- * así que no puede haber precios desfasados ni manipulados.
- */
+/* NOVA Sneakers · Carrito (pantalla) · Omar */
 
 // Evita que un doble clic en "Finalizar pedido" cree dos pedidos
 let creandoPedido = false;
@@ -153,7 +144,7 @@ function pintarCarrito() {
     </div>`;
 }
 
-/* ===== Acciones ===== */
+/* Acciones */
 
 // Quita una línea con una pequeña animación de salida
 function quitarLinea(sku) {
@@ -184,8 +175,7 @@ function vaciarCarrito() {
 }
 
 function finalizarPedido() {
-  // Protección contra el doble clic: si ya estamos creando uno, no se
-  // crea otro. El botón además se desactiva en el acto.
+  // Protección contra el doble clic: si ya estamos creando uno, no se crea otro.
   if (creandoPedido) {
     return;
   }

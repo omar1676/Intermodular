@@ -1,10 +1,4 @@
-/*
- * NOVA Sneakers - Mis pedidos · Omar
- *
- * Lista los pedidos de ejemplo y los que se hayan creado en esta
- * demostración. Cada pedido dice de dónde sale, para que no haya ninguna
- * duda de que nada de esto viene de una base de datos.
- */
+/* NOVA Sneakers · Mis pedidos (pantalla) · Omar */
 
 function lineaPedidoHtml(linea) {
   const encontrado = buscarSku(linea.sku);
@@ -90,8 +84,7 @@ function pintarPedidos() {
   const parametros = new URLSearchParams(window.location.search);
   const nueva = parametros.get("nuevo");
 
-  // Aviso de pedido recién creado. Se oculta siempre primero para que
-  // volver a dibujar deje la pantalla en el mismo estado que al cargarla.
+  // Aviso de pedido recién creado.
   const aviso = document.getElementById("cli-aviso-nuevo");
   aviso.hidden = true;
 

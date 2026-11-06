@@ -1,18 +1,6 @@
-/*
- * NOVA Sneakers - Escaparate · Omar
- *
- * Pide el catálogo a la capa API y llena el muro.
- *
- * El escaparate enseña COLORES, no modelos: cada variante ocupa su propia
- * repisa, igual que en una pared de tienda, donde el mismo modelo aparece
- * varias veces en acabados distintos. Seis modelos con dos colores cada
- * uno dan doce piezas, que es lo que llena el muro.
- *
- * Al pulsar una pieza se abre el detalle con ese color ya elegido.
- */
+/* NOVA Sneakers · Escaparate (pantalla) · Omar */
 
-// Devuelve una lista plana de { modelo, variante, indice } a partir de la
-// jerarquía modelos -> variantes
+// Aplana modelos -> variantes en una lista de piezas
 function piezasDelCatalogo(modelos) {
   const piezas = [];
 
@@ -25,8 +13,7 @@ function piezasDelCatalogo(modelos) {
   return piezas;
 }
 
-// Dibuja en SVG la zapatilla de un color. Se usa cuando ese color no
-// tiene foto, y también como repuesto si la foto no llega a cargar.
+// Dibuja en SVG la zapatilla de un color.
 function dibujoPorVariante(idVariante) {
   for (const modelo of CATALOGO_DEMO) {
     for (const variante of modelo.variantes) {
@@ -52,8 +39,7 @@ function piezaHtml(pieza, posicion) {
   const modelo = pieza.modelo;
   const variante = pieza.variante;
 
-  // Si el color tiene foto en la tabla FOTOS, manda la foto. Si no, se
-  // dibuja. data-respaldo deja apuntado qué dibujar si la foto falla.
+  // Si el color tiene foto en la tabla FOTOS, manda la foto.
   const foto = fotoVariante(variante);
 
   const imagen = foto
@@ -68,9 +54,7 @@ function piezaHtml(pieza, posicion) {
     ? '<span class="cli-pieza-agotado">Agotado</span>'
     : `<span class="cli-pieza-precio">${formatearPrecio(precioFinal(modelo, variante))}</span>`;
 
-  // Rótulo discreto: nombre a la izquierda, precio a la derecha, y el
-  // color debajo. Pequeño a propósito, para que no compita con la
-  // zapatilla, que es lo que hay que mirar.
+  // Rótulo discreto: nombre a la izquierda, precio a la derecha, y el color debajo.
   const rotulo = `
       <span class="cli-pieza-rotulo">
         <span class="cli-pieza-nombre">${textoSeguro(modelo.nombre)}</span>

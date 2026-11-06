@@ -1,10 +1,4 @@
-/*
- * NOVA Sneakers - Vista de detalle de una zapatilla · Omar
- *
- * Al elegir una zapatilla se muestra mucho más grande, sobre la misma
- * repisa iluminada del escaparate, con el nombre, el precio, las tallas
- * y la descripción al lado. Volver al catálogo está siempre a un clic.
- */
+/* NOVA Sneakers · Detalle de la zapatilla · Omar */
 
 .cli-detalle {
   display: grid;
@@ -16,7 +10,7 @@
   padding: 26px 6vw 40px;
 }
 
-/* ===== Lado izquierdo: la zapatilla en grande ===== */
+/* Lado izquierdo: la zapatilla en grande */
 
 .cli-escena {
   position: relative;
@@ -46,8 +40,7 @@
   content: "";
   position: absolute;
   z-index: 1;
-  /* Un tubo de luz encendido debajo de la zapatilla, como en la
-     referencia: núcleo casi blanco y halo cálido alrededor. */
+  /* Tubo de luz debajo de la zapatilla */
   left: 6%;
   right: 6%;
   bottom: 0;
@@ -79,7 +72,7 @@
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ===== Lado derecho: la información ===== */
+/* Lado derecho: la información */
 
 .cli-ficha h1 {
   margin: 14px 0 0;
@@ -116,7 +109,7 @@
   color: var(--cli-texto-suave);
 }
 
-/* ===== Colores ===== */
+/* Colores */
 
 .cli-colores {
   display: flex;
@@ -159,7 +152,7 @@
   flex-shrink: 0;
 }
 
-/* ===== Tallas ===== */
+/* Tallas */
 
 .cli-tallas {
   display: grid;
@@ -208,7 +201,7 @@
   min-height: 19px;
 }
 
-/* ===== Cantidad ===== */
+/* Cantidad */
 
 .cli-cantidad {
   display: inline-flex;
@@ -247,7 +240,7 @@
   font-weight: 600;
 }
 
-/* ===== Acciones ===== */
+/* Acciones */
 
 .cli-acciones {
   display: flex;
@@ -264,13 +257,13 @@
   color: var(--cli-texto-suave);
 }
 
-/* ===== Barra superior de la ficha ===== */
+/* Barra superior de la ficha */
 
 .cli-volver-barra {
   padding: 22px 6vw 0;
 }
 
-/* ===== Móvil y tablet ===== */
+/* Móvil y tablet */
 
 @media (max-width: 900px) {
   .cli-detalle {
@@ -300,9 +293,7 @@
   }
 }
 
-/* La foto de producto del detalle, cuando el color tiene fotografía.
-   Misma proporción que el dibujo, para que la escena no dé saltos al
-   cambiar de color si unos tienen foto y otros no. */
+/* La foto de producto del detalle, cuando el color tiene fotografía. */
 .cli-escena img.zap {
   display: block;
   width: 100%;
