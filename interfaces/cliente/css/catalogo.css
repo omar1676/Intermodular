@@ -1,0 +1,110 @@
+/* NOVA Sneakers · Catálogo · Omar */
+
+/* El catálogo no es el escaparate. Allí las zapatillas están expuestas
+   sobre repisas iluminadas, de una en una; aquí lo que se hace es
+   compararlas, así que la pared se apaga, cada zapatilla se pone sobre su
+   propio bloque liso y se ven menos y más grandes.
+
+   Reutiliza todo lo de escaparate.css: la pieza, la animación de entrada,
+   el rótulo. Esta hoja solo cambia lo que tiene que ser distinto, y lo
+   hace detrás de .cli-muro-catalogo para no tocar la portada. Por eso las
+   medidas de pantalla también lo llevan: un selector de dos clases gana al
+   de una, y sin repetirlo el catálogo no les haría caso. */
+
+/* Pared lisa, sin la luz de sala del escaparate */
+.cli-muro-catalogo {
+  background: var(--cli-fondo);
+}
+
+.cli-muro-catalogo .cli-intro {
+  max-width: 1360px;
+  padding-bottom: clamp(26px, 2.8vw, 42px);
+  border-bottom: 1px solid var(--cli-borde);
+  margin-bottom: clamp(30px, 3.4vw, 52px);
+}
+
+.cli-muro-catalogo .cli-intro h1 {
+  font-size: clamp(20px, 2.4vw, 30px);
+  letter-spacing: -.2px;
+}
+
+.cli-muro-catalogo .cli-intro p {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+/* Tres bloques grandes por fila */
+.cli-muro-catalogo .cli-rejilla {
+  max-width: 1360px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(30px, 3vw, 52px) clamp(22px, 2.4vw, 40px);
+}
+
+/* El bloque: un tono por encima de la pared. Sin borde y sin sombra */
+.cli-muro-catalogo .cli-hueco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 4.4vw, 76px) clamp(24px, 3vw, 54px);
+  background: var(--cli-panel);
+  transition: background .3s ease;
+}
+
+.cli-muro-catalogo .cli-pieza:hover .cli-hueco,
+.cli-muro-catalogo .cli-pieza:focus-visible .cli-hueco {
+  background: var(--cli-panel-claro);
+}
+
+/* Aquí el bloque hace de suelo: ni repisa ni resplandor dorado */
+.cli-muro-catalogo .cli-balda,
+.cli-muro-catalogo .cli-hueco::after {
+  display: none;
+}
+
+/* Rótulo debajo del bloque, más legible que el del escaparate */
+.cli-muro-catalogo .cli-pieza-rotulo {
+  margin-top: 16px;
+}
+
+.cli-muro-catalogo .cli-pieza-nombre {
+  font-size: 13px;
+  letter-spacing: 1.1px;
+}
+
+.cli-muro-catalogo .cli-pieza-precio {
+  font-size: 13px;
+  color: var(--cli-texto);
+}
+
+.cli-muro-catalogo .cli-pieza-color,
+.cli-muro-catalogo .cli-pieza-agotado {
+  font-size: 12px;
+}
+
+/* El color agotado se apaga entero, bloque incluido */
+.cli-muro-catalogo .cli-pieza.cli-sin-stock .cli-hueco {
+  background: #343437;
+}
+
+/* Portátil y tablet: dos bloques por fila */
+
+@media (max-width: 1279px) {
+  .cli-muro-catalogo .cli-rejilla {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Móvil: uno solo. Con dos, el bloque se queda sin aire y la zapatilla
+   acaba más pequeña que en la portada, que es justo lo contrario de lo
+   que busca esta página. */
+
+@media (max-width: 620px) {
+  .cli-muro-catalogo .cli-rejilla {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .cli-muro-catalogo .cli-hueco {
+    padding: 34px 26px;
+  }
+}
