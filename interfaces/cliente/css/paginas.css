@@ -405,6 +405,7 @@
 .cli-chip-preparacion  { color: var(--cli-preparacion);  border-color: #6a4a22; }
 .cli-chip-enviado      { color: var(--cli-enviado);      border-color: #27416e; }
 .cli-chip-entregado    { color: var(--cli-entregado);    border-color: #255239; }
+.cli-chip-cancelado    { color: var(--cli-cancelado);    border-color: #6e2a2a; }
 
 .cli-pedido-lineas {
   display: flex;

@@ -180,12 +180,21 @@ ahí: están escritos a mano en `js/pedidos-datos.js`.
 El catálogo ficticio usa la misma jerarquía que el esquema real:
 
 ```
-modelos -> variantes (color) -> producto_sku (talla + sku) -> stock
+modelos -> variantes (color) -> producto_sku (talla + sku) -> existencias
 ```
 
-Los nombres, descripciones y precios coinciden con los del proyecto, y el
-precio se calcula como `precio_base + suplemento_precio`, igual que en SQL,
-porque es un valor derivado que no se almacena.
+Los nombres y los precios de los seis modelos son **exactamente los del
+SQL** (`05_datos_prueba.sql`). Las descripciones no: las de la web amplían
+la frase corta de la base de datos para que el escaparate tenga algo que
+leer. Por ejemplo, el SQL dice «Estilo clasico y minimalista» y la web
+añade a continuación de qué va la zapatilla.
+
+El precio se calcula como `precio_base + suplemento_precio`, igual que en
+SQL, porque es un valor derivado que no se almacena.
+
+Los cinco estados de pedido son los mismos que admite el `CHECK` de la
+tabla `pedidos`: pendiente, en preparación, enviado, entregado y
+cancelado.
 
 El modelo **X-NOVA** queda fuera del escaparate a propósito: es el concepto
 de fabricación a medida y no tiene colores ni tallas de catálogo.

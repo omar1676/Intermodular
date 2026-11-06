@@ -60,5 +60,53 @@ __nodos["cli-aviso-nuevo"].hidden = true;
 pintarPedidos();
 ok("no muestra aviso por una referencia falsa", __nodos["cli-aviso-nuevo"].hidden === true);
 
+
+console.log("\n=== LOS CINCO ESTADOS DEL ESQUEMA SQL ===");
+
+// El CHECK de la tabla pedidos admite exactamente estos cinco
+const ESTADOS_SQL = ["pendiente", "en_preparacion", "enviado", "entregado", "cancelado"];
+
+ok("la web conoce los cinco estados del esquema",
+  ESTADOS_SQL.every(function (estado) { return ESTADOS_PEDIDO[estado] !== undefined; }),
+  Object.keys(ESTADOS_PEDIDO).join(", "));
+
+ok("y ninguno de mas", Object.keys(ESTADOS_PEDIDO).length === 5, Object.keys(ESTADOS_PEDIDO).length);
+
+ok("cada estado tiene su texto y su clase",
+  ESTADOS_SQL.every(function (estado) {
+    return estadoPedido(estado).texto !== "" && estadoPedido(estado).clase.startsWith("cli-chip-");
+  }));
+
+ok("las cinco clases son distintas",
+  new Set(ESTADOS_SQL.map(function (estado) { return estadoPedido(estado).clase; })).size === 5);
+
+ok("cancelado se llama Cancelado", estadoPedido("cancelado").texto === "Cancelado", estadoPedido("cancelado").texto);
+ok("cancelado tiene su chip", estadoPedido("cancelado").clase === "cli-chip-cancelado", estadoPedido("cancelado").clase);
+
+// Un estado que no exista sigue sin romper nada
+ok("un estado desconocido no revienta",
+  estadoPedido("inventado").texto === "inventado" && estadoPedido("inventado").clase === "");
+
+console.log("\n=== UN PEDIDO CANCELADO SE DIBUJA BIEN ===");
+
+// pedidosTodos() reconstruye la lista cada vez, asi que para probar un
+// estado concreto se dibuja una copia del pedido con pedidoHtml.
+const original = pedidosTodos()[0];
+const cancelado = Object.assign({}, original, { estado: "cancelado" });
+const htmlCancelado = pedidoHtml(cancelado, 0, null);
+
+ok("sale la palabra Cancelado", htmlCancelado.includes(">Cancelado<"));
+ok("lleva la clase del chip", htmlCancelado.includes("cli-chip cli-chip-cancelado"));
+ok("el pedido se dibuja entero igual", htmlCancelado.includes(cancelado.referencia));
+ok("sin undefined ni NaN", !/undefined|NaN/.test(htmlCancelado));
+
+// Y el mismo pedido con su estado de verdad no lleva el chip de cancelado
+ok("el original no se ha tocado", original.estado !== "cancelado", original.estado);
+ok("y no sale como cancelado", !pedidoHtml(original, 0, null).includes("cli-chip-cancelado"));
+ok("los otros cuatro estados no se han contagiado",
+  ESTADOS_SQL.slice(0, 4).every(function (estado) {
+    return estadoPedido(estado).clase !== "cli-chip-cancelado";
+  }));
+
 console.log("\n" + (fallos === 0 ? "TODAS LAS PRUEBAS CORRECTAS" : fallos + " PRUEBAS FALLIDAS"));
 process.exit(fallos ? 1 : 0);

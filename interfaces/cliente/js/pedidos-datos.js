@@ -131,7 +131,8 @@ const ESTADOS_PEDIDO = {
   pendiente: { texto: "Pendiente", clase: "cli-chip-pendiente" },
   en_preparacion: { texto: "En preparación", clase: "cli-chip-preparacion" },
   enviado: { texto: "Enviado", clase: "cli-chip-enviado" },
-  entregado: { texto: "Entregado", clase: "cli-chip-entregado" }
+  entregado: { texto: "Entregado", clase: "cli-chip-entregado" },
+  cancelado: { texto: "Cancelado", clase: "cli-chip-cancelado" }
 };
 
 function estadoPedido(estado) {

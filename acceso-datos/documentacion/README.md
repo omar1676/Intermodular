@@ -31,19 +31,32 @@ Las relaciones están implementadas mediante claves primarias y foráneas.
 
 Crear una base de datos vacía en PostgreSQL 17.
 
-Ejecutar estos archivos en el orden indicado:
+**El número del archivo no es el orden de ejecución.** La numeración viene
+de cuándo se escribió cada script, no de cuándo hay que lanzarlo. El orden
+correcto es este, y cada paso depende del anterior:
 
-1. sneaker-factory-esquema.sql
-2. 04_xnova.sql
-3. 02_funciones.sql
-4. 03_triggers.sql
-5. 05_datos_prueba.sql
-6. 07_seguridad.sql
-7. 08_auditoria.sql
+| # | Archivo | Por qué va aquí |
+|---|---|---|
+| 1 | `sneaker-factory-esquema.sql` | Crea las 13 tablas base. Todo lo demás las necesita |
+| 2 | `04_xnova.sql` | Crea `configuraciones_xnova` y añade a `linea_pedido` la columna que la referencia |
+| 3 | `02_funciones.sql` | Las cinco funciones. `realizar_compra_xnova` usa la tabla del paso 2 |
+| 4 | `03_triggers.sql` | Los dos triggers de cálculo. **Necesitan las funciones del paso 3** |
+| 5 | `05_datos_prueba.sql` | Los datos. Al insertarse con los triggers ya puestos, los totales se calculan solos |
+| 6 | `07_seguridad.sql` | Crea los roles y da permisos sobre tablas que ya existen |
+| 7 | `08_auditoria.sql` | Los triggers de auditoría |
+| 8 | `06_consultas.sql` | Solo consulta. Necesita datos, así que va al final |
 
-El archivo 06_consultas.sql contiene las consultas de análisis y se puede ejecutar después de cargar los datos.
+Dos avisos sobre este orden:
 
-Los scripts están disponibles en acceso-datos/sql.
+- **La auditoría se instala después de los datos de prueba, a propósito.**
+  Por eso `log_eventos` arranca vacía: registra lo que pase a partir de ahí,
+  no la carga inicial. Si se quisiera auditar también esa carga, habría que
+  lanzar `08_auditoria.sql` antes que `05_datos_prueba.sql`.
+- **`07_seguridad.sql` no da permisos sobre `configuraciones_xnova`.** Solo
+  reparte permisos de `modelos`, `existencias` y `pedidos`. Queda anotado
+  como pendiente; no se ha tocado el script.
+
+Los scripts están en `acceso-datos/sql`.
 
 ## 4. Datos de demostración
 
