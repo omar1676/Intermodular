@@ -73,6 +73,46 @@ function buscarSku(sku) {
   return null;
 }
 
+/*
+ * Fotografías
+ *
+ * Devuelve la ruta de la foto de un color, o "" si todavía no hay foto y
+ * hay que dibujar el SVG. La tabla FOTOS está en datos-demo.js, que es el
+ * único sitio donde se escriben los nombres de archivo.
+ */
+function fotoVariante(variante) {
+  if (typeof FOTOS === "undefined" || !variante) {
+    return "";
+  }
+
+  const ruta = FOTOS[variante.id_variante];
+
+  return typeof ruta === "string" ? ruta.trim() : "";
+}
+
+/*
+ * Si una foto no carga (nombre mal escrito, archivo que falta), se
+ * sustituye por el dibujo en lugar de dejar el icono de imagen rota.
+ *
+ * El evento "error" de las imágenes no burbujea, así que hay que
+ * escucharlo en fase de captura: ese es el tercer argumento en true.
+ */
+function respaldoDeFotos(contenedor, dibujar) {
+  contenedor.addEventListener("error", function (evento) {
+    const imagen = evento.target;
+
+    if (!imagen || imagen.tagName !== "IMG" || !imagen.dataset.respaldo) {
+      return;
+    }
+
+    const repuesto = dibujar(imagen.dataset.respaldo);
+
+    if (repuesto) {
+      imagen.outerHTML = repuesto;
+    }
+  }, true);
+}
+
 // Navega a otra página con una transición suave de salida
 function navegarCon(destino) {
   // Quien ha pedido menos movimiento no debe esperar la transición

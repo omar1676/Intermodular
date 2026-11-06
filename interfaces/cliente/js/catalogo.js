@@ -25,6 +25,21 @@ function piezasDelCatalogo(modelos) {
   return piezas;
 }
 
+// Dibuja en SVG la zapatilla de un color. Se usa cuando ese color no
+// tiene foto, y también como repuesto si la foto no llega a cargar.
+function dibujoPorVariante(idVariante) {
+  for (const modelo of CATALOGO_DEMO) {
+    for (const variante of modelo.variantes) {
+      if (String(variante.id_variante) === String(idVariante)) {
+        return svgZapatilla(variante.hex, variante.hex2, variante.suela,
+                            modelo.nombre, "v" + variante.id_variante, true);
+      }
+    }
+  }
+
+  return "";
+}
+
 // Un color está agotado cuando ninguna de sus tallas tiene existencias
 function colorSinExistencias(variante) {
   return variante.tallas.every(function (talla) {
@@ -37,15 +52,15 @@ function piezaHtml(pieza, posicion) {
   const modelo = pieza.modelo;
   const variante = pieza.variante;
 
-  // Si algún día hay fotografías con licencia comprobada, se usan antes
-  // que el dibujo SVG. Se admite una foto por color y otra por modelo.
-  const foto = variante.imagen || modelo.imagen;
+  // Si el color tiene foto en la tabla FOTOS, manda la foto. Si no, se
+  // dibuja. data-respaldo deja apuntado qué dibujar si la foto falla.
+  const foto = fotoVariante(variante);
 
   const imagen = foto
     ? `<img class="zap" src="${textoSeguro(foto)}" alt="" aria-hidden="true"
-            loading="lazy" decoding="async">`
-    : svgZapatilla(variante.hex, variante.hex2, variante.suela,
-                   modelo.nombre, "v" + variante.id_variante, true);
+            loading="lazy" decoding="async"
+            data-respaldo="${variante.id_variante}">`
+    : dibujoPorVariante(variante.id_variante);
 
   const agotado = colorSinExistencias(variante);
 
@@ -90,6 +105,9 @@ function pintarEscaparate(modelos) {
 
   contenedor.className = "cli-rejilla";
   contenedor.innerHTML = html;
+
+  // Si alguna foto no carga, se dibuja esa zapatilla en su lugar
+  respaldoDeFotos(contenedor, dibujoPorVariante);
 }
 
 // Un solo escuchador para todo el escaparate
