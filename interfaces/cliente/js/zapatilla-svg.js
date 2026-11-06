@@ -56,7 +56,7 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
     : 'role="img" aria-label="Zapatilla ' + nombre + '"';
 
   return `
-<svg class="zap" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg"
+<svg class="zap" viewBox="4 30 412 200" xmlns="http://www.w3.org/2000/svg"
      ${accesibilidad}>
   <defs>
     <!-- Volumen del cuerpo: iluminado arriba, apagado abajo -->

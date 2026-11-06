@@ -1,18 +1,23 @@
 /*
  * NOVA Sneakers - Escaparate · Omar
  *
- * La portada ES el escaparate: una pared de gris espacial a todo ancho,
- * sin recuadro ni tarjeta, con el título dentro y las zapatillas sobre
- * sus repisas de metacrilato. Al pie, una cornisa dorada que ilumina la
- * pared desde abajo de lado a lado de la pantalla.
+ * Pared de galería: un gris neutro a todo ancho, iluminado por el centro,
+ * y las zapatillas apoyadas en repisas finas de color claro.
  *
- * Criterio: contención. La luz se insinúa, no deslumbra; el dorado
- * aparece solo en la cornisa y en el canto de las repisas. Todo lo demás
- * son grises del sistema. Un escaparate real está iluminado, no
- * encendido como una feria.
+ * IMPORTANTE, porque es el error que cometimos antes: en la referencia la
+ * luz naranja NO está en la web. Es una tira LED que el autor del vídeo
+ * tiene detrás del monitor, en su habitación. La página en sí no tiene
+ * ni un solo acento de color: es gris, blanca y nada más.
+ *
+ * Por eso aquí el escaparate no lleva luz de color. El dorado del
+ * proyecto se queda donde toca, en la marca y en los botones, y la pared
+ * se mantiene neutra para que las zapatillas sean lo único con color.
+ *
+ * El otro rasgo de la referencia es la escala: rótulos diminutos y
+ * zapatillas grandes. La tipografía no compite con el producto.
  */
 
-/* ===== El muro: ocupa el ancho completo, es la portada ===== */
+/* ===== La pared: ocupa el ancho completo, es la portada ===== */
 
 .cli-escaparate {
   padding: 0;
@@ -20,112 +25,53 @@
 
 .cli-muro {
   position: relative;
-  /* El hueco de abajo deja sitio a la cornisa */
-  padding: clamp(30px, 4vw, 54px) clamp(18px, 4vw, 44px) clamp(58px, 5.5vw, 86px);
-  overflow: hidden;
+  padding: clamp(26px, 3vw, 44px) clamp(18px, 4vw, 48px) clamp(50px, 5vw, 78px);
 
-  /* La pared: gris espacial, más abierta arriba por la luz de sala y
-     teñida de dorado abajo por la cornisa */
+  /* Luz de sala: la pared se abre por el centro y cae hacia los bordes */
   background:
-    radial-gradient(ellipse 110% 54% at 50% 114%,
-      rgba(201, 162, 75, .16) 0%,
-      transparent 64%),
-    radial-gradient(ellipse 95% 62% at 50% -4%,
-      #3f4249 0%,
-      transparent 70%),
-    linear-gradient(180deg,
-      #34363c 0%,
-      #2c2e33 46%,
-      #232529 100%);
+    radial-gradient(ellipse 78% 64% at 50% 40%,
+      #3d3d40 0%,
+      #363638 42%,
+      #2c2c2e 100%);
 }
 
-/* El baño de luz que sube de la cornisa y lame la pared */
-.cli-muro::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 260px;
-  pointer-events: none;
-  background: linear-gradient(0deg,
-    rgba(201, 162, 75, .18) 0%,
-    rgba(201, 162, 75, .06) 38%,
-    transparent 100%);
-}
-
-/* La cornisa: una línea de luz al pie del muro, no una barra de neón */
-.cli-muro::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 3px;
-  pointer-events: none;
-  background: linear-gradient(90deg,
-    rgba(201, 162, 75, .2) 0%,
-    rgba(201, 162, 75, .9) 12%,
-    rgba(227, 194, 126, 1) 50%,
-    rgba(201, 162, 75, .9) 88%,
-    rgba(201, 162, 75, .2) 100%);
-  box-shadow: 0 -6px 26px 2px rgba(201, 162, 75, .32);
-}
-
-/* ===== Entradilla, dentro de la portada ===== */
+/* ===== Entradilla: diminuta, como en la referencia ===== */
 
 .cli-intro {
   position: relative;
   z-index: 2;
-  max-width: 1440px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 0 0 clamp(26px, 3vw, 44px);
+  padding: 0 0 clamp(30px, 3.4vw, 52px);
 }
 
 .cli-intro h1 {
   margin: 0;
-  font-size: clamp(24px, 3.2vw, 36px);
-  font-weight: 700;
-  letter-spacing: -.5px;
-  line-height: 1.12;
-}
-
-.cli-intro h1 em {
-  font-style: normal;
-  color: var(--cli-dorado);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: .2px;
+  line-height: 1.4;
+  color: var(--cli-texto);
 }
 
 .cli-intro p {
   max-width: 420px;
-  margin: 10px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
   color: var(--cli-texto-suave);
 }
 
 /* ===== La rejilla ===== */
 
 .cli-rejilla {
-  /* Dos luces para las repisas: la normal y la de la fila de abajo, que
-     está pegada a la cornisa. Se guardan como variables porque cuál es
-     "la fila de abajo" cambia con el número de columnas. */
-  --cli-balda-luz:
-    inset 0 1px 0 rgba(255, 255, 255, .3),
-    0 6px 14px rgba(0, 0, 0, .38);
-  --cli-balda-luz-fuerte:
-    inset 0 1px 0 rgba(246, 232, 200, .5),
-    0 6px 14px rgba(0, 0, 0, .38),
-    0 0 16px rgba(201, 162, 75, .3);
-
   position: relative;
   z-index: 2;
-  max-width: 1440px;
+  max-width: 1500px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: clamp(30px, 3.4vw, 54px) clamp(10px, 1.4vw, 24px);
+  gap: clamp(34px, 3.6vw, 62px) clamp(14px, 2vw, 34px);
 }
 
 /* ===== Cada zapatilla sobre su repisa ===== */
@@ -140,7 +86,7 @@
   background: none;
   color: inherit;
   font: inherit;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
 
   /* Aparición escalonada; el retardo lo pone catalogo.js */
@@ -159,11 +105,11 @@
   to   { opacity: 1; translate: 0 0; }
 }
 
-/* Hueco donde se apoya la zapatilla, justo encima de su repisa */
+/* Hueco donde se apoya la zapatilla. Sin relleno: la zapatilla es la
+   protagonista y ocupa el ancho entero de su hueco. */
 .cli-hueco {
   position: relative;
   display: block;
-  padding: 0 4%;
 }
 
 .cli-pieza .zap {
@@ -175,41 +121,21 @@
   transition: transform .35s ease;
 }
 
-/* La repisa de metacrilato: un canto fino, traslúcido */
+/* La repisa: una pletina clara y fina, más estrecha que la zapatilla */
 .cli-balda {
   position: relative;
   z-index: 1;
   display: block;
-  width: 78%;
-  height: 6px;
-  margin: -12px auto 0;
-  border-radius: 1px 1px 3px 3px;
+  width: 72%;
+  height: 5px;
+  margin: -9px auto 0;
+  border-radius: 1px;
   background: linear-gradient(180deg,
-    rgba(255, 255, 255, .2) 0%,
-    rgba(255, 255, 255, .08) 45%,
-    rgba(0, 0, 0, .26) 100%);
-  box-shadow: var(--cli-balda-luz);
-}
-
-/* Canto frontal, encendido por la cornisa */
-.cli-balda::after {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: -1px;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(201, 162, 75, .7) 30%,
-    rgba(227, 194, 126, .85) 50%,
-    rgba(201, 162, 75, .7) 70%,
-    transparent);
-}
-
-/* Con seis columnas, las piezas 7 a 12 forman la fila de abajo */
-.cli-rejilla > .cli-pieza:nth-child(n + 7) .cli-balda {
-  box-shadow: var(--cli-balda-luz-fuerte);
+    #cfd0d3 0%,
+    #a3a4a8 38%,
+    #76777c 72%,
+    #4e4f53 100%);
+  box-shadow: 0 7px 13px rgba(0, 0, 0, .42);
 }
 
 /* Al pasar por encima, la zapatilla se levanta de la repisa */
@@ -223,46 +149,56 @@
   transform: translateY(-7px);
 }
 
-.cli-pieza:hover .cli-pieza-nombre,
 .cli-pieza:focus-visible .cli-pieza-nombre {
   color: var(--cli-dorado);
 }
 
-/* ===== Rótulo de cada pieza ===== */
+/* ===== Rótulo: pequeño y discreto, debajo de la repisa ===== */
+
+.cli-pieza-rotulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 15px 0 0;
+}
 
 .cli-pieza-nombre {
-  margin: 18px 0 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.3px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .9px;
   text-transform: uppercase;
-  line-height: 1.35;
+  line-height: 1.3;
   color: var(--cli-texto);
   transition: color .2s ease;
 }
 
-.cli-pieza-color {
-  margin: 4px 0 0;
-  font-size: 12px;
+.cli-pieza-precio {
+  flex-shrink: 0;
+  font-size: 10px;
+  letter-spacing: .4px;
   color: var(--cli-texto-suave);
 }
 
-.cli-pieza-precio {
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: var(--cli-texto);
+.cli-pieza-color {
+  display: block;
+  margin: 3px 0 0;
+  font-size: 10px;
+  letter-spacing: .4px;
+  color: var(--cli-texto-suave);
 }
 
 /* Un color entero sin existencias */
 .cli-pieza-agotado {
-  margin: 6px 0 0;
-  font-size: 12px;
-  color: var(--cli-cancelado);
+  flex-shrink: 0;
+  font-size: 10px;
+  letter-spacing: .4px;
+  color: var(--cli-texto-suave);
 }
 
 .cli-pieza.cli-sin-stock .zap,
 .cli-pieza.cli-sin-stock .cli-balda {
-  opacity: .42;
+  opacity: .4;
 }
 
 /* ===== Portátil: cuatro por fila ===== */
@@ -270,15 +206,6 @@
 @media (max-width: 1180px) {
   .cli-rejilla {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  /* Ahora la fila de abajo son las piezas 9 a 12 */
-  .cli-rejilla > .cli-pieza:nth-child(n + 7) .cli-balda {
-    box-shadow: var(--cli-balda-luz);
-  }
-
-  .cli-rejilla > .cli-pieza:nth-child(n + 9) .cli-balda {
-    box-shadow: var(--cli-balda-luz-fuerte);
   }
 }
 
@@ -288,36 +215,18 @@
   .cli-rejilla {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  /* Y ahora las piezas 10 a 12 */
-  .cli-rejilla > .cli-pieza:nth-child(n + 9) .cli-balda {
-    box-shadow: var(--cli-balda-luz);
-  }
-
-  .cli-rejilla > .cli-pieza:nth-child(n + 10) .cli-balda {
-    box-shadow: var(--cli-balda-luz-fuerte);
-  }
 }
 
-/* ===== Móvil: dos por fila ===== */
+/* ===== Móvil: dos por fila, como el teléfono de la referencia ===== */
 
 @media (max-width: 580px) {
   .cli-muro {
-    padding: 26px 5vw 48px;
+    padding: 22px 5vw 42px;
   }
 
   .cli-rejilla {
     grid-template-columns: repeat(2, 1fr);
-    gap: 26px 14px;
-  }
-
-  /* Con dos columnas, la fila de abajo son las dos últimas piezas */
-  .cli-rejilla > .cli-pieza:nth-child(n + 10) .cli-balda {
-    box-shadow: var(--cli-balda-luz);
-  }
-
-  .cli-rejilla > .cli-pieza:nth-child(n + 11) .cli-balda {
-    box-shadow: var(--cli-balda-luz-fuerte);
+    gap: 30px 18px;
   }
 
   /* En pantalla táctil no hay "hover": el dedo pulsa y entra */
