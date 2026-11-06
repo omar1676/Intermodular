@@ -37,8 +37,9 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | Archivo | Para qué sirve |
 |---|---|
 | `css/base.css` | Paleta, cabecera, pie, botones y avisos |
-| `css/escaparate.css` | Pared, repisas y rejilla del catálogo |
+| `css/escaparate.css` | Pared, repisas y rejilla de la portada |
 | `css/producto.css` | Escena del detalle, colores, tallas y cantidad |
+| `css/catalogo.css` | Lo que el catálogo hace distinto del escaparate |
 | `css/paginas.css` | Carrito, cuenta y Mis pedidos |
 | `js/datos-demo.js` | Tabla `FOTOS` y catálogo ficticio: modelos, colores, tallas y stock |
 | `js/zapatilla-svg.js` | Dibujo SVG de la zapatilla |

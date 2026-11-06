@@ -99,5 +99,19 @@ comprobar("sin undefined ni NaN", !/undefined|NaN/.test(html));
 comprobar("existe el escuchador de clics reutilizado",
   typeof activarClicsDePiezas === "function");
 
+
+console.log("\n=== LA PAGINA ESTA BIEN CABLEADA ===");
+
+// Si alguien quita la hoja o la clase, el catalogo se queda con el
+// aspecto del escaparate sin que falle nada. Por eso se comprueba aqui.
+const paginaCatalogo = require("fs").readFileSync(__dirname + "/../catalogo.html", "utf8");
+
+comprobar("catalogo.html carga su propia hoja de estilos",
+  paginaCatalogo.includes("css/catalogo.css"));
+comprobar("y su muro lleva la clase que la activa",
+  paginaCatalogo.includes("cli-muro-catalogo"));
+comprobar("sigue cargando piezas.js, que es lo que dibuja",
+  paginaCatalogo.includes("js/piezas.js"));
+
 console.log("\n" + (fallos === 0 ? "CATÁLOGO CORRECTO" : fallos + " FALLOS"));
 process.exit(fallos ? 1 : 0);
