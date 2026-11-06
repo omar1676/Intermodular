@@ -71,3 +71,22 @@ licencia de la foto sea libre.
 
 No hacen falta las doce para empezar. Con seis, una por modelo, el
 escaparate ya cambia por completo.
+
+## nova-logo.png
+
+El logotipo de la cabecera. **No es un archivo nuevo del proyecto**: es una
+copia reducida del original `interfaces/admin/img/Nova Logo.png`, que hizo
+Álvaro y que está en su rama. El original no se ha tocado.
+
+| | Original | Copia de aquí |
+|---|---|---|
+| Tamaño | 2172 × 724 | 480 × 160 |
+| Peso | 624 KB | 21 KB |
+
+Se redujo manteniendo la proporción 3:1 y la transparencia. El logotipo es
+blanco al cien por cien, así que antes de reducirlo se fijó todo el color a
+blanco: así los bordes no se ensucian de gris al interpolar.
+
+Está duplicado a propósito, para que la web de clientes funcione sola sin
+depender de la carpeta del panel de administración. Cuando se junten las
+ramas habrá que decidir si las dos usan la misma copia.

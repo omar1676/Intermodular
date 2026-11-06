@@ -62,7 +62,10 @@ body.cli.saliendo {
   border-bottom: 1px solid rgba(255, 255, 255, .07);
 }
 
+/* Las reglas de texto son para el texto alternativo, si la imagen no carga */
 .cli-logo {
+  display: flex;
+  align-items: center;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 3px;
@@ -71,8 +74,11 @@ body.cli.saliendo {
   white-space: nowrap;
 }
 
-.cli-logo span {
-  color: var(--cli-dorado);
+/* El logotipo es blanco con fondo transparente: se ve sobre el gris */
+.cli-logo img {
+  display: block;
+  height: 26px;
+  width: auto;
 }
 
 .cli-nav {
@@ -272,9 +278,8 @@ body.cli.saliendo {
     font-size: 13px;
   }
 
-  .cli-logo {
-    font-size: 19px;
-    letter-spacing: 4px;
+  .cli-logo img {
+    height: 30px;
   }
 }
 
