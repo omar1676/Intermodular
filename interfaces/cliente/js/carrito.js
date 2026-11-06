@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Carrito
+ * NOVA Sneakers - Carrito · Omar
  *
  * Permite cambiar cantidades, quitar líneas, vaciar el carrito y crear un
  * pedido de demostración.

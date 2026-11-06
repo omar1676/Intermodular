@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Zapatilla renderizada en SVG
+ * NOVA Sneakers - Zapatilla renderizada en SVG · Omar
  *
  * Dibujo propio hecho para este proyecto: no se usa ninguna marca,
  * logotipo ni fotografía de terceros, así que no hay problema de derechos.

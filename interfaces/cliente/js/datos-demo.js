@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Catálogo de demostración
+ * NOVA Sneakers - Catálogo de demostración · Omar
  *
  * Datos ficticios, inventados para la práctica. Están escritos con la
  * misma jerarquía que usamos en el proyecto:

@@ -1,5 +1,5 @@
 /*
- * NOVA Sneakers - Escaparate
+ * NOVA Sneakers - Escaparate · Omar
  *
  * Pide el catálogo a la capa API y llena el muro.
  *
