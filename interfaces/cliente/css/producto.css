@@ -36,8 +36,8 @@
   pointer-events: none;
   background: radial-gradient(
     ellipse 62% 100% at 50% 100%,
-    rgba(255, 106, 0, .4) 0%,
-    rgba(255, 106, 0, .14) 44%,
+    rgba(201, 162, 75, .4) 0%,
+    rgba(201, 162, 75, .14) 44%,
     transparent 72%
   );
 }
@@ -54,15 +54,15 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--cli-naranja) 16%,
-    var(--cli-naranja-claro) 50%,
-    var(--cli-naranja) 84%,
+    var(--cli-dorado) 16%,
+    var(--cli-dorado-claro) 50%,
+    var(--cli-dorado) 84%,
     transparent
   );
   box-shadow:
-    0 0 16px 4px rgba(255, 106, 0, .7),
-    0 0 52px 16px rgba(255, 106, 0, .36),
-    0 0 110px 36px rgba(255, 106, 0, .18);
+    0 0 16px 4px rgba(201, 162, 75, .7),
+    0 0 52px 16px rgba(201, 162, 75, .36),
+    0 0 110px 36px rgba(201, 162, 75, .18);
 }
 
 .cli-escena .zap {
@@ -93,7 +93,7 @@
   margin: 14px 0 0;
   font-size: 27px;
   font-weight: 600;
-  color: var(--cli-naranja-claro);
+  color: var(--cli-dorado-claro);
 }
 
 .cli-ficha-desc {
@@ -136,7 +136,7 @@
   font: inherit;
   font-size: 14px;
   color: var(--cli-texto-suave);
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
   cursor: pointer;
   transition: border-color .2s ease, color .2s ease;
 }
@@ -148,8 +148,8 @@
 
 .cli-color.cli-activo {
   color: var(--cli-texto);
-  border-color: var(--cli-naranja);
-  box-shadow: 0 0 0 1px var(--cli-naranja), 0 0 18px rgba(255, 106, 0, .25);
+  border-color: var(--cli-dorado);
+  box-shadow: 0 0 0 1px var(--cli-dorado), 0 0 18px rgba(201, 162, 75, .25);
 }
 
 .cli-muestra {
@@ -176,7 +176,7 @@
   font: inherit;
   font-size: 15px;
   color: var(--cli-texto);
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
   cursor: pointer;
   transition: border-color .2s ease, transform .15s ease;
 }
@@ -187,9 +187,9 @@
 }
 
 .cli-talla.cli-activo {
-  color: #19100a;
-  border-color: var(--cli-naranja);
-  background: linear-gradient(180deg, var(--cli-naranja-claro), var(--cli-naranja));
+  color: #141208;
+  border-color: var(--cli-dorado);
+  background: linear-gradient(180deg, var(--cli-dorado-claro), var(--cli-dorado));
   font-weight: 700;
 }
 
@@ -218,7 +218,7 @@
   border: 1px solid var(--cli-borde);
   border-radius: 10px;
   overflow: hidden;
-  background: var(--cli-antracita);
+  background: var(--cli-panel);
 }
 
 .cli-cantidad button {
@@ -233,7 +233,7 @@
 }
 
 .cli-cantidad button:hover:not(:disabled) {
-  background: var(--cli-antracita-claro);
+  background: var(--cli-panel-claro);
 }
 
 .cli-cantidad button:disabled {

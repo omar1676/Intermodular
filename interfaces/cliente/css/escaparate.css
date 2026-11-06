@@ -1,99 +1,92 @@
 /*
  * NOVA Sneakers - Escaparate
  *
- * Reproduce una pared de tienda de zapatillas:
+ * Un muro de tienda: pared oscura, cada zapatilla sobre su repisa de
+ * metacrilato y una luz de cornisa dorada al pie que la ilumina desde
+ * abajo.
  *
- *   - un muro gris cálido con degradado, no negro plano
- *   - cada zapatilla sobre su propia repisa de metacrilato transparente
- *   - una tira LED naranja ancha al pie del muro, que lo baña desde abajo
+ * Criterio: contención. La luz se insinúa, no deslumbra; el acento
+ * dorado aparece solo en la cornisa y en el canto de las repisas. Todo
+ * lo demás son grises del sistema. Un escaparate real está iluminado,
+ * no encendido como una feria.
  *
- * Todo con CSS: degradados, box-shadow, backdrop-filter y transform.
- * Nada de 3D ni librerías.
+ * Mismo lenguaje que el panel de administración: borde de 1 px, radio de
+ * 10 px y la paleta --cli-*, que son los valores de --adm-*.
  */
 
 /* ===== Entradilla ===== */
 
 .cli-intro {
-  max-width: 1500px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 46px clamp(18px, 5vw, 60px) 22px;
+  padding: 44px clamp(18px, 4vw, 42px) 24px;
 }
 
 .cli-intro h1 {
   margin: 0;
-  font-size: clamp(26px, 4.2vw, 42px);
+  font-size: clamp(22px, 3vw, 32px);
   font-weight: 700;
-  letter-spacing: -1px;
-  line-height: 1.06;
+  letter-spacing: -.4px;
+  line-height: 1.15;
 }
 
 .cli-intro h1 em {
   font-style: normal;
-  color: var(--cli-naranja);
+  color: var(--cli-dorado);
 }
 
 .cli-intro p {
-  max-width: 440px;
-  margin: 12px 0 0;
+  max-width: 420px;
+  margin: 10px 0 0;
   font-size: 14px;
   line-height: 1.6;
   color: var(--cli-texto-suave);
 }
 
-/* ===== El muro del escaparate ===== */
+/* ===== El muro ===== */
 
 .cli-escaparate {
-  padding: 0 clamp(10px, 3vw, 40px) 56px;
+  padding: 0 clamp(18px, 4vw, 42px) 60px;
 }
 
 .cli-muro {
   position: relative;
-  max-width: 1500px;
+  max-width: 1440px;
   margin: 0 auto;
-  /* El hueco de abajo deja sitio a la tira LED */
-  padding: clamp(30px, 4vw, 58px) clamp(14px, 3vw, 48px) clamp(74px, 7vw, 104px);
-  border-radius: 20px;
+  /* El hueco de abajo deja sitio a la cornisa */
+  padding: clamp(34px, 4vw, 56px) clamp(16px, 2.6vw, 40px) clamp(52px, 5vw, 72px);
+  border: 1px solid var(--cli-borde);
+  border-radius: 10px;
   overflow: hidden;
 
-  /* La pared: gris cálido, más claro arriba, con el rincón inferior
-     teñido por la luz naranja */
+  /* La pared, apenas más clara que la página */
   background:
-    radial-gradient(ellipse 120% 62% at 50% 118%,
-      rgba(255, 122, 26, .26) 0%,
-      rgba(255, 122, 26, .07) 44%,
-      transparent 70%),
+    radial-gradient(ellipse 110% 56% at 50% 116%,
+      rgba(201, 162, 75, .13) 0%,
+      transparent 66%),
     linear-gradient(180deg,
-      #35353b 0%,
-      #2e2e34 38%,
-      #26262c 68%,
-      #1c1c22 100%);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .07),
-    0 40px 90px rgba(0, 0, 0, .55);
+      #202024 0%,
+      #1b1b1f 48%,
+      #151518 100%);
 }
 
-/* Resplandor que sube del LED y lame la pared */
+/* El baño de luz que sube de la cornisa y lame la pared */
 .cli-muro::before {
   content: "";
   position: absolute;
   z-index: 0;
-  left: -8%;
-  right: -8%;
-  bottom: -40px;
-  height: 340px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 240px;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse 64% 100% at 50% 100%,
-    rgba(255, 128, 30, .34) 0%,
-    rgba(255, 128, 30, .13) 40%,
-    transparent 72%
-  );
-  /* La luz "respira" muy despacio: da sensación de neón encendido */
-  animation: cli-respirar 7s ease-in-out infinite;
+  background: linear-gradient(0deg,
+    rgba(201, 162, 75, .17) 0%,
+    rgba(201, 162, 75, .06) 38%,
+    transparent 100%);
 }
 
-/* La tira LED: una banda ancha y cálida al pie del muro */
+/* La cornisa: una línea de luz al pie del muro, no una barra de neón */
 .cli-muro::after {
   content: "";
   position: absolute;
@@ -101,49 +94,36 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: clamp(34px, 3.6vw, 52px);
+  height: 3px;
   pointer-events: none;
-  background:
-    linear-gradient(90deg,
-      rgba(255, 138, 38, .55) 0%,
-      rgba(255, 138, 38, 1) 12%,
-      rgba(255, 178, 100, 1) 48%,
-      rgba(255, 138, 38, 1) 88%,
-      rgba(255, 138, 38, .55) 100%),
-    linear-gradient(180deg,
-      rgba(255, 150, 50, .25) 0%,
-      rgba(255, 150, 50, 1) 40%);
-  background-blend-mode: multiply;
-  box-shadow:
-    0 -14px 40px 6px rgba(255, 122, 20, .5),
-    0 -40px 100px 24px rgba(255, 110, 10, .26);
+  background: linear-gradient(90deg,
+    rgba(201, 162, 75, .25) 0%,
+    rgba(201, 162, 75, .9) 14%,
+    rgba(227, 194, 126, 1) 50%,
+    rgba(201, 162, 75, .9) 86%,
+    rgba(201, 162, 75, .25) 100%);
+  box-shadow: 0 -6px 24px 2px rgba(201, 162, 75, .3);
 }
 
-@keyframes cli-respirar {
-  0%, 100% { opacity: .84; }
-  50%      { opacity: 1; }
-}
-
-/* ===== La rejilla de zapatillas ===== */
+/* ===== La rejilla ===== */
 
 .cli-rejilla {
   /* Dos luces para las repisas: la normal y la de la fila de abajo, que
-     está pegada al LED. Se guardan como variables porque cuál es "la
-     fila de abajo" cambia con el número de columnas. */
+     está pegada a la cornisa. Se guardan como variables porque cuál es
+     "la fila de abajo" cambia con el número de columnas. */
   --cli-balda-luz:
-    inset 0 1px 0 rgba(255, 255, 255, .75),
-    0 10px 20px rgba(0, 0, 0, .5),
-    0 0 20px rgba(255, 140, 40, .22);
+    inset 0 1px 0 rgba(255, 255, 255, .34),
+    0 6px 14px rgba(0, 0, 0, .45);
   --cli-balda-luz-fuerte:
-    inset 0 1px 0 rgba(255, 235, 215, .85),
-    0 10px 22px rgba(0, 0, 0, .5),
-    0 0 30px rgba(255, 140, 40, .5);
+    inset 0 1px 0 rgba(246, 232, 200, .5),
+    0 6px 14px rgba(0, 0, 0, .45),
+    0 0 16px rgba(201, 162, 75, .28);
 
   position: relative;
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: clamp(26px, 3.4vw, 52px) clamp(8px, 1.4vw, 22px);
+  gap: clamp(30px, 3.4vw, 54px) clamp(10px, 1.4vw, 24px);
 }
 
 /* ===== Cada zapatilla sobre su repisa ===== */
@@ -163,25 +143,25 @@
 
   /* Aparición escalonada; el retardo lo pone catalogo.js */
   opacity: 0;
-  animation: cli-entrar .6s ease forwards;
+  animation: cli-entrar .5s ease forwards;
 
   /* Ojo: la animación de entrada usa la propiedad "translate" y el
      hover usa "transform". Son propiedades distintas a propósito: una
      animación con fill-mode forwards gana al hover en la cascada, así
      que si las dos usaran "transform" la zapatilla no se levantaría. */
-  transition: transform .45s cubic-bezier(.2, .7, .3, 1);
+  transition: transform .35s ease;
 }
 
 @keyframes cli-entrar {
-  from { opacity: 0; translate: 0 26px; }
+  from { opacity: 0; translate: 0 18px; }
   to   { opacity: 1; translate: 0 0; }
 }
 
-/* Hueco donde flota la zapatilla, justo encima de su repisa */
+/* Hueco donde se apoya la zapatilla, justo encima de su repisa */
 .cli-hueco {
   position: relative;
   display: block;
-  padding: 0 2% 10px;
+  padding: 0 4%;
 }
 
 .cli-pieza .zap {
@@ -190,43 +170,39 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: filter .45s ease, transform .45s cubic-bezier(.2, .7, .3, 1);
+  transition: transform .35s ease;
 }
 
-/* La repisa de metacrilato: canto superior brillante, cuerpo traslúcido */
+/* La repisa de metacrilato: un canto fino, traslúcido */
 .cli-balda {
   position: relative;
   z-index: 1;
   display: block;
-  width: 82%;
-  height: 9px;
-  margin: -14px auto 0;
-  border-radius: 2px 2px 4px 4px;
+  width: 78%;
+  height: 6px;
+  margin: -12px auto 0;
+  border-radius: 1px 1px 3px 3px;
   background: linear-gradient(180deg,
-    rgba(255, 255, 255, .5) 0%,
-    rgba(214, 226, 236, .26) 26%,
-    rgba(160, 175, 190, .12) 60%,
+    rgba(255, 255, 255, .17) 0%,
+    rgba(255, 255, 255, .07) 45%,
     rgba(0, 0, 0, .3) 100%);
   box-shadow: var(--cli-balda-luz);
-  backdrop-filter: blur(2px);
 }
 
-/* Canto frontal de la repisa, encendido por el LED de abajo */
+/* Canto frontal, encendido por la cornisa */
 .cli-balda::after {
   content: "";
   position: absolute;
-  left: 6%;
-  right: 6%;
-  bottom: -3px;
-  height: 2px;
-  border-radius: 2px;
+  left: 10%;
+  right: 10%;
+  bottom: -1px;
+  height: 1px;
   background: linear-gradient(90deg,
     transparent,
-    rgba(255, 150, 60, .85) 22%,
-    rgba(255, 190, 120, .95) 50%,
-    rgba(255, 150, 60, .85) 78%,
+    rgba(201, 162, 75, .7) 30%,
+    rgba(227, 194, 126, .85) 50%,
+    rgba(201, 162, 75, .7) 70%,
     transparent);
-  box-shadow: 0 0 12px 2px rgba(255, 130, 30, .5);
 }
 
 /* Con seis columnas, las piezas 7 a 12 forman la fila de abajo */
@@ -237,56 +213,54 @@
 /* Al pasar por encima, la zapatilla se levanta de la repisa */
 .cli-pieza:hover,
 .cli-pieza:focus-visible {
-  transform: translateY(-10px);
   outline: none;
 }
 
 .cli-pieza:hover .zap,
 .cli-pieza:focus-visible .zap {
-  transform: translateY(-8px) scale(1.06);
-  filter: drop-shadow(0 16px 24px rgba(255, 106, 0, .45));
+  transform: translateY(-7px);
 }
 
+.cli-pieza:hover .cli-pieza-nombre,
 .cli-pieza:focus-visible .cli-pieza-nombre {
-  color: var(--cli-naranja-claro);
+  color: var(--cli-dorado);
 }
 
 /* ===== Rótulo de cada pieza ===== */
 
 .cli-pieza-nombre {
-  margin: 16px 0 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.6px;
+  margin: 18px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
   text-transform: uppercase;
-  line-height: 1.3;
+  line-height: 1.35;
+  color: var(--cli-texto);
+  transition: color .2s ease;
 }
 
 .cli-pieza-color {
-  margin: 5px 0 0;
-  font-size: 11px;
-  letter-spacing: .6px;
+  margin: 4px 0 0;
+  font-size: 12px;
   color: var(--cli-texto-suave);
 }
 
 .cli-pieza-precio {
   margin: 6px 0 0;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--cli-naranja-claro);
+  color: var(--cli-texto);
 }
 
 /* Un color entero sin existencias */
 .cli-pieza-agotado {
   margin: 6px 0 0;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--cli-texto-suave);
+  font-size: 12px;
+  color: var(--cli-cancelado);
 }
 
-.cli-pieza.cli-sin-stock .zap {
-  filter: grayscale(.55) brightness(.72);
+.cli-pieza.cli-sin-stock .zap,
+.cli-pieza.cli-sin-stock .cli-balda {
+  opacity: .42;
 }
 
 /* ===== Portátil: cuatro por fila ===== */
@@ -323,25 +297,24 @@
   }
 }
 
-/* ===== Móvil: dos por fila, como en la referencia ===== */
+/* ===== Móvil: dos por fila ===== */
 
 @media (max-width: 580px) {
   .cli-intro {
-    padding: 30px 6vw 16px;
+    padding: 28px 5vw 16px;
   }
 
   .cli-escaparate {
-    padding: 0 10px 40px;
+    padding: 0 5vw 40px;
   }
 
   .cli-muro {
-    padding: 24px 12px 60px;
-    border-radius: 14px;
+    padding: 26px 14px 44px;
   }
 
   .cli-rejilla {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px 10px;
+    gap: 26px 14px;
   }
 
   /* Con dos columnas, la fila de abajo son las dos últimas piezas */
@@ -353,22 +326,12 @@
     box-shadow: var(--cli-balda-luz-fuerte);
   }
 
-  .cli-pieza-nombre {
-    font-size: 11px;
-    letter-spacing: 1.2px;
-  }
-
   /* En pantalla táctil no hay "hover": el dedo pulsa y entra */
-  .cli-pieza:hover {
-    transform: none;
-  }
-
   .cli-pieza:hover .zap {
     transform: none;
-    filter: none;
   }
 
   .cli-pieza:active .zap {
-    transform: scale(.95);
+    transform: scale(.96);
   }
 }

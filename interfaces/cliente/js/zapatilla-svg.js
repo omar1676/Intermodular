@@ -10,7 +10,7 @@
  *   1. sombra proyectada sobre la repisa (desenfocada de verdad)
  *   2. cuerpo con degradado de volumen
  *   3. luz cenital, oclusión en el apoyo y brillo especular en el empeine
- *   4. rebote naranja que sube desde la tira LED del escaparate
+ *   4. rebote cálido que sube desde la tira LED del escaparate
  *   5. mediasuela con brillo superior y canto cálido
  *   6. suela exterior con tacos y reflejo del LED
  *
@@ -86,10 +86,10 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
       <stop offset="1" stop-color="#000000" stop-opacity=".55"/>
     </linearGradient>
 
-    <!-- Rebote naranja que sube desde la tira LED de la repisa -->
+    <!-- Rebote cálido que sube desde la tira LED de la repisa -->
     <linearGradient id="${id("calida")}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ff8a26" stop-opacity="0"/>
-      <stop offset="1" stop-color="#ffab54" stop-opacity=".8"/>
+      <stop offset="0" stop-color="#cfa958" stop-opacity="0"/>
+      <stop offset="1" stop-color="#e3c27e" stop-opacity=".5"/>
     </linearGradient>
 
     <!-- Desenfoque de la sombra proyectada -->
@@ -136,7 +136,7 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
     <!-- Oclusión en el apoyo -->
     <rect x="0" y="110" width="420" height="44" fill="url(#${id("ocluir")})"/>
 
-    <!-- Rebote naranja del LED -->
+    <!-- Rebote cálido del LED -->
     <rect x="0" y="122" width="420" height="30" fill="url(#${id("calida")})"
           opacity=".6"/>
   </g>
@@ -195,6 +195,6 @@ function svgZapatilla(principal, sombra, suela, nombre, clave, decorativa) {
   <!-- Reflejo del LED en el canto de la suela -->
   <path d="M 46 196 L 382 196 C 391 196 399 193 402 186
            L 24 188 C 28 193 36 196 46 196 Z"
-        fill="#ff8a26" opacity=".72"/>
+        fill="#cfa958" opacity=".42"/>
 </svg>`;
 }

@@ -138,7 +138,7 @@ const CATALOGO_DEMO = [
   {
     id_modelo: 6,
     nombre: "NOVA Pulse",
-    descripcion: "Estilo técnico y futurista. Líneas marcadas y acabado brillante: es la que mejor recoge la luz naranja del escaparate.",
+    descripcion: "Estilo técnico y futurista. Líneas marcadas y acabado brillante: es la que mejor recoge la luz cálida del escaparate.",
     precio_base: 114.90,
     activo: true,
     variantes: [
