@@ -10,6 +10,11 @@
   position: relative;
   padding: clamp(26px, 3vw, 44px) clamp(18px, 4vw, 48px) clamp(50px, 5vw, 78px);
 
+  /* El halo de la repisa se sale un 12 % por cada lado de su pieza. Con
+     pocas columnas eso puede asomar por el borde y sacar barra de
+     desplazamiento horizontal. */
+  overflow-x: hidden;
+
   /* Luz de sala: la pared se abre por el centro y cae hacia los bordes */
   background:
     radial-gradient(ellipse 78% 64% at 50% 40%,
@@ -278,41 +283,52 @@
    estas reglas llevan delante .cli-muro-portada para no tocarlo.
 
    Ojo: por eso las medidas de pantalla de más abajo también lo llevan. Un
-   selector de dos clases gana al de una, y sin ellas la portada se
-   quedaría en cuatro columnas también en el móvil. */
+   selector de dos clases gana al de una, y sin repetirlo la portada no
+   haría caso a estas medidas. */
 
 .cli-muro-portada .cli-rejilla {
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(52px, 5.2vw, 92px) clamp(26px, 3.4vw, 58px);
 }
 
-/* Las piezas son casi el doble de grandes, y el rótulo crecería poco */
+/* Las piezas son casi el doble de grandes: el rótulo las acompaña */
 .cli-muro-portada .cli-pieza-nombre,
 .cli-muro-portada .cli-pieza-precio,
 .cli-muro-portada .cli-pieza-color,
 .cli-muro-portada .cli-pieza-agotado {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .cli-muro-portada .cli-pieza-rotulo {
   margin-top: 19px;
 }
 
-@media (max-width: 1180px) {
+/* De cuatro columnas se pasa directamente a dos. Ocho piezas caben
+   enteras en 4x2 y en 2x4; en tres columnas la última fila se quedaría a
+   medias, con dos piezas y un hueco. */
+
+@media (max-width: 980px) {
   .cli-muro-portada .cli-rejilla {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px 32px;
   }
 }
 
-@media (max-width: 860px) {
-  .cli-muro-portada .cli-rejilla {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* Teléfono: siguen siendo dos, con menos hueco entre columnas */
 
 @media (max-width: 580px) {
   .cli-muro-portada .cli-rejilla {
-    grid-template-columns: repeat(2, 1fr);
     gap: 38px 18px;
+  }
+}
+
+/* Muy estrecho: con dos columnas el nombre del modelo ya no cabe en una
+   línea sin encogerlo, y el enunciado dice que la legibilidad manda. Una
+   sola columna. */
+
+@media (max-width: 380px) {
+  .cli-muro-portada .cli-rejilla {
+    grid-template-columns: 1fr;
+    gap: 36px;
   }
 }
