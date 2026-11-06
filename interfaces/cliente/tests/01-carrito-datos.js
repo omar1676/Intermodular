@@ -68,7 +68,11 @@ console.log("\n=== PEDIDOS ===");
 
 __almacen.clear();
 
-ok("hay 2 pedidos de ejemplo", pedidosTodos().length === 2, pedidosTodos().length);
+// Las cuentas salen de PEDIDOS_EJEMPLO, para que no haya que tocarlas al anadir uno
+const EJEMPLOS = PEDIDOS_EJEMPLO.length;
+function refNumero(i) { return "WEB-DEMO-" + String(i).padStart(6, "0"); }
+
+ok("los pedidos de ejemplo se cargan", pedidosTodos().length === EJEMPLOS, pedidosTodos().length + " de " + EJEMPLOS);
 ok("los ejemplos van marcados como ejemplo", pedidosTodos().every(p => p.origen === "ejemplo"));
 ok("todas las referencias llevan WEB-DEMO-", pedidosTodos().every(p => p.referencia.startsWith("WEB-DEMO-")));
 ok("ordenados del mas nuevo al mas viejo", new Date(pedidosTodos()[0].fecha) > new Date(pedidosTodos()[1].fecha));
@@ -79,7 +83,7 @@ ok("total del pedido de ejemplo", Math.abs(pedidoTotal(ej) - 339.97) < 0.001, pe
 ok("unidades del pedido de ejemplo", pedidoUnidades(ej) === 3, pedidoUnidades(ej));
 ok("todos los SKU de los ejemplos existen", pedidosTodos().every(p => p.lineas.every(l => buscarSku(l.sku) !== null)));
 
-ok("siguiente referencia libre", referenciaNueva() === "WEB-DEMO-000003", referenciaNueva());
+ok("siguiente referencia libre", referenciaNueva() === refNumero(EJEMPLOS + 1), referenciaNueva());
 
 // Crear un pedido desde el carrito
 carroVaciar();
@@ -87,20 +91,20 @@ carroAnadir("NOVA-1-42", 2);
 carroAnadir("NOVA-6-40", 1);
 const nuevo = crearPedidoDemo(carroLeer());
 
-ok("crea el pedido", nuevo !== null && nuevo.referencia === "WEB-DEMO-000003", nuevo && nuevo.referencia);
+ok("crea el pedido", nuevo !== null && nuevo.referencia === refNumero(EJEMPLOS + 1), nuevo && nuevo.referencia);
 ok("un carrito de 2 lineas da UN solo pedido", nuevo.lineas.length === 2, nuevo.lineas.length);
 ok("el pedido nace pendiente", nuevo.estado === "pendiente");
 ok("marcado como creado en la demostracion", nuevo.origen === "demostracion");
 ok("el pedido SI guarda el precio unitario", nuevo.lineas.every(l => typeof l.precio_unitario === "number"));
 ok("total del pedido nuevo", Math.abs(pedidoTotal(nuevo) - (2 * 79.99 + 129.99)) < 0.001, pedidoTotal(nuevo).toFixed(2));
-ok("ahora hay 3 pedidos", pedidosTodos().length === 3, pedidosTodos().length);
-ok("la siguiente referencia avanza", referenciaNueva() === "WEB-DEMO-000004", referenciaNueva());
+ok("ahora hay uno mas", pedidosTodos().length === EJEMPLOS + 1, pedidosTodos().length);
+ok("la siguiente referencia avanza", referenciaNueva() === refNumero(EJEMPLOS + 2), referenciaNueva());
 
 ok("un carrito vacio no crea pedido", crearPedidoDemo([]) === null);
 ok("un carrito con SKU inexistente no crea pedido", crearPedidoDemo([{ sku: "NOVA-999-99", cantidad: 1 }]) === null);
 
 pedidosBorrarCreados();
-ok("borrar deja solo los ejemplos", pedidosTodos().length === 2, pedidosTodos().length);
+ok("borrar deja solo los ejemplos", pedidosTodos().length === EJEMPLOS, pedidosTodos().length);
 
 console.log("\n" + (fallos === 0 ? "TODAS LAS PRUEBAS CORRECTAS" : fallos + " PRUEBAS FALLIDAS"));
 process.exit(fallos ? 1 : 0);
