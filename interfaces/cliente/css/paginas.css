@@ -75,7 +75,7 @@
 
 .cli-carro-linea {
   display: grid;
-  grid-template-columns: 108px 1fr auto auto auto;
+  grid-template-columns: 108px 1fr 152px 100px 46px;
   align-items: center;
   gap: 16px;
   padding: 14px 18px 14px 14px;
@@ -496,8 +496,21 @@
    RESPONSIVE
    =================================================================== */
 
-/* Tablet */
-@media (max-width: 1000px) {
+/* Cuenta: el título se centra sobre la tarjeta del formulario (que va centrada) */
+@media (min-width: 681px) {
+  .cli-titulo-centrado {
+    text-align: center;
+  }
+
+  .cli-titulo-centrado p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Pantallas medianas: el resumen pasa debajo de la lista para que el
+   nombre de la zapatilla tenga sitio */
+@media (max-width: 1180px) {
   .cli-carro {
     grid-template-columns: 1fr;
   }
@@ -507,16 +520,11 @@
   }
 }
 
-/* Móvil */
-@media (max-width: 680px) {
-  .cli-pagina {
-    padding: 20px 5vw 10px;
-  }
-
-  /* La línea del carrito pasa a dos filas: foto + datos arriba,
-     cantidad e importe abajo */
+/* Tablet y móvil: la línea del carrito pasa a dos filas: foto + datos
+   arriba, cantidad e importe abajo */
+@media (max-width: 860px) {
   .cli-carro-linea {
-    grid-template-columns: 84px 1fr auto;
+    grid-template-columns: 84px 1fr 104px;
     grid-template-areas:
       "foto info quitar"
       "cant cant importe";
@@ -526,11 +534,18 @@
 
   .cli-carro-foto   { grid-area: foto; }
   .cli-carro-info   { grid-area: info; }
-  .cli-quitar       { grid-area: quitar; }
+  .cli-quitar       { grid-area: quitar; justify-self: end; }
   .cli-carro-cant   { grid-area: cant; }
   .cli-carro-importe {
     grid-area: importe;
     align-self: center;
+  }
+}
+
+/* Móvil */
+@media (max-width: 680px) {
+  .cli-pagina {
+    padding: 20px 5vw 10px;
   }
 
   .cli-pedido-linea {
