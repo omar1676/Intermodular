@@ -121,6 +121,15 @@
   transition: transform .35s ease;
 }
 
+/* Las fotografías no vienen todas del mismo tamaño. Con una proporción
+   fija y object-fit todas ocupan el mismo hueco, y alineadas abajo se
+   apoyan en la repisa en vez de flotar a alturas distintas. */
+.cli-pieza img.zap {
+  aspect-ratio: 412 / 200;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
 /* La repisa: una pletina clara y fina, más estrecha que la zapatilla */
 .cli-balda {
   position: relative;

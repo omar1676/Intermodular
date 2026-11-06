@@ -40,14 +40,36 @@ function colorAgotado() {
 
 function pintarZapatilla() {
   const variante = varianteActual();
+  const escena = document.getElementById("cli-escena");
+  const nombre = modeloActual.nombre + " " + variante.color;
+  const foto = fotoVariante(variante);
 
-  // Aquí el SVG sí es la imagen principal, así que lleva su etiqueta
-  document.getElementById("cli-escena").innerHTML = svgZapatilla(
-    variante.hex, variante.hex2, variante.suela,
-    modeloActual.nombre + " " + variante.color,
-    "detalle-" + variante.id_variante,
-    false
-  );
+  // Aquí la zapatilla es la imagen principal de la página, así que
+  // lleva texto alternativo de verdad, no va como decorativa.
+  if (foto) {
+    escena.innerHTML =
+      '<img class="zap" src="' + textoSeguro(foto) + '"' +
+      ' alt="Zapatilla ' + textoSeguro(nombre) + '"' +
+      ' data-respaldo="' + variante.id_variante + '">';
+  } else {
+    escena.innerHTML = dibujoDetalle(variante.id_variante);
+  }
+}
+
+// Dibujo de respaldo del detalle, con su etiqueta accesible
+function dibujoDetalle(idVariante) {
+  for (const variante of modeloActual.variantes) {
+    if (String(variante.id_variante) === String(idVariante)) {
+      return svgZapatilla(
+        variante.hex, variante.hex2, variante.suela,
+        modeloActual.nombre + " " + variante.color,
+        "detalle-" + variante.id_variante,
+        false
+      );
+    }
+  }
+
+  return "";
 }
 
 function pintarPrecio() {
@@ -287,6 +309,10 @@ async function iniciar() {
     }
 
     pintarEstructura();
+
+    // Si la foto no carga, se dibuja la zapatilla en su lugar
+    respaldoDeFotos(document.getElementById("cli-escena"), dibujoDetalle);
+
     pintarZapatilla();
     actualizar();
     activarEventos();

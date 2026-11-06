@@ -39,6 +39,36 @@ function tallasDemo(idVariante, primerSku, agotadas) {
   return tallas;
 }
 
+/*
+ * FOTOGRAFÍAS
+ *
+ * Este es el ÚNICO sitio donde hay que tocar para poner fotos reales.
+ *
+ * Deja el archivo en interfaces/cliente/img/ y escribe aquí su nombre.
+ * Lo que quede en blanco se dibuja en SVG, así que se pueden ir
+ * añadiendo de una en una. Si el nombre está mal escrito o el archivo
+ * no existe, la web lo detecta y dibuja la zapatilla en su lugar: no
+ * aparece nunca el icono de imagen rota.
+ *
+ * Las fotos deberían ir todas de perfil y mirando al mismo lado, con el
+ * fondo recortado (PNG o WebP con transparencia), para que se apoyen
+ * bien sobre la repisa.
+ */
+const FOTOS = {
+  1:  "",   // NOVA Origin · Blanco
+  2:  "",   // NOVA Origin · Negro
+  3:  "",   // NOVA Velocity · Rojo
+  4:  "",   // NOVA Velocity · Azul
+  5:  "",   // NOVA Eclipse · Negro
+  6:  "",   // NOVA Eclipse · Gris
+  7:  "",   // NOVA Archive · Blanco
+  8:  "",   // NOVA Archive · Beige
+  9:  "",   // NOVA Aura · Rosa
+  10: "",   // NOVA Aura · Crema
+  11: "",   // NOVA Pulse · Verde
+  12: ""    // NOVA Pulse · Negro
+};
+
 const CATALOGO_DEMO = [
   {
     id_modelo: 1,
