@@ -53,6 +53,16 @@ function piezaHtml(pieza, posicion) {
     ? '<span class="cli-pieza-agotado">Agotado</span>'
     : `<span class="cli-pieza-precio">${formatearPrecio(precioFinal(modelo, variante))}</span>`;
 
+  // Rótulo discreto: nombre a la izquierda, precio a la derecha, y el
+  // color debajo. Pequeño a propósito, para que no compita con la
+  // zapatilla, que es lo que hay que mirar.
+  const rotulo = `
+      <span class="cli-pieza-rotulo">
+        <span class="cli-pieza-nombre">${textoSeguro(modelo.nombre)}</span>
+        ${pie}
+      </span>
+      <span class="cli-pieza-color">${textoSeguro(variante.color)}</span>`;
+
   // El retardo escalonado hace que las zapatillas aparezcan una tras otra
   const retardo = (posicion * 0.05).toFixed(2);
 
@@ -64,10 +74,7 @@ function piezaHtml(pieza, posicion) {
       <span class="cli-hueco">
         ${imagen}
         <span class="cli-balda" aria-hidden="true"></span>
-      </span>
-      <span class="cli-pieza-nombre">${textoSeguro(modelo.nombre)}</span>
-      <span class="cli-pieza-color">${textoSeguro(variante.color)}</span>
-      ${pie}
+      </span>${rotulo}
     </button>`;
 }
 

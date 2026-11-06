@@ -37,18 +37,18 @@
  * mínimo accesible. Con #a8a9b0 sube a 5,6:1.
  */
 :root {
-  --cli-fondo: #2e3035;
-  --cli-panel: #383b40;
-  --cli-panel-claro: #42454b;
-  --cli-borde: #4a4d54;
+  --cli-fondo: #2f2f31;
+  --cli-panel: #3a3a3d;
+  --cli-panel-claro: #444447;
+  --cli-borde: #4b4b4f;
 
   /* Acento del proyecto: dorado, no naranja. Es el color de marca que ya
      usa el administrador en los estados y en las barras. */
   --cli-dorado: #c9a24b;
   --cli-dorado-claro: #e3c27e;
 
-  --cli-texto: #f0f0f2;
-  --cli-texto-suave: #a8a9b0;
+  --cli-texto: #f0f0f1;
+  --cli-texto-suave: #a9a9ad;
 
   /* Estados de pedido: los mismos colores que las etiquetas .adm-estado,
      para que un pedido "enviado" se vea igual en las dos webs. */
@@ -72,10 +72,11 @@ body.cli {
   font-family: var(--cli-fuente);
   color: var(--cli-texto);
   background: var(--cli-fondo);
-  /* Dos resplandores suaves para que el fondo no sea un negro plano */
+  /* La página entera es la pared de la galería: gris neutro iluminado
+     por el centro. Sin tintes de color: el color lo ponen las zapatillas. */
   background-image:
-    radial-gradient(ellipse 80% 55% at 50% 0%, #3b3e44 0%, transparent 72%),
-    radial-gradient(ellipse 70% 45% at 50% 100%, #24262a 0%, transparent 72%);
+    radial-gradient(ellipse 85% 60% at 50% 30%, #3b3b3e 0%, transparent 74%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, #272729 0%, transparent 74%);
   background-attachment: fixed;
 
   /* Transición de entrada y salida entre páginas */
@@ -89,19 +90,22 @@ body.cli.saliendo {
 
 /* ===== Cabecera minimalista ===== */
 
+/* Diminuta a propósito: en una galería el rótulo no compite con lo
+   expuesto. Marca pequeña a la izquierda, navegación pequeña a la
+   derecha, y una línea apenas visible como separación. */
 .cli-cabecera {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 20px 6vw;
-  border-bottom: 1px solid var(--cli-borde);
+  padding: 13px clamp(18px, 4vw, 48px);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
 }
 
 .cli-logo {
-  font-size: 22px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 6px;
+  letter-spacing: 3px;
   text-decoration: none;
   color: var(--cli-texto);
   white-space: nowrap;
@@ -121,9 +125,10 @@ body.cli.saliendo {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 10px 13px;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  letter-spacing: .5px;
   text-decoration: none;
   color: var(--cli-texto-suave);
   transition: color .2s ease, background .2s ease;
@@ -159,14 +164,17 @@ body.cli.saliendo {
 
 /* ===== Aviso académico (obligatorio en toda la web) ===== */
 
+/* Discreto: tiene que leerse, pero no ser lo primero que grita en la
+   página. Gris sobre gris, sin banda de color. */
 .cli-aviso-demo {
   margin: 0;
-  padding: 10px 6vw;
-  font-size: 13px;
+  padding: 7px clamp(18px, 4vw, 48px);
+  font-size: 11px;
+  letter-spacing: .3px;
   text-align: center;
-  color: var(--cli-dorado-claro);
-  background: rgba(201, 162, 75, .09);
-  border-bottom: 1px solid rgba(201, 162, 75, .25);
+  color: var(--cli-texto-suave);
+  background: rgba(0, 0, 0, .22);
+  border-bottom: 1px solid rgba(255, 255, 255, .05);
 }
 
 /* Etiqueta para marcar cualquier cosa que sea de demostración */
@@ -186,13 +194,14 @@ body.cli.saliendo {
 /* ===== Pie ===== */
 
 .cli-pie {
-  padding: 34px 6vw;
-  margin-top: 70px;
-  font-size: 13px;
-  line-height: 1.6;
+  padding: 24px clamp(18px, 4vw, 48px);
+  margin-top: 0;
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: .3px;
   color: var(--cli-texto-suave);
   text-align: center;
-  border-top: 1px solid var(--cli-borde);
+  border-top: 1px solid rgba(255, 255, 255, .07);
 }
 
 /* ===== Botones ===== */
