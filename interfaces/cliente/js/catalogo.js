@@ -1,13 +1,22 @@
-/* NOVA Sneakers · Escaparate (pantalla) · Omar */
+/* NOVA Sneakers · Catálogo completo (pantalla) · Omar */
 
-// Dibuja el muro entero: las doce piezas del catálogo
-function pintarEscaparate(modelos) {
-  const contenedor = document.getElementById("cli-rejilla");
-  pintarPiezas(contenedor, piezasDelCatalogo(modelos));
+// Las mismas piezas que el escaparate, pero en su propia página
+function pintarCatalogo(modelos) {
+  const contenedor = document.getElementById("cli-rejilla-catalogo");
+  const piezas = piezasDelCatalogo(modelos);
+
+  pintarPiezas(contenedor, piezas);
+
+  // El recuento sale de los datos, para que no se quede desfasado
+  const cuenta = document.getElementById("cli-cuenta-catalogo");
+
+  if (cuenta) {
+    cuenta.textContent = modelos.length + " modelos · " + piezas.length + " acabados";
+  }
 }
 
 async function iniciar() {
-  const contenedor = document.getElementById("cli-rejilla");
+  const contenedor = document.getElementById("cli-rejilla-catalogo");
 
   try {
     const modelos = await API.catalogo();
@@ -17,7 +26,7 @@ async function iniciar() {
       return;
     }
 
-    pintarEscaparate(modelos);
+    pintarCatalogo(modelos);
     activarClicsDePiezas(contenedor);
 
   } catch (error) {

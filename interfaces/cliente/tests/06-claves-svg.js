@@ -9,7 +9,7 @@ require("./entorno.js").cargar([
   "carrito.js",
   "pedidos.js",
   "piezas.js",
-  "catalogo.js"
+  "escaparate.js"
 ]);
 
 /*

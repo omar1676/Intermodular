@@ -26,6 +26,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | Página | Qué hace |
 |---|---|
 | `index.html` | Escaparate: doce acabados, cada uno sobre su repisa |
+| `catalogo.html` | Catálogo completo: las mismas doce piezas en su propia página |
 | `producto.html` | Detalle: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
 | `cuenta.html` | Entrar y crear cuenta. **Solo interfaz**: valida, pero no autentica |
@@ -45,7 +46,8 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `js/carro.js` | Carrito: añadir, cambiar, quitar, totales y contador |
 | `js/pedidos-datos.js` | Pedidos de ejemplo y creación de pedidos de demostración |
 | `js/piezas.js` | Dibuja las zapatillas del catálogo, para quien las necesite |
-| `js/catalogo.js` | Dibuja el escaparate |
+| `js/escaparate.js` | Dibuja el escaparate |
+| `js/catalogo.js` | Dibuja el catálogo completo |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
 | `js/cuenta.js` | Pestañas y validación de los formularios |
