@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar">
+  <title>NOVA Sneakers · Escaparate</title>
+  <meta name="description" content="Escaparate de zapatillas NOVA Sneakers. Omar.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/escaparate.css">
+</head>
+
+<body class="cli">
+
+  <p class="cli-aviso-demo">
+    Tienda de demostración: no se realizan
+    pagos ni envíos reales
+  </p>
+
+  <header class="cli-cabecera">
+    <a class="cli-logo" href="index.html">
+      <img src="img/nova-logo.png" alt="NOVA Sneakers" width="480" height="160">
+    </a>
+    <nav class="cli-nav" aria-label="Navegación principal">
+      <a href="index.html" aria-current="page">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="carrito.html">Carrito <span class="cli-globo" data-contador-carro>0</span></a>
+      <a href="pedidos.html">Mis pedidos</a>
+      <a href="cuenta.html">Cuenta</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="cli-escaparate" aria-label="Modelos destacados">
+      <div class="cli-muro">
+
+        <div class="cli-intro">
+          <h1>Una perspectiva distinta.</h1>
+          <p>Un acabado de cada modelo. Fabricados en Madrid.</p>
+        </div>
+
+        <div id="cli-rejilla" class="cli-estado">Cargando el catálogo…</div>
+
+        <p class="cli-mas">
+          <a class="cli-boton-sec" id="cli-ir-catalogo" href="catalogo.html">Ver el catálogo completo</a>
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cli-pie">
+    NOVA Sneakers · Sneaker Factory · Omar<br>
+    Las ilustraciones de las zapatillas son dibujos propios hechos para este
+    proyecto: no se utiliza ninguna marca ni fotografía de terceros.
+  </footer>
+
+  <script src="js/datos-demo.js"></script>
+  <script src="js/zapatilla-svg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/carro.js"></script>
+  <script src="js/piezas.js"></script>
+  <script src="js/escaparate.js"></script>
+
+</body>
+
+</html>

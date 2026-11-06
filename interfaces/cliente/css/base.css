@@ -1,0 +1,303 @@
+/* NOVA Sneakers · Estilos comunes · Omar */
+
+/* Paleta del proyecto. */
+:root {
+  --cli-fondo: #2f2f31;
+  --cli-panel: #3a3a3d;
+  --cli-panel-claro: #444447;
+  --cli-borde: #4b4b4f;
+
+  /* Acento del proyecto: dorado, no naranja. */
+  --cli-dorado: #c9a24b;
+  --cli-dorado-claro: #e3c27e;
+
+  --cli-texto: #f0f0f1;
+  --cli-texto-suave: #a9a9ad;
+
+  /* Estados de pedido: los mismos colores que el panel de Alvaro */
+  --cli-pendiente: #c9a24b;
+  --cli-preparacion: #e0a458;
+  --cli-enviado: #6aa3ff;
+  --cli-entregado: #5fc58a;
+
+  /* Misma tipografía que el administrador */
+  --cli-fuente: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.cli {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--cli-fuente);
+  color: var(--cli-texto);
+  background: var(--cli-fondo);
+  /* La página entera es la pared de la galería: gris neutro iluminado por el centro. */
+  background-image:
+    radial-gradient(ellipse 85% 60% at 50% 30%, #3b3b3e 0%, transparent 74%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, #272729 0%, transparent 74%);
+  background-attachment: fixed;
+
+  /* Transición de entrada y salida entre páginas */
+  opacity: 1;
+  transition: opacity .26s ease;
+}
+
+body.cli.saliendo {
+  opacity: 0;
+}
+
+/* Cabecera minimalista */
+
+/* Diminuta a propósito: en una galería el rótulo no compite con lo expuesto. */
+.cli-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px clamp(18px, 4vw, 48px);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+
+/* Las reglas de texto son para el texto alternativo, si la imagen no carga */
+.cli-logo {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-decoration: none;
+  color: var(--cli-texto);
+  white-space: nowrap;
+}
+
+/* El logotipo es blanco con fondo transparente: se ve sobre el gris */
+.cli-logo img {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+
+.cli-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cli-nav a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  letter-spacing: .5px;
+  text-decoration: none;
+  color: var(--cli-texto-suave);
+  transition: color .2s ease, background .2s ease;
+}
+
+.cli-nav a:hover,
+.cli-nav a:focus-visible {
+  color: var(--cli-texto);
+  background: var(--cli-panel-claro);
+}
+
+.cli-nav a[aria-current="page"] {
+  color: var(--cli-texto);
+}
+
+/* Contador de unidades del carrito */
+.cli-globo {
+  display: none;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  color: #141208;
+  background: var(--cli-dorado);
+}
+
+/* carro.js le pone la clase cuando hay algo dentro */
+.cli-globo.cli-visible {
+  display: inline-block;
+}
+
+/* Aviso académico (obligatorio en toda la web) */
+
+/* Discreto: tiene que leerse, pero no ser lo primero que grita en la página. */
+.cli-aviso-demo {
+  margin: 0;
+  padding: 7px clamp(18px, 4vw, 48px);
+  font-size: 11px;
+  letter-spacing: .3px;
+  text-align: center;
+  color: var(--cli-texto-suave);
+  background: rgba(0, 0, 0, .22);
+  border-bottom: 1px solid rgba(255, 255, 255, .05);
+}
+
+/* Etiqueta para marcar cualquier cosa que sea de demostración */
+.cli-etiqueta-demo {
+  display: inline-block;
+  padding: 4px 9px;
+  border: 1px solid rgba(201, 162, 75, .45);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--cli-dorado-claro);
+  background: rgba(201, 162, 75, .1);
+}
+
+/* Pie */
+
+.cli-pie {
+  padding: 24px clamp(18px, 4vw, 48px);
+  margin-top: 0;
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: .3px;
+  color: var(--cli-texto-suave);
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, .07);
+}
+
+/* Botones */
+
+.cli-boton {
+  display: inline-block;
+  padding: 15px 26px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  color: #141208;
+  background: linear-gradient(180deg, var(--cli-dorado-claro), var(--cli-dorado));
+  cursor: pointer;
+  /* Altura mínima cómoda para el dedo en móvil */
+  min-height: 48px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cli-boton:hover:not(:disabled),
+.cli-boton:focus-visible:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(201, 162, 75, .35);
+}
+
+.cli-boton:disabled {
+  color: var(--cli-texto-suave);
+  background: var(--cli-panel-claro);
+  border: 1px solid var(--cli-borde);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cli-boton-sec {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 13px 20px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--cli-texto-suave);
+  background: transparent;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.cli-boton-sec:hover,
+.cli-boton-sec:focus-visible {
+  color: var(--cli-texto);
+  border-color: var(--cli-texto-suave);
+}
+
+.cli-boton-peligro:hover,
+.cli-boton-peligro:focus-visible {
+  color: #e66a6a;
+  border-color: #7d3328;
+}
+
+/* Mensajes de carga y error */
+
+.cli-estado {
+  padding: 70px 6vw;
+  text-align: center;
+  color: var(--cli-texto-suave);
+}
+
+/* Títulos de página */
+
+.cli-titulo-pagina {
+  padding: 46px 6vw 0;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.cli-titulo-pagina h1 {
+  margin: 0;
+  font-size: clamp(27px, 4.6vw, 42px);
+  letter-spacing: -1px;
+}
+
+.cli-titulo-pagina p {
+  margin: 12px 0 0;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cli-texto-suave);
+}
+
+/* Móvil */
+
+@media (max-width: 680px) {
+  .cli-cabecera {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 5vw;
+  }
+
+  .cli-nav {
+    justify-content: center;
+  }
+
+  .cli-nav a {
+    padding: 10px 11px;
+    font-size: 13px;
+  }
+
+  .cli-logo img {
+    height: 30px;
+  }
+}
+
+/* Quien prefiera menos movimiento, no lo tiene */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Empiezan invisibles: sin animacion hay que devolverles la opacidad */
+  .cli-pieza,
+  .cli-fila-pedido {
+    opacity: 1 !important;
+  }
+}
+
+/* El atributo hidden de HTML debe ganar a cualquier display que pongamos en nuestras clases. */
+[hidden] {
+  display: none !important;
+}

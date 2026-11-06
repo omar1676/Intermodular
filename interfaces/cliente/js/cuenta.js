@@ -1,0 +1,203 @@
+/* NOVA Sneakers · Cuenta (pantalla) · Omar */
+
+// Comprobación de correo sencilla: algo, arroba, algo, punto, algo
+const PATRON_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+/* Pestañas */
+
+function cambiarPestana(cual) {
+  const pestanas = document.querySelectorAll(".cli-pestana");
+  const formularios = document.querySelectorAll(".cli-formulario");
+
+  pestanas.forEach(function (pestana) {
+    const activa = pestana.dataset.pestana === cual;
+    pestana.classList.toggle("cli-activo", activa);
+    pestana.setAttribute("aria-selected", activa);
+  });
+
+  formularios.forEach(function (formulario) {
+    formulario.hidden = formulario.dataset.formulario !== cual;
+  });
+
+  // Al cambiar de pestaña se limpia el mensaje anterior
+  document.getElementById("cli-resultado").innerHTML = "";
+
+  // Limpia los errores del formulario anterior
+  document.querySelectorAll(".cli-error").forEach(function (hueco) {
+    hueco.textContent = "";
+  });
+
+  document.querySelectorAll(".cli-campo input").forEach(function (campo) {
+    campo.removeAttribute("aria-invalid");
+  });
+}
+
+/* Validación */
+
+// Escribe (o borra) el mensaje de error de un campo
+function marcarError(campo, mensaje) {
+  const hueco = document.getElementById("error-" + campo.id);
+
+  if (hueco) {
+    hueco.textContent = mensaje || "";
+  }
+
+  if (mensaje) {
+    campo.setAttribute("aria-invalid", "true");
+  } else {
+    campo.removeAttribute("aria-invalid");
+  }
+
+  return !mensaje;
+}
+
+function validarEntrar() {
+  const email = document.getElementById("entrar-email");
+  const clave = document.getElementById("entrar-clave");
+
+  let correcto = true;
+
+  if (email.value.trim() === "") {
+    correcto = marcarError(email, "Escribe tu correo.") && correcto;
+  } else if (!PATRON_EMAIL.test(email.value.trim())) {
+    correcto = marcarError(email, "Este correo no tiene un formato válido.") && correcto;
+  } else {
+    marcarError(email, "");
+  }
+
+  if (clave.value === "") {
+    correcto = marcarError(clave, "Escribe tu contraseña.") && correcto;
+  } else {
+    marcarError(clave, "");
+  }
+
+  return correcto;
+}
+
+function validarRegistro() {
+  const nombre = document.getElementById("alta-nombre");
+  const email = document.getElementById("alta-email");
+  const clave = document.getElementById("alta-clave");
+  const repetir = document.getElementById("alta-repetir");
+
+  let correcto = true;
+
+  if (nombre.value.trim().length < 2) {
+    correcto = marcarError(nombre, "Escribe tu nombre completo.") && correcto;
+  } else {
+    marcarError(nombre, "");
+  }
+
+  if (!PATRON_EMAIL.test(email.value.trim())) {
+    correcto = marcarError(email, "Este correo no tiene un formato válido.") && correcto;
+  } else {
+    marcarError(email, "");
+  }
+
+  // Mínimo ocho caracteres, con al menos una letra y un número
+  const tieneLetra = /[a-zA-ZáéíóúñÁÉÍÓÚÑ]/.test(clave.value);
+  const tieneNumero = /[0-9]/.test(clave.value);
+
+  if (clave.value.length < 8) {
+    correcto = marcarError(clave, "La contraseña necesita ocho caracteres como mínimo.") && correcto;
+  } else if (!tieneLetra || !tieneNumero) {
+    correcto = marcarError(clave, "Mezcla al menos una letra y un número.") && correcto;
+  } else {
+    marcarError(clave, "");
+  }
+
+  if (repetir.value !== clave.value) {
+    correcto = marcarError(repetir, "Las dos contraseñas no coinciden.") && correcto;
+  } else {
+    marcarError(repetir, "");
+  }
+
+  return correcto;
+}
+
+/* Envío (que no envía nada) */
+
+function vaciarClaves(formulario) {
+  formulario.querySelectorAll('input[type="password"]').forEach(function (campo) {
+    campo.value = "";
+  });
+}
+
+function mensajeDemo(titulo, detalle) {
+  document.getElementById("cli-resultado").innerHTML =
+    "<strong>" + titulo + "</strong><br>" + detalle;
+}
+
+function activarPestanas() {
+  document.querySelector(".cli-pestanas").addEventListener("click", function (evento) {
+    const pestana = evento.target.closest(".cli-pestana");
+
+    if (pestana) {
+      cambiarPestana(pestana.dataset.pestana);
+    }
+  });
+}
+
+function activarEntrar() {
+  const formulario = document.getElementById("cli-form-entrar");
+
+  formulario.addEventListener("submit", function (evento) {
+    // Nada sale de esta página
+    evento.preventDefault();
+
+    if (!validarEntrar()) {
+      return;
+    }
+
+    const email = document.getElementById("entrar-email").value.trim();
+
+    mensajeDemo(
+      "Pantalla de demostración: no se ha iniciado ninguna sesión.",
+      "Los datos escritos para " + textoSeguro(email) + " se han validado " +
+      "en el navegador y se han descartado. Esta web no tiene servidor, " +
+      "no comprueba contraseñas y no guarda ninguna cuenta."
+    );
+
+    vaciarClaves(formulario);
+  });
+}
+
+function activarAlta() {
+  const formulario = document.getElementById("cli-form-alta");
+
+  formulario.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    if (!validarRegistro()) {
+      return;
+    }
+
+    const nombre = document.getElementById("alta-nombre").value.trim();
+
+    mensajeDemo(
+      "Pantalla de demostración: no se ha creado ninguna cuenta.",
+      "El formulario de " + textoSeguro(nombre) + " cumple todas las " +
+      "validaciones, pero no se envía a ningún sitio y la contraseña no " +
+      "se guarda en ninguna parte."
+    );
+
+    vaciarClaves(formulario);
+  });
+}
+
+// Al reescribir un campo marcado en rojo, se le quita el error
+function activarLimpiezaDeErrores() {
+  document.querySelectorAll(".cli-campo input").forEach(function (campo) {
+    campo.addEventListener("input", function () {
+      if (campo.hasAttribute("aria-invalid")) {
+        marcarError(campo, "");
+      }
+    });
+  });
+}
+
+cambiarPestana("entrar");
+activarPestanas();
+activarEntrar();
+activarAlta();
+activarLimpiezaDeErrores();
