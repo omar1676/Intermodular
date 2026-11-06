@@ -266,13 +266,25 @@ async function iniciar() {
   const idModelo = Number(parametros.get("modelo"));
 
   if (!Number.isInteger(idModelo) || idModelo <= 0) {
-    detalle.innerHTML = "No se ha indicado ninguna zapatilla. " +
+    const sinParametro = parametros.get("modelo") === null;
+    detalle.innerHTML = (sinParametro
+      ? "No se ha indicado ninguna zapatilla. "
+      : "La zapatilla indicada no es válida. ") +
       '<a href="index.html">Volver al escaparate</a>.';
     return;
   }
 
   try {
     modeloActual = await API.modelo(idModelo);
+
+    // El escaparate enseña cada color por separado, así que puede pedir
+    // que el detalle se abra ya con ese color elegido
+    const color = Number(parametros.get("color"));
+
+    if (Number.isInteger(color) && color >= 0 &&
+        color < modeloActual.variantes.length) {
+      indiceVariante = color;
+    }
 
     pintarEstructura();
     pintarZapatilla();

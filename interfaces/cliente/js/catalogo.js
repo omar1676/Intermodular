@@ -1,79 +1,93 @@
 /*
  * NOVA Sneakers - Escaparate
  *
- * Pide el catálogo a la capa API y lo coloca en filas de tres, que es lo
- * que forma las dos repisas iluminadas del escritorio. En móvil el CSS se
- * encarga de pasar a una columna.
+ * Pide el catálogo a la capa API y llena el muro.
+ *
+ * El escaparate enseña COLORES, no modelos: cada variante ocupa su propia
+ * repisa, igual que en una pared de tienda, donde el mismo modelo aparece
+ * varias veces en acabados distintos. Seis modelos con dos colores cada
+ * uno dan doce piezas, que es lo que llena el muro.
+ *
+ * Al pulsar una pieza se abre el detalle con ese color ya elegido.
  */
 
-const ZAPATILLAS_POR_FILA = 3;
+// Devuelve una lista plana de { modelo, variante, indice } a partir de la
+// jerarquía modelos -> variantes
+function piezasDelCatalogo(modelos) {
+  const piezas = [];
 
-// Precio más bajo del modelo, contando el suplemento de cada color
-function precioDesde(modelo) {
-  const precios = modelo.variantes.map(function (variante) {
-    return precioFinal(modelo, variante);
+  modelos.forEach(function (modelo) {
+    modelo.variantes.forEach(function (variante, indice) {
+      piezas.push({ modelo: modelo, variante: variante, indice: indice });
+    });
   });
 
-  return Math.min.apply(null, precios);
+  return piezas;
+}
+
+// Un color está agotado cuando ninguna de sus tallas tiene existencias
+function colorSinExistencias(variante) {
+  return variante.tallas.every(function (talla) {
+    return talla.stock <= 0;
+  });
 }
 
 // Construye el botón de una zapatilla del escaparate
-function piezaHtml(modelo, posicion) {
-  // El primer color es el que se ve en el escaparate
-  const variante = modelo.variantes[0];
+function piezaHtml(pieza, posicion) {
+  const modelo = pieza.modelo;
+  const variante = pieza.variante;
 
   // Si algún día hay fotografías con licencia comprobada, se usan antes
-  // que el dibujo SVG. Mientras no exista modelo.imagen, va el SVG.
-  const imagen = modelo.imagen
-    ? `<img class="zap" src="${textoSeguro(modelo.imagen)}"
-            alt="Zapatilla ${textoSeguro(modelo.nombre)}" loading="lazy">`
-    : svgZapatilla(variante.hex, variante.hex2, variante.suela,
-                   modelo.nombre, "m" + modelo.id_modelo, true);
+  // que el dibujo SVG. Se admite una foto por color y otra por modelo.
+  const foto = variante.imagen || modelo.imagen;
 
-  const colores = modelo.variantes.length === 1
-    ? "1 color"
-    : modelo.variantes.length + " colores";
+  const imagen = foto
+    ? `<img class="zap" src="${textoSeguro(foto)}" alt="" aria-hidden="true"
+            loading="lazy" decoding="async">`
+    : svgZapatilla(variante.hex, variante.hex2, variante.suela,
+                   modelo.nombre, "v" + variante.id_variante, true);
+
+  const agotado = colorSinExistencias(variante);
+
+  const pie = agotado
+    ? '<span class="cli-pieza-agotado">Agotado</span>'
+    : `<span class="cli-pieza-precio">${formatearPrecio(precioFinal(modelo, variante))}</span>`;
 
   // El retardo escalonado hace que las zapatillas aparezcan una tras otra
-  const retardo = (posicion * 0.07).toFixed(2);
+  const retardo = (posicion * 0.05).toFixed(2);
 
   return `
-    <button class="cli-pieza" type="button"
+    <button class="cli-pieza${agotado ? " cli-sin-stock" : ""}" type="button"
             data-modelo="${modelo.id_modelo}"
+            data-color="${pieza.indice}"
             style="animation-delay: ${retardo}s">
-      ${imagen}
+      <span class="cli-hueco">
+        ${imagen}
+        <span class="cli-balda" aria-hidden="true"></span>
+      </span>
       <span class="cli-pieza-nombre">${textoSeguro(modelo.nombre)}</span>
-      <span class="cli-pieza-precio">Desde ${formatearPrecio(precioDesde(modelo))}</span>
-      <span class="cli-pieza-colores">${colores}</span>
+      <span class="cli-pieza-color">${textoSeguro(variante.color)}</span>
+      ${pie}
     </button>`;
 }
 
-// Reparte los modelos en filas de tres y las dibuja
+// Dibuja el muro entero
 function pintarEscaparate(modelos) {
-  const contenedor = document.getElementById("cli-filas");
+  const contenedor = document.getElementById("cli-rejilla");
+  const piezas = piezasDelCatalogo(modelos);
   let html = "";
-  let posicion = 0;
 
-  for (let i = 0; i < modelos.length; i += ZAPATILLAS_POR_FILA) {
-    const fila = modelos.slice(i, i + ZAPATILLAS_POR_FILA);
+  piezas.forEach(function (pieza, posicion) {
+    html += piezaHtml(pieza, posicion);
+  });
 
-    html += '<div class="cli-fila">';
-
-    fila.forEach(function (modelo) {
-      html += piezaHtml(modelo, posicion);
-      posicion++;
-    });
-
-    html += "</div>";
-  }
-
-  contenedor.className = "";
+  contenedor.className = "cli-rejilla";
   contenedor.innerHTML = html;
 }
 
 // Un solo escuchador para todo el escaparate
 function activarClics() {
-  const contenedor = document.getElementById("cli-filas");
+  const contenedor = document.getElementById("cli-rejilla");
 
   contenedor.addEventListener("click", function (evento) {
     const pieza = evento.target.closest(".cli-pieza");
@@ -82,13 +96,14 @@ function activarClics() {
       return;
     }
 
-    navegarCon("producto.html?modelo=" + pieza.dataset.modelo);
+    navegarCon("producto.html?modelo=" + pieza.dataset.modelo +
+               "&color=" + pieza.dataset.color);
   });
 }
 
 // Arranque
 async function iniciar() {
-  const contenedor = document.getElementById("cli-filas");
+  const contenedor = document.getElementById("cli-rejilla");
 
   try {
     const modelos = await API.catalogo();
