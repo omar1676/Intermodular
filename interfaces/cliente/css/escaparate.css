@@ -272,3 +272,47 @@
   padding: 34px 0 6px;
   text-align: center;
 }
+
+/* La rejilla de la portada: ocho piezas en dos filas de cuatro, con mucho
+   aire entre ellas. El catálogo usa la misma clase .cli-rejilla, así que
+   estas reglas llevan delante .cli-muro-portada para no tocarlo.
+
+   Ojo: por eso las medidas de pantalla de más abajo también lo llevan. Un
+   selector de dos clases gana al de una, y sin ellas la portada se
+   quedaría en cuatro columnas también en el móvil. */
+
+.cli-muro-portada .cli-rejilla {
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(52px, 5.2vw, 92px) clamp(26px, 3.4vw, 58px);
+}
+
+/* Las piezas son casi el doble de grandes, y el rótulo crecería poco */
+.cli-muro-portada .cli-pieza-nombre,
+.cli-muro-portada .cli-pieza-precio,
+.cli-muro-portada .cli-pieza-color,
+.cli-muro-portada .cli-pieza-agotado {
+  font-size: 11px;
+}
+
+.cli-muro-portada .cli-pieza-rotulo {
+  margin-top: 19px;
+}
+
+@media (max-width: 1180px) {
+  .cli-muro-portada .cli-rejilla {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .cli-muro-portada .cli-rejilla {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .cli-muro-portada .cli-rejilla {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 38px 18px;
+  }
+}
