@@ -1,13 +1,14 @@
 /* NOVA Sneakers · Detalle de la zapatilla · Omar */
 
+/* La zapatilla manda: ocupa casi dos tercios del ancho */
 .cli-detalle {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 46px;
+  grid-template-columns: 1.75fr .85fr;
+  gap: clamp(28px, 4vw, 64px);
   align-items: center;
-  max-width: 1240px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 26px 6vw 40px;
+  padding: 10px clamp(18px, 4vw, 48px) 48px;
 }
 
 /* Lado izquierdo: la zapatilla en grande */
@@ -64,22 +65,20 @@
   height: auto;
   filter: drop-shadow(0 34px 28px rgba(0, 0, 0, .7));
   /* Entra creciendo, como si se acercase al cristal */
-  animation: cli-acercar .5s cubic-bezier(.2, .7, .3, 1) both;
+  animation: cli-acercar .55s cubic-bezier(.2, .7, .3, 1) both;
 }
 
 @keyframes cli-acercar {
-  from { opacity: 0; transform: scale(.86) translateY(22px); }
+  from { opacity: 0; transform: scale(.72) translateY(28px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Lado derecho: la información */
-
-.cli-ficha h1 {
-  margin: 14px 0 0;
-  font-size: clamp(28px, 4.4vw, 44px);
-  letter-spacing: -1px;
-  line-height: 1.07;
+/* Al cambiar de color, la zapatilla vuelve a entrar */
+.cli-escena .zap.cli-acercando {
+  animation: cli-acercar .4s cubic-bezier(.2, .7, .3, 1) both;
 }
+
+/* Lado derecho: la información */
 
 .cli-ficha-precio {
   margin: 14px 0 0;
@@ -145,8 +144,9 @@
 }
 
 .cli-muestra {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
+  transition: transform .2s ease;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, .22);
   flex-shrink: 0;
@@ -301,4 +301,37 @@
   aspect-ratio: 412 / 200;
   object-fit: contain;
   object-position: center bottom;
+}
+
+/* Nombre del modelo, grande y arriba a la izquierda */
+.cli-rotulo-modelo {
+  margin: 0 0 4px;
+  padding-left: 2%;
+}
+
+.cli-rotulo-modelo h1 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.cli-rotulo-modelo p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--cli-texto-suave);
+}
+
+/* La muestra crece al señalar: se nota que se puede pulsar */
+.cli-color:hover .cli-muestra,
+.cli-color:focus-visible .cli-muestra {
+  transform: scale(1.14);
+}
+
+.cli-color.cli-activo .cli-muestra {
+  box-shadow: 0 0 0 2px var(--cli-fondo), 0 0 0 4px var(--cli-dorado);
 }

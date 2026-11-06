@@ -45,6 +45,24 @@ function pintarZapatilla() {
   } else {
     escena.innerHTML = dibujoDetalle(variante.id_variante);
   }
+
+  // El nombre del color, debajo del nombre del modelo
+  const rotulo = document.getElementById("cli-rotulo-color");
+
+  if (rotulo) {
+    rotulo.textContent = variante.color;
+  }
+
+  // Reinicia la animación de acercamiento para que al cambiar de color
+  // la zapatilla vuelva a entrar en vez de aparecer de golpe. Leer
+  // offsetWidth fuerza al navegador a recalcular y reiniciarla.
+  const dibujo = escena.querySelector(".zap");
+
+  if (dibujo) {
+    dibujo.classList.remove("cli-acercando");
+    void dibujo.offsetWidth;
+    dibujo.classList.add("cli-acercando");
+  }
 }
 
 // Dibujo de respaldo del detalle, con su etiqueta accesible
@@ -155,10 +173,15 @@ function pintarEstructura() {
 
   detalle.className = "cli-detalle";
   detalle.innerHTML = `
-    <div class="cli-escena" id="cli-escena"></div>
+    <div class="cli-columna-escena">
+      <div class="cli-rotulo-modelo">
+        <h1>${textoSeguro(modeloActual.nombre)}</h1>
+        <p id="cli-rotulo-color"></p>
+      </div>
+      <div class="cli-escena" id="cli-escena"></div>
+    </div>
 
     <div class="cli-ficha">
-      <h1>${textoSeguro(modeloActual.nombre)}</h1>
       <p class="cli-ficha-precio" id="cli-precio"></p>
       <p class="cli-ficha-desc">${textoSeguro(modeloActual.descripcion)}</p>
 
