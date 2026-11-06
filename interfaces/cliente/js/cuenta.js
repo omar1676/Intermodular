@@ -9,14 +9,14 @@ function cambiarPestana(cual) {
   const pestanas = document.querySelectorAll(".cli-pestana");
   const formularios = document.querySelectorAll(".cli-formulario");
 
-  pestanas.forEach(function (p) {
-    const activa = p.dataset.pestana === cual;
-    p.classList.toggle("cli-activo", activa);
-    p.setAttribute("aria-selected", activa);
+  pestanas.forEach(function (pestana) {
+    const activa = pestana.dataset.pestana === cual;
+    pestana.classList.toggle("cli-activo", activa);
+    pestana.setAttribute("aria-selected", activa);
   });
 
-  formularios.forEach(function (f) {
-    f.hidden = f.dataset.formulario !== cual;
+  formularios.forEach(function (formulario) {
+    formulario.hidden = formulario.dataset.formulario !== cual;
   });
 
   // Al cambiar de pestaña se limpia el mensaje anterior

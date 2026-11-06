@@ -3,28 +3,19 @@
 // Evita que un doble clic en "Finalizar pedido" cree dos pedidos
 let creandoPedido = false;
 
-// Miniatura de la zapatilla para una línea del carrito
-function miniatura(modelo, variante, clave) {
-  return svgZapatilla(
-    variante.hex, variante.hex2, variante.suela,
-    modelo.nombre, clave, true
-  );
-}
-
 function lineaHtml(linea) {
   const encontrado = buscarSku(linea.sku);
 
   // El SKU ya no está en el catálogo: lo avisamos en vez de fallar
   if (!encontrado) {
     return `
-      <div class="cli-carro-linea">
+      <div class="cli-carro-linea cli-carro-perdida"
+           data-linea="${textoSeguro(linea.sku)}">
         <div class="cli-carro-foto"></div>
         <div class="cli-carro-info">
           <h3>Referencia no disponible</h3>
           <p>La referencia ${textoSeguro(linea.sku)} ya no está en el catálogo.</p>
         </div>
-        <div></div>
-        <div></div>
         <button class="cli-quitar" type="button" data-quitar="${textoSeguro(linea.sku)}"
                 aria-label="Quitar esta línea">×</button>
       </div>`;
@@ -49,7 +40,8 @@ function lineaHtml(linea) {
     <div class="cli-carro-linea" data-linea="${textoSeguro(linea.sku)}">
 
       <div class="cli-carro-foto">
-        ${miniatura(modelo, variante, "carro-" + variante.id_variante)}
+        ${svgZapatilla(variante.hex, variante.hex2, variante.suela,
+                       modelo.nombre, "carro-" + linea.sku, true)}
       </div>
 
       <div class="cli-carro-info">
@@ -146,6 +138,20 @@ function pintarCarrito() {
 
 /* Acciones */
 
+// Suma o resta una unidad a una línea
+function cambiarUnidades(sku, paso) {
+  const linea = carroLeer().find(function (linea) {
+    return linea.sku === sku;
+  });
+
+  if (!linea) {
+    return;
+  }
+
+  carroCambiarCantidad(sku, linea.cantidad + paso);
+  pintarCarrito();
+}
+
 // Quita una línea con una pequeña animación de salida
 function quitarLinea(sku) {
   const fila = document.querySelector('[data-linea="' + sku + '"]');
@@ -219,18 +225,10 @@ function activarEventos() {
     }
 
     if (boton.dataset.mas) {
-      const linea = carroLeer().find(function (l) { return l.sku === boton.dataset.mas; });
-      if (linea) {
-        carroCambiarCantidad(boton.dataset.mas, linea.cantidad + 1);
-        pintarCarrito();
-      }
+      cambiarUnidades(boton.dataset.mas, 1);
 
     } else if (boton.dataset.menos) {
-      const linea = carroLeer().find(function (l) { return l.sku === boton.dataset.menos; });
-      if (linea) {
-        carroCambiarCantidad(boton.dataset.menos, linea.cantidad - 1);
-        pintarCarrito();
-      }
+      cambiarUnidades(boton.dataset.menos, -1);
 
     } else if (boton.dataset.quitar) {
       quitarLinea(boton.dataset.quitar);

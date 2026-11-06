@@ -3,7 +3,6 @@
 const CARRO_CLAVE = "nova_carrito_demo";
 const CARRO_MAX_POR_LINEA = 5;
 
-// Lee el carrito.
 function carroLeer() {
   try {
     const bruto = localStorage.getItem(CARRO_CLAVE);
@@ -49,7 +48,6 @@ function carroTope(sku) {
   return Math.min(encontrado.talla.stock, CARRO_MAX_POR_LINEA);
 }
 
-// Añade unidades de un SKU.
 function carroAnadir(sku, cantidad) {
   const tope = carroTope(sku);
 
@@ -59,7 +57,7 @@ function carroAnadir(sku, cantidad) {
   }
 
   const lineas = carroLeer();
-  const existente = lineas.find(function (l) { return l.sku === sku; });
+  const existente = lineas.find(function (linea) { return linea.sku === sku; });
 
   if (existente) {
     existente.cantidad = Math.min(existente.cantidad + cantidad, tope);
@@ -73,7 +71,7 @@ function carroAnadir(sku, cantidad) {
 
 function carroCambiarCantidad(sku, cantidad) {
   const lineas = carroLeer();
-  const linea = lineas.find(function (l) { return l.sku === sku; });
+  const linea = lineas.find(function (linea) { return linea.sku === sku; });
 
   if (!linea) {
     return;
@@ -92,7 +90,7 @@ function carroCambiarCantidad(sku, cantidad) {
 }
 
 function carroQuitar(sku) {
-  const lineas = carroLeer().filter(function (l) { return l.sku !== sku; });
+  const lineas = carroLeer().filter(function (linea) { return linea.sku !== sku; });
   carroGuardar(lineas);
 }
 

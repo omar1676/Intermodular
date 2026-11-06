@@ -1,16 +1,13 @@
 /* NOVA Sneakers · Acceso a datos y utilidades · Omar */
 
 const API = {
-  // "demo" es el único modo que funciona ahora mismo.
-  MODO: "demo",
-
   async catalogo() {
     return CATALOGO_DEMO;
   },
 
   async modelo(idModelo) {
-    const encontrado = CATALOGO_DEMO.find(function (m) {
-      return m.id_modelo === idModelo;
+    const encontrado = CATALOGO_DEMO.find(function (modelo) {
+      return modelo.id_modelo === idModelo;
     });
 
     if (!encontrado) {
