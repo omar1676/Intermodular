@@ -298,9 +298,9 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 412 / 200;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center;
 }
 
 /* Nombre del modelo, grande y arriba a la izquierda */

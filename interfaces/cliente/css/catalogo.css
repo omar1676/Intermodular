@@ -108,3 +108,13 @@
     padding: 34px 26px;
   }
 }
+
+/* El reclamo: es lo que separa esta página de un listado a secas */
+.cli-muro-catalogo .cli-pieza-reclamo {
+  display: block;
+  max-width: 34ch;
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cli-texto-suave);
+}

@@ -25,8 +25,8 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 | Página | Qué hace |
 |---|---|
-| `index.html` | Portada: seis modelos destacados y el paso al catálogo |
-| `catalogo.html` | Catálogo completo: las mismas doce piezas en su propia página |
+| `index.html` | Portada: los ocho modelos destacados |
+| `catalogo.html` | Catálogo completo: los veinte modelos, con su reclamo |
 | `producto.html` | Detalle: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
 | `cuenta.html` | Entrar y crear cuenta. **Solo interfaz**: valida, pero no autentica |
@@ -47,7 +47,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `js/carro.js` | Carrito: añadir, cambiar, quitar, totales y contador |
 | `js/pedidos-datos.js` | Pedidos de ejemplo y creación de pedidos de demostración |
 | `js/piezas.js` | Dibuja las zapatillas del catálogo, para quien las necesite |
-| `js/escaparate.js` | Dibuja la portada: elige las seis destacadas |
+| `js/escaparate.js` | Dibuja la portada: elige las marcadas como destacado |
 | `js/catalogo.js` | Dibuja el catálogo completo |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
@@ -56,12 +56,14 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 ## Qué hace cada pantalla
 
-**Portada.** Seis piezas sobre una pared gris, una por modelo, y debajo el
-paso al catálogo completo. Al señalar o enfocar una zapatilla **se enciende
-su repisa** y la luz le sube por la suela; las demás se quedan apagadas.
+**Portada.** Ocho zapatillas sobre una pared gris, en dos filas de cuatro.
+Son las que el catálogo marca con `destacado`. Al señalar o enfocar una
+**se enciende su repisa**; las demás se quedan apagadas. Desde aquí no se
+va al catálogo: para eso está el menú.
 
-**Catálogo.** Las doce piezas, los dos acabados de cada modelo. Los colores
-sin ninguna talla disponible salen atenuados y con la palabra «Agotado».
+**Catálogo.** Los veinte modelos, en bloques grandes, cada uno con su
+reclamo debajo. Los que no tienen ninguna talla disponible salen atenuados
+y con la palabra «Agotado».
 
 **Detalle.** La zapatilla entra acercándose. Al pulsar un color se redibuja,
 se reinicia la talla y vuelve a acercarse. Las tallas sin existencias salen
@@ -90,12 +92,11 @@ creados.
   espacial.
 - **Sin tarjetas blancas.** Es una pared de tienda: gris neutro, cada
   zapatilla sobre su repisa, y la luz solo en la pieza que estás mirando.
-- **La portada enseña modelos; el catálogo, colores.** La portada pone uno
-  de cada modelo para que se vea la gama de un vistazo; el catálogo abre
-  los dos acabados de cada uno, que son las doce piezas. Las dos páginas
-  usan la misma función de dibujo: lo único que cambia es qué piezas se le
-  pasan. Al pulsar una, el detalle se abre con ese color ya elegido
-  (`producto.html?modelo=1&color=0`).
+- **La portada es una selección; el catálogo está entero.** Qué sale en la
+  portada lo decide un solo campo del catálogo, `destacado`, y nada más.
+  Las dos páginas usan la misma función de dibujo: lo único que cambia es
+  qué piezas se le pasan. Al pulsar una, el detalle se abre con ese acabado
+  ya elegido (`producto.html?modelo=1&color=0`).
 - **La zapatilla es un SVG por capas, no un icono plano.** Luz cenital,
   oclusión en el apoyo, brillo especular en el empeine, sombra proyectada
   desenfocada y el rebote cálido de la repisa en la mediasuela. Todas las
@@ -184,11 +185,20 @@ El catálogo ficticio usa la misma jerarquía que el esquema real:
 modelos -> variantes (color) -> producto_sku (talla + sku) -> existencias
 ```
 
-Los nombres y los precios de los seis modelos son **exactamente los del
-SQL** (`05_datos_prueba.sql`). Las descripciones no: las de la web amplían
-la frase corta de la base de datos para que el escaparate tenga algo que
-leer. Por ejemplo, el SQL dice «Estilo clasico y minimalista» y la web
-añade a continuación de qué va la zapatilla.
+### Atención: ahora mismo la web y el SQL **no** coinciden
+
+La base de datos tiene siete modelos; la web tiene veinte, uno por cada
+fotografía de producto. **Seis de los veinte conservan el nombre y el
+precio exactos del SQL**: Origin, Velocity, Eclipse, Archive, Aura y Pulse.
+Los otros catorce son datos de demostración que la base de datos todavía
+no tiene.
+
+**Pendiente para el equipo:** añadir esos catorce modelos a
+`acceso-datos/sql/05_datos_prueba.sql` para que las dos partes vuelvan a
+cuadrar. Desde la web no se toca ningún `.sql`.
+
+Las descripciones tampoco coinciden: las del SQL dicen cómo es la
+zapatilla y las de la web son el reclamo que se lee en el catálogo.
 
 El precio se calcula como `precio_base + suplemento_precio`, igual que en
 SQL, porque es un valor derivado que no se almacena.

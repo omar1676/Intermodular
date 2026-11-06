@@ -31,7 +31,11 @@ ok("avisa de que son de ejemplo", html.includes("<strong>ejemplo</strong>"));
 ok("avisa de que no estan en ninguna base de datos", html.includes("No existe en ninguna base de datos"));
 ok("estados con nombre legible", html.includes("Entregado") && html.includes("En preparación"));
 ok("fecha en espanol", html.includes("octubre") || html.includes("noviembre"), "se esperaba un mes en espanol");
-ok("totales de los pedidos", html.includes("339,97"));
+// El total de cada ejemplo sale de sus propias lineas
+const totalPrimero = formatearPrecio(PEDIDOS_EJEMPLO[0].lineas.reduce(function (s, l) {
+  return s + l.precio_unitario * l.cantidad;
+}, 0));
+ok("totales de los pedidos", html.includes(totalPrimero), totalPrimero);
 ok("una miniatura por linea", (html.match(/<svg/g) || []).length === LINEAS_EJEMPLO, (html.match(/<svg/g) || []).length + " de " + LINEAS_EJEMPLO);
 ok("boton de borrar oculto sin pedidos creados", __nodos["cli-borrar-pedidos"].hidden === true);
 ok("sin aviso de pedido nuevo", __nodos["cli-aviso-nuevo"].hidden === true);

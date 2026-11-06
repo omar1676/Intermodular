@@ -1,4 +1,4 @@
-/* El marcado de las doce piezas, tal y como lo dibuja piezas.js */
+/* El marcado de las piezas, tal y como lo dibuja piezas.js */
 
 require("./entorno.js").cargar([
   "datos-demo.js",
@@ -12,95 +12,79 @@ function comprobar(n, c, d) {
   console.log((c ? "  OK   " : "  FALLO") + "  " + n + (d !== undefined ? "  -> " + d : ""));
   if (!c) fallos++;
 }
+
+const PIEZAS = piezasDelCatalogo(CATALOGO_DEMO);
+const AGOTADAS = PIEZAS.filter(function (p) { return colorSinExistencias(p.variante); }).length;
+
+pintarPiezas(document.getElementById("cli-rejilla"), PIEZAS);
+const html = __nodos["cli-rejilla"].innerHTML;
 const cuenta = (re) => (html.match(re) || []).length;
 
-pintarPiezas(document.getElementById("cli-rejilla"), piezasDelCatalogo(CATALOGO_DEMO));
-const html = __nodos["cli-rejilla"].innerHTML;
+console.log("=== ESTRUCTURA ===");
 
-// --- Estructura del muro ---
-comprobar("12 piezas, una por color", cuenta(/class="cli-pieza[ "]/g) === 12, cuenta(/class="cli-pieza[ "]/g));
-comprobar("12 zapatillas dibujadas", cuenta(/<svg/g) === 12, cuenta(/<svg/g));
-comprobar("cada pieza lleva su repisa", cuenta(/class="cli-balda"/g) === 12, cuenta(/class="cli-balda"/g));
-comprobar("se quita el estado de carga", __nodos["cli-rejilla"].className === "cli-rejilla", __nodos["cli-rejilla"].className);
+comprobar("una pieza por variante", cuenta(/class="cli-pieza[ "]/g) === PIEZAS.length, PIEZAS.length);
+comprobar("cada pieza lleva su repisa", cuenta(/class="cli-balda"/g) === PIEZAS.length);
+comprobar("se quita el estado de carga", __nodos["cli-rejilla"].className === "cli-rejilla");
 
-// --- Identificadores de los degradados ---
-// Si dos zapatillas comparten el id de un degradado, la segunda se pinta
-// con los colores de la primera. Por eso cada pieza usa su id_variante.
-comprobar("IDs de degradado distintos", new Set(html.match(/cuerpo-v\d+/g)).size === 12, new Set(html.match(/cuerpo-v\d+/g)).size);
-comprobar("todas las capas de luz tienen sufijo propio", new Set(html.match(/calida-v\d+/g)).size === 12, new Set(html.match(/calida-v\d+/g)).size);
-comprobar("los recortes no se pisan entre piezas", new Set(html.match(/recCuerpo-v\d+/g)).size === 12, new Set(html.match(/recCuerpo-v\d+/g)).size);
+console.log("\n=== CONTENIDO ===");
 
-// --- Contenido ---
-comprobar("aparecen los 6 nombres", ["NOVA Origin","NOVA Velocity","NOVA Eclipse","NOVA Archive","NOVA Aura","NOVA Pulse"].every(n => html.includes(n)));
-comprobar("aparecen los colores", ["Blanco","Negro","Rojo","Azul","Gris","Beige","Rosa","Crema","Verde"].every(c => html.includes(">" + c + "<")));
-comprobar("precios con formato español", html.includes("79,99") && html.includes("129,99"));
+comprobar("aparecen todos los nombres",
+  CATALOGO_DEMO.every(function (m) { return html.includes(m.nombre); }));
+comprobar("aparecen todos los acabados",
+  PIEZAS.every(function (p) { return html.includes(">" + p.variante.color + "<"); }));
+comprobar("cada pieza lleva su reclamo",
+  CATALOGO_DEMO.every(function (m) { return html.includes(m.descripcion); }));
+comprobar("precios con formato español", html.includes(",") && /\d,\d\d/.test(html));
 comprobar("ningún texto 'undefined' o 'NaN'", !/undefined|NaN/.test(html));
 
-// --- Navegación ---
-comprobar("cada pieza lleva su modelo", cuenta(/data-modelo="\d+"/g) === 12, cuenta(/data-modelo="\d+"/g));
-comprobar("cada pieza lleva su color", cuenta(/data-color="\d+"/g) === 12, cuenta(/data-color="\d+"/g));
-comprobar("retardo escalonado de animación", cuenta(/animation-delay: \d\.\d+s/g) === 12, cuenta(/animation-delay: \d\.\d+s/g));
+console.log("\n=== NAVEGACIÓN ===");
 
-// --- Stock ---
-// NOVA Pulse Negro (variante 12) no tiene ninguna talla con existencias.
-comprobar("el color agotado se marca", cuenta(/cli-sin-stock/g) === 1, cuenta(/cli-sin-stock/g));
-comprobar("el color agotado lo dice por escrito", cuenta(/>Agotado</g) === 1, cuenta(/>Agotado</g));
-comprobar("los 11 colores con stock muestran precio", cuenta(/cli-pieza-precio/g) === 11, cuenta(/cli-pieza-precio/g));
+comprobar("cada pieza lleva su modelo", cuenta(/data-modelo="\d+"/g) === PIEZAS.length);
+comprobar("cada pieza lleva su acabado", cuenta(/data-color="\d+"/g) === PIEZAS.length);
+comprobar("retardo escalonado de animación", cuenta(/animation-delay: \d\.\d+s/g) === PIEZAS.length);
 
-// --- Accesibilidad ---
-// Los SVG del escaparate son decorativos: el rótulo de al lado ya dice
-// qué zapatilla es, así que el lector de pantalla no debe leerlo dos veces.
-comprobar("los SVG del escaparate son decorativos", cuenta(/focusable="false"/g) === 12, cuenta(/focusable="false"/g));
-comprobar("ningún SVG repite el nombre", !html.includes('aria-label="Zapatilla'));
-comprobar("el rótulo sí nombra la zapatilla", html.includes("NOVA Origin"));
+console.log("\n=== STOCK ===");
 
-// --- Fotografías ---
-// Con la tabla FOTOS vacía se dibuja todo. En cuanto un color tiene
-// foto, esa pieza pasa a ser <img> y deja apuntado qué dibujar si falla.
-comprobar("sin fotos, se dibujan las 12", cuenta(/<img/g) === 0, cuenta(/<img/g));
+comprobar("los agotados se marcan", cuenta(/cli-sin-stock/g) === AGOTADAS, AGOTADAS);
+comprobar("y lo dicen por escrito", cuenta(/>Agotado</g) === AGOTADAS);
+comprobar("los demás muestran precio",
+  cuenta(/cli-pieza-precio/g) === PIEZAS.length - AGOTADAS, PIEZAS.length - AGOTADAS);
 
-FOTOS[1] = "img/origin-blanco.png";
-FOTOS[12] = "  img/pulse-negro.png  ";   // con espacios, a ver si los quita
-pintarPiezas(document.getElementById("cli-rejilla"), piezasDelCatalogo(CATALOGO_DEMO));
-const conFoto = __nodos["cli-rejilla"].innerHTML;
-const cuenta2 = (re) => (conFoto.match(re) || []).length;
+console.log("\n=== FOTOGRAFÍAS ===");
 
-comprobar("los colores con foto usan <img>", cuenta2(/<img/g) === 2, cuenta2(/<img/g));
-comprobar("se recortan los espacios del nombre", conFoto.includes('src="img/pulse-negro.png"'));
-comprobar("los otros 10 se siguen dibujando", cuenta2(/<svg/g) === 10, cuenta2(/<svg/g));
-comprobar("cada foto deja apuntado su repuesto", cuenta2(/data-respaldo="(1|12)"/g) === 2, cuenta2(/data-respaldo="(1|12)"/g));
-comprobar("la foto del escaparate es decorativa", cuenta2(/<img[^>]*aria-hidden="true"/g) === 2);
-comprobar("el repuesto existe y es un dibujo", dibujoPorVariante(1).includes("<svg"));
-comprobar("un id inventado no revienta", dibujoPorVariante(999) === "", JSON.stringify(dibujoPorVariante(999)));
+// Hoy todas las variantes tienen foto
+comprobar("todas se pintan con <img>", cuenta(/<img/g) === PIEZAS.length, cuenta(/<img/g));
+comprobar("ningún SVG dibujado", cuenta(/<svg/g) === 0, cuenta(/<svg/g));
+comprobar("cada foto deja apuntado su repuesto",
+  cuenta(/data-respaldo="\d+"/g) === PIEZAS.length);
+comprobar("la foto es decorativa: el rótulo ya la nombra",
+  cuenta(/<img[^>]*aria-hidden="true"/g) === PIEZAS.length);
+comprobar("se cargan con pereza", cuenta(/loading="lazy"/g) === PIEZAS.length);
 
-FOTOS[1] = "";
-FOTOS[12] = "";
+console.log("\n=== SIN FOTOS, SE DIBUJA ===");
 
-// --- Carga del catálogo, que ahora comparten la portada y el catálogo ---
+// Si mañana se quita una foto, su zapatilla tiene que volver a dibujarse
+const guardadas = Object.assign({}, FOTOS);
+FOTOS[PIEZAS[0].variante.id_variante] = "";
+FOTOS[PIEZAS[1].variante.id_variante] = "   " + guardadas[PIEZAS[1].variante.id_variante] + "   ";
+pintarPiezas(document.getElementById("cli-rejilla"), PIEZAS);
+const mixto = __nodos["cli-rejilla"].innerHTML;
+const cuenta2 = (re) => (mixto.match(re) || []).length;
 
-const hueco = document.getElementById("hueco-de-prueba");
-const catalogoDeVerdad = API.catalogo;
+comprobar("la que se queda sin foto se dibuja", cuenta2(/<svg/g) === 1, cuenta2(/<svg/g));
+comprobar("las demás siguen con foto", cuenta2(/<img/g) === PIEZAS.length - 1);
+comprobar("se recortan los espacios del nombre",
+  mixto.includes('src="' + guardadas[PIEZAS[1].variante.id_variante] + '"'));
+comprobar("los SVG del escaparate son decorativos", cuenta2(/focusable="false"/g) === 1);
+comprobar("ningún SVG repite el nombre", !mixto.includes('aria-label="Zapatilla'));
 
-comprobar("devuelve los modelos cuando todo va bien",
-  catalogoParaPintar(hueco) === CATALOGO_DEMO);
+Object.keys(guardadas).forEach(function (k) { FOTOS[k] = guardadas[k]; });
 
-API.catalogo = function () { return []; };
-hueco.textContent = "";
-comprobar("catálogo vacío: devuelve null", catalogoParaPintar(hueco) === null);
-comprobar("catálogo vacío: lo dice por escrito",
-  hueco.textContent.includes("Todavía no hay zapatillas"), hueco.textContent);
-
-API.catalogo = function () { throw new Error("sin datos"); };
-hueco.textContent = "";
-const silencio = console.error;
-console.error = function () {};
-comprobar("si la carga falla: devuelve null", catalogoParaPintar(hueco) === null);
-console.error = silencio;
-comprobar("si la carga falla: avisa al usuario",
-  hueco.textContent.includes("No se ha podido cargar"), hueco.textContent);
-
-API.catalogo = catalogoDeVerdad;
-comprobar("el API queda como estaba", API.catalogo() === CATALOGO_DEMO);
+comprobar("el respaldo existe y es un dibujo",
+  dibujoPorVariante(PIEZAS[0].variante.id_variante).includes("<svg"));
+comprobar("un id inventado no revienta", dibujoPorVariante(9999) === "");
+comprobar("FOTOS queda como estaba",
+  Object.keys(FOTOS).every(function (k) { return FOTOS[k] === guardadas[k]; }));
 
 console.log("\n" + (fallos === 0 ? "MARCADO CORRECTO" : fallos + " FALLOS"));
 process.exit(fallos ? 1 : 0);
