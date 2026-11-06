@@ -284,7 +284,7 @@ function activarEventos() {
     }
   });
 
-  // Volver al escaparate con la misma transición suave
+  // Volver al inicio con la misma transición suave
   document.getElementById("cli-volver").addEventListener("click", function (evento) {
     evento.preventDefault();
     navegarCon("index.html");
@@ -293,7 +293,7 @@ function activarEventos() {
 
 /* Arranque */
 
-async function iniciar() {
+function iniciar() {
   const detalle = document.getElementById("cli-detalle");
 
   // Leemos el id de la dirección y comprobamos que sea un número
@@ -305,12 +305,12 @@ async function iniciar() {
     detalle.innerHTML = (sinParametro
       ? "No se ha indicado ninguna zapatilla. "
       : "La zapatilla indicada no es válida. ") +
-      '<a href="index.html">Volver al escaparate</a>.';
+      '<a href="index.html">Volver al inicio</a>.';
     return;
   }
 
   try {
-    modeloActual = await API.modelo(idModelo);
+    modeloActual = API.modelo(idModelo);
 
     // El escaparate puede pedir que se abra ya con un color elegido
     const color = Number(parametros.get("color"));
@@ -333,7 +333,7 @@ async function iniciar() {
 
   } catch (error) {
     detalle.innerHTML = "Esta zapatilla no existe. " +
-      '<a href="index.html">Volver al escaparate</a>.';
+      '<a href="index.html">Volver al inicio</a>.';
   }
 }
 

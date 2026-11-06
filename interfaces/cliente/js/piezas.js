@@ -104,3 +104,24 @@ function activarClicsDePiezas(contenedor) {
                "&color=" + pieza.dataset.color);
   });
 }
+
+// Pide el catálogo y escribe el aviso en el contenedor si algo va mal.
+// Devuelve los modelos, o null si no hay nada que dibujar.
+function catalogoParaPintar(contenedor) {
+  try {
+    const modelos = API.catalogo();
+
+    if (!modelos || modelos.length === 0) {
+      contenedor.textContent = "Todavía no hay zapatillas en el catálogo.";
+      return null;
+    }
+
+    return modelos;
+
+  } catch (error) {
+    contenedor.textContent =
+      "No se ha podido cargar el catálogo. Vuelve a intentarlo más tarde.";
+    console.error(error);
+    return null;
+  }
+}

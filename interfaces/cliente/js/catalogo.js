@@ -1,6 +1,6 @@
 /* NOVA Sneakers · Catálogo completo (pantalla) · Omar */
 
-// Las mismas piezas que el escaparate, pero en su propia página
+// Las mismas piezas que la portada, pero todas
 function pintarCatalogo(modelos) {
   const contenedor = document.getElementById("cli-rejilla-catalogo");
   const piezas = piezasDelCatalogo(modelos);
@@ -15,25 +15,16 @@ function pintarCatalogo(modelos) {
   }
 }
 
-async function iniciar() {
+function iniciar() {
   const contenedor = document.getElementById("cli-rejilla-catalogo");
+  const modelos = catalogoParaPintar(contenedor);
 
-  try {
-    const modelos = await API.catalogo();
-
-    if (!modelos || modelos.length === 0) {
-      contenedor.textContent = "Todavía no hay zapatillas en el catálogo.";
-      return;
-    }
-
-    pintarCatalogo(modelos);
-    activarClicsDePiezas(contenedor);
-
-  } catch (error) {
-    contenedor.textContent =
-      "No se ha podido cargar el catálogo. Vuelve a intentarlo más tarde.";
-    console.error(error);
+  if (!modelos) {
+    return;
   }
+
+  pintarCatalogo(modelos);
+  activarClicsDePiezas(contenedor);
 }
 
 iniciar();

@@ -20,25 +20,16 @@ function pintarEscaparate(modelos) {
   }
 }
 
-async function iniciar() {
+function iniciar() {
   const contenedor = document.getElementById("cli-rejilla");
+  const modelos = catalogoParaPintar(contenedor);
 
-  try {
-    const modelos = await API.catalogo();
-
-    if (!modelos || modelos.length === 0) {
-      contenedor.textContent = "Todavía no hay zapatillas en el catálogo.";
-      return;
-    }
-
-    pintarEscaparate(modelos);
-    activarClicsDePiezas(contenedor);
-
-  } catch (error) {
-    contenedor.textContent =
-      "No se ha podido cargar el catálogo. Vuelve a intentarlo más tarde.";
-    console.error(error);
+  if (!modelos) {
+    return;
   }
+
+  pintarEscaparate(modelos);
+  activarClicsDePiezas(contenedor);
 }
 
 iniciar();

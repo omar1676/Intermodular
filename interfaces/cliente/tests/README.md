@@ -20,7 +20,7 @@ Una sola, cuando estás tocando esa parte:
 node 01-carrito-datos.js
 ```
 
-Si todo va bien, la última línea dice `164 comprobaciones en 8 archivos, 0
+Si todo va bien, la última línea dice `170 comprobaciones en 8 archivos, 0
 fallidas` y el programa termina con código 0. Si algo falla, sale `FALLO`
 en la línea de la comprobación y el código de salida es 1.
 
@@ -32,7 +32,7 @@ en la línea de la comprobación y el código de salida es 1.
 | `02-carrito-pantalla.js` | Dibujado de las líneas y que un doble clic no cree dos pedidos | 19 |
 | `03-pedidos-pantalla.js` | Dibujado, aviso de pedido nuevo y borrado | 21 |
 | `04-cuenta.js` | Validaciones y que no se guarde ninguna contraseña | 20 |
-| `05-piezas.js` | Marcado de las 12 piezas y la tabla `FOTOS` | 28 |
+| `05-piezas.js` | Marcado de las 12 piezas, la tabla `FOTOS` y la carga del catálogo | 34 |
 | `06-claves-svg.js` | Que no se repita ningún identificador de degradado | 5 |
 | `07-catalogo.js` | La página del catálogo completo: las 12 variantes, enlaces y precios | 19 |
 | `08-portada.js` | La portada: seis destacadas, una por modelo, y el paso al catálogo | 16 |

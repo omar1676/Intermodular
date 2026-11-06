@@ -90,3 +90,29 @@ blanco: así los bordes no se ensucian de gris al interpolar.
 Está duplicado a propósito, para que la web de clientes funcione sola sin
 depender de la carpeta del panel de administración. Cuando se junten las
 ramas habrá que decidir si las dos usan la misma copia.
+
+## Qué parte de esto está hoy sin usar
+
+La tabla `FOTOS` tiene **las doce casillas vacías**, así que ahora mismo se
+dibujan las doce zapatillas y no se carga ni una imagen. Todo el montaje
+está escrito y probado, esperando a las fotos. Esto es lo que hay montado
+y no se ejecuta:
+
+| Dónde | Qué | Estado |
+|---|---|---|
+| `js/datos-demo.js` | La tabla `FOTOS`, 12 líneas | las 12 vacías |
+| `js/api.js` | `fotoVariante()` | devuelve siempre `""` |
+| `js/api.js` | `respaldoDeFotos()` | nunca salta, porque no hay `<img>` |
+| `js/piezas.js` | La rama de `<img>` de `piezaHtml` | nunca se toma |
+| `js/producto.js` | La rama de `<img>` de `pintarZapatilla` | nunca se toma |
+| `css/escaparate.css` | `.cli-pieza img.zap` | sin elementos a los que aplicarse |
+| `css/producto.css` | `.cli-escena img.zap` | igual |
+
+Son unas 50 líneas en total. **No es código muerto: es código a la espera**,
+y las pruebas lo recorren rellenando `FOTOS` a mano. Pero si al final no
+entran fotografías, esto sobra y hay que quitarlo antes de entregar.
+
+Un detalle que conviene saber: `respaldoDeFotos` escucha el evento en fase
+de captura (`addEventListener("error", ..., true)`) porque **el evento
+`error` de una imagen no burbujea**. Sin ese `true` no se enteraría de
+nada.

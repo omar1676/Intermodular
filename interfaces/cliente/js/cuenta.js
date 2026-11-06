@@ -128,8 +128,7 @@ function mensajeDemo(titulo, detalle) {
     "<strong>" + titulo + "</strong><br>" + detalle;
 }
 
-function activarEventos() {
-  // Pestañas
+function activarPestanas() {
   document.querySelector(".cli-pestanas").addEventListener("click", function (evento) {
     const pestana = evento.target.closest(".cli-pestana");
 
@@ -137,11 +136,12 @@ function activarEventos() {
       cambiarPestana(pestana.dataset.pestana);
     }
   });
+}
 
-  // Entrar
-  const formEntrar = document.getElementById("cli-form-entrar");
+function activarEntrar() {
+  const formulario = document.getElementById("cli-form-entrar");
 
-  formEntrar.addEventListener("submit", function (evento) {
+  formulario.addEventListener("submit", function (evento) {
     // Nada sale de esta página
     evento.preventDefault();
 
@@ -158,13 +158,14 @@ function activarEventos() {
       "no comprueba contraseñas y no guarda ninguna cuenta."
     );
 
-    vaciarClaves(formEntrar);
+    vaciarClaves(formulario);
   });
+}
 
-  // Crear cuenta
-  const formAlta = document.getElementById("cli-form-alta");
+function activarAlta() {
+  const formulario = document.getElementById("cli-form-alta");
 
-  formAlta.addEventListener("submit", function (evento) {
+  formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
 
     if (!validarRegistro()) {
@@ -180,10 +181,12 @@ function activarEventos() {
       "se guarda en ninguna parte."
     );
 
-    vaciarClaves(formAlta);
+    vaciarClaves(formulario);
   });
+}
 
-  // Al reescribir un campo marcado en rojo, se le quita el error
+// Al reescribir un campo marcado en rojo, se le quita el error
+function activarLimpiezaDeErrores() {
   document.querySelectorAll(".cli-campo input").forEach(function (campo) {
     campo.addEventListener("input", function () {
       if (campo.hasAttribute("aria-invalid")) {
@@ -194,4 +197,7 @@ function activarEventos() {
 }
 
 cambiarPestana("entrar");
-activarEventos();
+activarPestanas();
+activarEntrar();
+activarAlta();
+activarLimpiezaDeErrores();

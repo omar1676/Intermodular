@@ -1,11 +1,14 @@
 /* NOVA Sneakers · Acceso a datos y utilidades · Omar */
 
+/* Unica puerta de acceso a los datos. Hoy el catalogo esta en memoria;
+   cuando haya servidor, solo cambia lo de dentro de estas dos funciones
+   (y quien las llama tendra que esperar la respuesta con await). */
 const API = {
-  async catalogo() {
+  catalogo() {
     return CATALOGO_DEMO;
   },
 
-  async modelo(idModelo) {
+  modelo(idModelo) {
     const encontrado = CATALOGO_DEMO.find(function (modelo) {
       return modelo.id_modelo === idModelo;
     });
