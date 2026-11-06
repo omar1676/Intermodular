@@ -25,7 +25,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 | Página | Qué hace |
 |---|---|
-| `index.html` | Escaparate oscuro con las seis zapatillas sobre repisas iluminadas |
+| `index.html` | Muro de escaparate: doce acabados, cada uno sobre su repisa de metacrilato |
 | `producto.html` | Detalle ampliado: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
 | `cuenta.html` | Entrar y crear cuenta. **Solo interfaz**: valida, pero no autentica |
@@ -55,8 +55,18 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 - **Prefijo `cli-` en todas las clases CSS.** El panel de administración de
   Álvaro usa `adm-`, en otra carpeta y con otras hojas de estilo. Colisión
   imposible, y su código no se toca.
-- **Sin tarjetas blancas.** Las zapatillas se apoyan sobre una repisa con
-  una tira de luz naranja debajo, como un escaparate de tienda.
+- **Sin tarjetas blancas.** Es un muro de tienda: pared gris cálida, cada
+  zapatilla sobre su propia repisa de metacrilato y una tira LED naranja
+  ancha al pie del muro que lo ilumina desde abajo.
+- **El escaparate enseña colores, no modelos.** Seis modelos con dos
+  acabados cada uno dan las doce piezas que llenan la pared, igual que en
+  una tienda real. Al pulsar una, el detalle se abre con ese color ya
+  elegido (`producto.html?modelo=1&color=0`).
+- **La zapatilla es un SVG por capas, no un icono plano.** Lleva luz
+  cenital, oclusión en el apoyo, brillo especular en el empeine, sombra
+  proyectada desenfocada y el rebote naranja del LED en la mediasuela.
+  Todas las capas van recortadas con `clipPath` contra la silueta, que es
+  lo que hace que la luz parezca envolverla.
 - **El carrito no guarda precios.** Guarda solo el SKU y la cantidad; el
   precio se recalcula del catálogo cada vez que se dibuja, así que no puede
   quedar desfasado ni manipulado desde el almacenamiento del navegador.
@@ -67,10 +77,36 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 - **Ninguna contraseña se guarda en ningún sitio.** Ni en localStorage, ni en
   sessionStorage, ni en cookies. Al enviar el formulario los campos de
   contraseña se vacían. Tampoco se crea ninguna sesión falsa.
-- **Ilustraciones propias en SVG.** No se usa ninguna marca, logotipo ni
-  fotografía de terceros. Si conseguimos fotos con licencia comprobada,
-  basta añadir el campo `imagen` al modelo: el catálogo da prioridad a la
-  foto y deja el SVG como respaldo.
+- **Ilustraciones propias.** No se usa ninguna marca, logotipo ni
+  fotografía de terceros.
+
+## Poner fotografías reales
+
+El escaparate ya está preparado: si una pieza tiene foto, usa la foto; si
+no, dibuja el SVG. No hay que tocar ni el CSS ni el JavaScript.
+
+1. Deja los archivos en `interfaces/cliente/img/`, recortados y con fondo
+   transparente (PNG o WebP), de perfil y mirando a la izquierda, que es
+   como está dibujado el SVG.
+2. Añade el campo `imagen` en `js/datos-demo.js`. Vale por color, que es
+   lo suyo porque cada acabado es una foto distinta:
+
+```js
+{
+  id_variante: 1, color: "Blanco", suplemento_precio: 0,
+  hex: "#f2efe9", hex2: "#cdc7bb", suela: "#ffffff",
+  imagen: "img/origin-blanco.png",
+  tallas: tallasDemo(1, 1, [44])
+}
+```
+
+También se acepta `imagen` en el modelo, y entonces vale para todos sus
+colores.
+
+**Cuidado con los derechos.** Las fotos de zapatillas de los bancos
+gratuitos suelen ser de marcas reconocibles, con el logotipo a la vista, y
+el enunciado prohíbe usar marcas. Hay que buscar fotos sin logotipo, o
+hacerlas nosotros.
 - **La animación de entrada usa `translate` y el hover usa `transform`.**
   A propósito: una animación con `forwards` gana al hover en la cascada, así
   que si las dos usaran `transform` la zapatilla no se levantaría.
@@ -79,9 +115,14 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 | Ancho | Escaparate | Carrito |
 |---|---|---|
-| Más de 1000 px | 2 filas de 3 zapatillas, repisa compartida | Líneas y resumen al lado |
-| 681 a 1000 px | 2 columnas | Resumen debajo |
-| Hasta 680 px | 1 columna, cada zapatilla con su propia luz | Línea en dos filas |
+| Más de 1180 px | 6 columnas: 2 filas de 6 | Líneas y resumen al lado |
+| 861 a 1180 px | 4 columnas | Resumen debajo |
+| 581 a 860 px | 3 columnas | Resumen debajo |
+| Hasta 580 px | 2 columnas | Línea en dos filas |
+
+La repisa de la última fila brilla más que las demás porque está pegada a
+la tira LED. Cuál es "la última fila" depende del número de columnas, así
+que se ajusta con `:nth-child` en cada punto de ruptura.
 
 Los botones y las tallas miden 48 px o más de alto, para poder pulsarlos con
 el dedo. Se respeta `prefers-reduced-motion` para quien no quiera animaciones.
