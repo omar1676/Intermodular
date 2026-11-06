@@ -3,7 +3,9 @@
 const PEDIDOS_CLAVE = "nova_pedidos_demo";
 const PEDIDOS_PREFIJO = "WEB-DEMO-";
 
-// Pedidos de ejemplo, fijos y escritos a mano
+// Pedidos de ejemplo, fijos y escritos a mano. Son cuatro, uno por cada
+// estado que se puede ver sin hacer nada; el quinto, "pendiente", sale al
+// crear un pedido en la demostración.
 const PEDIDOS_EJEMPLO = [
   {
     referencia: "WEB-DEMO-000001",
@@ -22,6 +24,25 @@ const PEDIDOS_EJEMPLO = [
     origen: "ejemplo",
     lineas: [
       { sku: "NOVA-4-41", cantidad: 1, precio_unitario: 119.90 }
+    ]
+  },
+  {
+    referencia: "WEB-DEMO-000003",
+    fecha: "2026-11-04T09:40:00",
+    estado: "enviado",
+    origen: "ejemplo",
+    lineas: [
+      { sku: "NOVA-2-43", cantidad: 1, precio_unitario: 79.99 },
+      { sku: "NOVA-11-42", cantidad: 1, precio_unitario: 114.90 }
+    ]
+  },
+  {
+    referencia: "WEB-DEMO-000004",
+    fecha: "2026-11-05T16:12:00",
+    estado: "cancelado",
+    origen: "ejemplo",
+    lineas: [
+      { sku: "NOVA-9-40", cantidad: 1, precio_unitario: 99.99 }
     ]
   }
 ];
