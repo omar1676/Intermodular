@@ -29,13 +29,6 @@
 
 /* Panel genérico */
 
-.cli-panel {
-  padding: 22px;
-  border: 1px solid var(--cli-borde);
-  border-radius: 12px;
-  background: var(--cli-panel);
-}
-
 /* Mensaje de lista vacía */
 
 .cli-vacio {
@@ -414,7 +407,6 @@
 .cli-chip-preparacion  { color: var(--cli-preparacion);  border-color: #6a4a22; }
 .cli-chip-enviado      { color: var(--cli-enviado);      border-color: #27416e; }
 .cli-chip-entregado    { color: var(--cli-entregado);    border-color: #255239; }
-.cli-chip-cancelado    { color: var(--cli-cancelado);    border-color: #6b2a2a; }
 
 .cli-pedido-lineas {
   display: flex;
@@ -556,4 +548,11 @@
 /* Mientras no haya mensaje, el recuadro dorado no debe verse vacío */
 .cli-resultado:empty {
   display: none;
+}
+
+/* Una referencia que ya no existe no tiene cantidad ni importe: tres
+   columnas en vez de cinco, y la misma fila en movil */
+.cli-carro-perdida {
+  grid-template-columns: 108px 1fr 46px;
+  grid-template-areas: "foto info quitar";
 }

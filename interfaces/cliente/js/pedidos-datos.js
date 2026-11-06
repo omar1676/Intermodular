@@ -36,8 +36,8 @@ function pedidosGuardados() {
       return [];
     }
 
-    return datos.filter(function (p) {
-      return p && typeof p.referencia === "string" && Array.isArray(p.lineas);
+    return datos.filter(function (pedido) {
+      return pedido && typeof pedido.referencia === "string" && Array.isArray(pedido.lineas);
     });
 
   } catch (error) {
@@ -68,7 +68,6 @@ function referenciaNueva() {
   return PEDIDOS_PREFIJO + String(numero).padStart(6, "0");
 }
 
-// Crea un pedido de demostración a partir de las líneas del carrito.
 function crearPedidoDemo(lineasCarro) {
   if (!lineasCarro || lineasCarro.length === 0) {
     return null;
@@ -115,14 +114,12 @@ function pedidosBorrarCreados() {
   pedidosEscribir([]);
 }
 
-// Importe total de un pedido
 function pedidoTotal(pedido) {
   return pedido.lineas.reduce(function (suma, linea) {
     return suma + linea.precio_unitario * linea.cantidad;
   }, 0);
 }
 
-// Unidades totales de un pedido
 function pedidoUnidades(pedido) {
   return pedido.lineas.reduce(function (suma, linea) {
     return suma + linea.cantidad;

@@ -16,15 +16,15 @@ function tallaActual() {
     return null;
   }
 
-  return varianteActual().tallas.find(function (t) {
-    return t.talla === tallaElegida;
+  return varianteActual().tallas.find(function (talla) {
+    return talla.talla === tallaElegida;
   }) || null;
 }
 
 // Este color se ha quedado sin ninguna talla disponible
 function colorAgotado() {
-  return varianteActual().tallas.every(function (t) {
-    return t.stock <= 0 || !t.activo;
+  return varianteActual().tallas.every(function (talla) {
+    return talla.stock <= 0 || !talla.activo;
   });
 }
 
@@ -87,12 +87,12 @@ function pintarPrecio() {
 }
 
 function pintarColores() {
-  const html = modeloActual.variantes.map(function (variante, i) {
-    const activo = i === indiceVariante ? " cli-activo" : "";
+  const html = modeloActual.variantes.map(function (variante, indice) {
+    const activo = indice === indiceVariante ? " cli-activo" : "";
 
     return `
-      <button class="cli-color${activo}" type="button" data-variante="${i}"
-              aria-pressed="${i === indiceVariante}">
+      <button class="cli-color${activo}" type="button" data-variante="${indice}"
+              aria-pressed="${indice === indiceVariante}">
         <span class="cli-muestra" style="background: ${textoSeguro(variante.hex)}"></span>
         ${textoSeguro(variante.color)}
       </button>`;
@@ -102,17 +102,17 @@ function pintarColores() {
 }
 
 function pintarTallas() {
-  const html = varianteActual().tallas.map(function (t) {
-    const agotada = t.stock <= 0 || !t.activo;
-    const activa = t.talla === tallaElegida ? " cli-activo" : "";
+  const html = varianteActual().tallas.map(function (talla) {
+    const agotada = talla.stock <= 0 || !talla.activo;
+    const activa = talla.talla === tallaElegida ? " cli-activo" : "";
 
     return `
       <button class="cli-talla${activa}" type="button"
-              data-talla="${t.talla}"
+              data-talla="${talla.talla}"
               ${agotada ? "disabled" : ""}
-              aria-pressed="${t.talla === tallaElegida}"
-              title="${agotada ? "Sin existencias" : t.stock + " pares disponibles"}">
-        ${t.talla}
+              aria-pressed="${talla.talla === tallaElegida}"
+              title="${agotada ? "Sin existencias" : talla.stock + " pares disponibles"}">
+        ${talla.talla}
       </button>`;
   }).join("");
 
@@ -201,7 +201,7 @@ function pintarEstructura() {
         <div class="cli-cantidad">
           <button type="button" id="cli-menos" aria-label="Quitar una unidad">-</button>
           <output id="cli-valor-cantidad">1</output>
-          <button type="button" id="cli-mas" aria-label="Anadir una unidad">+</button>
+          <button type="button" id="cli-mas" aria-label="Añadir una unidad">+</button>
         </div>
       </div>
 
@@ -285,8 +285,8 @@ function activarEventos() {
   });
 
   // Volver al escaparate con la misma transición suave
-  document.getElementById("cli-volver").addEventListener("click", function (e) {
-    e.preventDefault();
+  document.getElementById("cli-volver").addEventListener("click", function (evento) {
+    evento.preventDefault();
     navegarCon("index.html");
   });
 }

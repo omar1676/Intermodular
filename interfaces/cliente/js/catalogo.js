@@ -13,7 +13,6 @@ function piezasDelCatalogo(modelos) {
   return piezas;
 }
 
-// Dibuja en SVG la zapatilla de un color.
 function dibujoPorVariante(idVariante) {
   for (const modelo of CATALOGO_DEMO) {
     for (const variante of modelo.variantes) {

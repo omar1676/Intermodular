@@ -1,6 +1,6 @@
 /* NOVA Sneakers · Mis pedidos (pantalla) · Omar */
 
-function lineaPedidoHtml(linea) {
+function lineaPedidoHtml(linea, referencia) {
   const encontrado = buscarSku(linea.sku);
   const importe = linea.precio_unitario * linea.cantidad;
 
@@ -17,7 +17,7 @@ function lineaPedidoHtml(linea) {
     ? svgZapatilla(
         encontrado.variante.hex, encontrado.variante.hex2,
         encontrado.variante.suela, encontrado.modelo.nombre,
-        "pedido-" + linea.sku, true
+        "pedido-" + referencia + "-" + linea.sku, true
       )
     : "";
 
@@ -35,7 +35,7 @@ function lineaPedidoHtml(linea) {
     </div>`;
 }
 
-function pedidoHtml(pedido, posicion, referenciaNueva) {
+function pedidoHtml(pedido, posicion, referenciaDestacada) {
   const estado = estadoPedido(pedido.estado);
   const unidades = pedidoUnidades(pedido);
 
@@ -48,7 +48,7 @@ function pedidoHtml(pedido, posicion, referenciaNueva) {
       "ni se ha cobrado nada.";
 
   // Si acabamos de crearlo, lo destacamos
-  const recien = pedido.referencia === referenciaNueva
+  const recien = pedido.referencia === referenciaDestacada
     ? '<span class="cli-etiqueta-demo">Nuevo</span>'
     : "";
 
@@ -66,7 +66,9 @@ function pedidoHtml(pedido, posicion, referenciaNueva) {
       </header>
 
       <div class="cli-pedido-lineas">
-        ${pedido.lineas.map(lineaPedidoHtml).join("")}
+        ${pedido.lineas.map(function (linea) {
+          return lineaPedidoHtml(linea, pedido.referencia);
+        }).join("")}
       </div>
 
       <footer class="cli-pedido-pie">
@@ -84,11 +86,10 @@ function pintarPedidos() {
   const parametros = new URLSearchParams(window.location.search);
   const nueva = parametros.get("nuevo");
 
-  // Aviso de pedido recién creado.
   const aviso = document.getElementById("cli-aviso-nuevo");
   aviso.hidden = true;
 
-  if (nueva && pedidos.some(function (p) { return p.referencia === nueva; })) {
+  if (nueva && pedidos.some(function (pedido) { return pedido.referencia === nueva; })) {
     aviso.innerHTML =
       "<div>Pedido <strong>" + textoSeguro(nueva) + "</strong> creado " +
       "correctamente. Es un pedido de demostración: no se ha cobrado nada, " +
