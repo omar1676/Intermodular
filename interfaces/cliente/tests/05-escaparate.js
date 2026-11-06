@@ -4,6 +4,7 @@ require("./entorno.js").cargar([
   "datos-demo.js",
   "zapatilla-svg.js",
   "api.js",
+  "piezas.js",
   "catalogo.js"
 ]);
 

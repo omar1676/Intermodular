@@ -8,6 +8,7 @@ require("./entorno.js").cargar([
   "pedidos-datos.js",
   "carrito.js",
   "pedidos.js",
+  "piezas.js",
   "catalogo.js"
 ]);
 
