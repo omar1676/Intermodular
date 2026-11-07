@@ -56,9 +56,15 @@ function calidez(hex) {
   return (c.r - c.b) / 255;
 }
 
-/* La proporción: el ancho de la foto entre su alto. Cuanto más baja, más
-   alta es la zapatilla (caña alta o suela gruesa). Sale de medir el
-   archivo, no de clasificar las cien a mano. */
+/* La proporción: el ancho de la fotografía entre su alto.
+
+   OJO CON LO QUE ESTO ES Y LO QUE NO ES. Mide el encuadre de la foto, no
+   la zapatilla. Da una pista de la silueta —una de caña alta o de suela
+   gruesa ocupa más alto que una plana— pero depende también de cómo esté
+   hecha la foto, y no es una medida fiable de cómo es la zapatilla de
+   verdad. Aquí se usa solo para ordenar una sugerencia, que es para lo
+   que da. Para saber de verdad cómo es cada modelo haría falta un campo
+   en la base de datos puesto por quien la fabrica. */
 function proporcionDe(modelo) {
   return ANCHO_FOTO / modelo.alto_foto;
 }
@@ -120,24 +126,25 @@ function motivo(pieza, altura, peso, tono) {
   const partes = [];
 
   if (proporcion < objetivo - 0.12) {
-    partes.push("tiene más cuerpo del que buscabas, y aun así encaja");
+    partes.push("se ve con más cuerpo del que te proponemos, pero puede encajar");
   } else if (proporcion > objetivo + 0.12) {
-    partes.push("es más plana de lo que buscabas, y aun así encaja");
+    partes.push("se ve más plana de lo que te proponemos, pero puede encajar");
   } else if (objetivo < 2.05) {
-    partes.push("suela con cuerpo, la proporción que te proponemos");
+    partes.push("suela con cuerpo, cerca de la proporción que te proponemos");
   } else {
-    partes.push("perfil bajo y línea larga, la proporción que te proponemos");
+    partes.push("perfil bajo, cerca de la proporción que te proponemos");
   }
 
   if (puntosContraste(pieza.variante, tono) > 20) {
-    partes.push("y su color se distingue bien del tono que has elegido");
+    partes.push("su color se distingue del tono que has elegido");
   } else if (puntosGama(pieza.variante, tono) > 13) {
-    partes.push("y va en la misma gama de color que el tono que has elegido");
+    partes.push("va en la misma gama de color que el tono que has elegido");
   } else {
-    partes.push("y es un color tranquilo, que combina con casi todo");
+    partes.push("es un color tranquilo");
   }
 
-  const frase = partes.join(", ");
+  // Dos ideas, una sola frase: "lo primero, y lo segundo."
+  const frase = partes.join(", y ");
 
   return frase.charAt(0).toUpperCase() + frase.slice(1) + ".";
 }
@@ -226,8 +233,8 @@ function pintarResultados(modelos, altura, peso, tono) {
   const titulo = document.getElementById("cli-fit-titulo-resultados");
 
   if (titulo) {
-    titulo.textContent = piezas.length + " modelos para " + altura + " cm y " +
-      peso + " kg, con el " + tono.nombre.toLowerCase();
+    titulo.textContent = piezas.length + " modelos que te proponemos para " +
+      altura + " cm, " + peso + " kg y el " + tono.nombre.toLowerCase();
   }
 
   const zona = document.getElementById("cli-fit-salida");
