@@ -99,7 +99,9 @@ los tres salen del stock o del propio catálogo.**
 | Últimas tallas | Quedan tres tallas o menos |
 | Novedad | Está marcada con `destacado`, que es lo mismo que la pone en el expositor |
 
-**Detalle.** La zapatilla entra acercándose. Al pulsar un color se redibuja,
+**Detalle.** La zapatilla va arriba del todo, nada más pasar la cabecera, y
+debajo, en una sola columna, va todo lo que hay que elegir: color, talla,
+cantidad y el botón de añadir. Entra acercándose. Al pulsar un color se redibuja,
 se reinicia la talla y vuelve a acercarse. Las tallas sin existencias salen
 tachadas y no se pueden pulsar. El botón de añadir está bloqueado hasta que
 hay una talla elegida.
