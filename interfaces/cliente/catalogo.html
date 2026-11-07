@@ -39,14 +39,38 @@
       <div class="cli-muro cli-muro-catalogo">
 
         <div class="cli-intro">
-          <h1>Todo el catálogo.</h1>
-          <p id="cli-cuenta-catalogo"></p>
+          <h1>Catálogo NOVA</h1>
+          <p>Cien zapatillas en seis colecciones.</p>
         </div>
 
-        <div class="cli-filtros" id="cli-filtros" role="group"
-             aria-label="Filtrar por colección"></div>
+        <!-- Los filtros y el orden los escribe catalogo.js a partir de los
+             datos, por eso estos huecos están vacíos. -->
+        <div class="cli-catalogo-caja" id="cli-catalogo-caja">
 
-        <div id="cli-rejilla-catalogo" class="cli-estado">Cargando el catálogo…</div>
+          <aside class="cli-lado" id="cli-lado" aria-label="Filtros">
+            <div id="cli-filtros"></div>
+            <button class="cli-limpiar" type="button" id="cli-limpiar" hidden>
+              Quitar todos los filtros
+            </button>
+          </aside>
+
+          <div class="cli-principal">
+
+            <div class="cli-barra">
+              <p class="cli-cuenta" id="cli-cuenta-catalogo" aria-live="polite"></p>
+
+              <div class="cli-barra-acciones">
+                <button class="cli-boton-filtros" type="button" id="cli-ocultar-filtros"
+                        aria-expanded="true" aria-controls="cli-lado">Ocultar filtros</button>
+                <label class="cli-ordenar-rotulo" for="cli-orden">Ordenar por</label>
+                <select class="cli-orden" id="cli-orden"></select>
+              </div>
+            </div>
+
+            <div id="cli-rejilla-catalogo" class="cli-estado">Cargando el catálogo…</div>
+
+          </div>
+        </div>
 
       </div>
     </section>

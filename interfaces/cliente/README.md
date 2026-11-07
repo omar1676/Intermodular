@@ -39,7 +39,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `css/base.css` | Paleta, cabecera, pie, botones y avisos |
 | `css/escaparate.css` | Pared, repisas y rejilla de la portada |
 | `css/producto.css` | Escena del detalle, colores, tallas y cantidad |
-| `css/catalogo.css` | Tarjetas y filtro del catálogo comercial |
+| `css/catalogo.css` | Columna de filtros, barra y tarjetas del catálogo |
 | `css/paginas.css` | Carrito, cuenta y Mis pedidos |
 | `js/datos-demo.js` | Tabla `FOTOS` y catálogo ficticio: modelos, colores, tallas y stock |
 | `js/zapatilla-svg.js` | Dibujo SVG de la zapatilla |
@@ -48,7 +48,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `js/pedidos-datos.js` | Pedidos de ejemplo y creación de pedidos de demostración |
 | `js/piezas.js` | Dibuja las zapatillas: pieza de expositor y tarjeta de catálogo |
 | `js/escaparate.js` | Dibuja el expositor: elige las marcadas como destacado |
-| `js/catalogo.js` | Dibuja el catálogo y lo filtra por colección |
+| `js/catalogo.js` | Dibuja el catálogo, lo filtra y lo ordena |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
 | `js/cuenta.js` | Pestañas y validación de los formularios |
@@ -62,17 +62,33 @@ Arriba, **el expositor**: ocho zapatillas sobre una pared gris, en dos filas
 de cuatro y muy separadas. Son las que el catálogo marca con `destacado`. Al
 señalar o enfocar una **se enciende su repisa**; las demás se quedan apagadas.
 
-Debajo, **el catálogo**: las cien, en tarjetas de cuatro por fila sobre un
-bloque claro, con marca, modelo, acabado y precio. Arriba se expone de una en
-una; aquí se comparan.
+Debajo, **el catálogo**, montado como una tienda de verdad: columna de
+filtros a la izquierda, barra de herramientas arriba y rejilla de tarjetas a
+la derecha. Arriba se expone de una en una; aquí se compra.
 
 **Catálogo.** Lo mismo que el bloque de abajo de la portada, en su propia
 página, para llegar desde el menú. Es el mismo código: las dos páginas cargan
-`catalogo.js` y tienen los mismos tres huecos.
+`catalogo.js` y tienen los mismos huecos vacíos.
 
-Se filtra por colección con los botones de arriba, que salen de la lista
-`COLECCIONES` y no de una lista escrita a mano en el HTML. El recuento de
-debajo del título cuenta lo que hay en pantalla.
+**Los filtros no están escritos en el HTML.** Los escribe `catalogo.js`
+leyendo el catálogo, y cada opción lleva al lado cuántas zapatillas tiene.
+Añadir una colección o una talla a los datos la añade aquí sola.
+
+| Bloque | De dónde sale |
+|---|---|
+| Colección | El campo `coleccion`, que es la palabra del archivo de la foto |
+| Precio | `precio_base`, partido en tres tramos |
+| Talla | Las tallas del catálogo, contando solo las que tienen existencias |
+| Disponibilidad | El mismo estado que decide el aviso de la tarjeta |
+
+No hay bloques de **género** ni de **estilo**: las seis colecciones ya son
+esas dos cosas (`hombre`, `mujer` y `unisex` son género; `luxe`, `street` y
+`casual` son estilo). Separarlos obligaría a inventarse el género de cuarenta
+zapatillas y el estilo de otras sesenta.
+
+La barra de arriba dice cuántos artículos se están viendo, deja ocultar la
+columna de filtros y ordenar por destacadas, precio o nombre. Si una
+combinación de filtros no deja ninguna, lo dice en vez de quedarse en blanco.
 
 Cada tarjeta puede llevar un aviso en la esquina. **Ninguno está inventado:
 los tres salen del stock o del propio catálogo.**

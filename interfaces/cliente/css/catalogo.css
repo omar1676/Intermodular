@@ -1,80 +1,248 @@
 /* NOVA Sneakers · Catálogo comercial · Omar */
 
-/* El catálogo no es el escaparate, y tiene que notarse a la primera.
+/* El catálogo no es el expositor, y tiene que notarse a la primera.
 
-   Arriba, en el expositor, hay ocho zapatillas sobre repisas iluminadas,
-   muy separadas, para mirarlas de una en una. Aquí hay cien y lo que se
-   hace es compararlas, así que la pared se apaga, cada zapatilla va en su
-   propio bloque claro y caben cuatro por fila.
+   Arriba hay ocho zapatillas sobre repisas iluminadas, muy separadas,
+   para mirarlas de una en una. Aquí hay cien y lo que se hace es
+   comprarlas: filtros a la izquierda, barra de herramientas arriba y una
+   rejilla de tarjetas a la derecha, como en cualquier tienda.
 
-   Esta hoja no toca nada del escaparate: todo cuelga de .cli-muro-catalogo
-   o de clases propias (.cli-tarjeta, .cli-filtro) que allí no existen. */
+   Esta hoja no toca nada del expositor: todo cuelga de
+   .cli-muro-catalogo o de clases propias que allí no existen. */
 
-/* La pared se apaga: sin la luz de sala del escaparate */
+/* La pared se apaga: sin la luz de sala del expositor */
 .cli-muro-catalogo {
   background: var(--cli-fondo);
   border-top: 1px solid var(--cli-borde);
 }
 
 .cli-muro-catalogo .cli-intro {
-  max-width: 1400px;
-  padding-bottom: clamp(18px, 2vw, 26px);
-  margin-bottom: 0;
+  max-width: 1500px;
+  padding-bottom: clamp(16px, 1.8vw, 24px);
+  margin-bottom: clamp(16px, 1.8vw, 24px);
+  border-bottom: 1px solid var(--cli-borde);
 }
 
 .cli-muro-catalogo .cli-intro h1,
 .cli-muro-catalogo .cli-intro h2 {
   margin: 0;
-  font-size: clamp(20px, 2.4vw, 30px);
+  font-size: clamp(19px, 2.2vw, 27px);
   font-weight: 600;
   letter-spacing: -.2px;
 }
 
 .cli-muro-catalogo .cli-intro p {
-  margin-top: 8px;
+  margin-top: 7px;
   font-size: 13px;
   color: var(--cli-texto-suave);
 }
 
-/* Filtro por colección */
+/* La caja: filtros a la izquierda, catálogo a la derecha */
 
-.cli-filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-width: 1400px;
-  margin: 0 auto clamp(22px, 2.6vw, 36px);
-  padding-bottom: clamp(20px, 2.4vw, 32px);
+.cli-catalogo-caja {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(22px, 2.4vw, 40px);
+  max-width: 1500px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* Al ocultar los filtros, el catálogo se queda con todo el ancho. Es una
+   sola clase en el contenedor: ni se mueve nada de sitio ni se vuelve a
+   dibujar la rejilla. */
+.cli-catalogo-caja.cli-sin-filtros {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cli-catalogo-caja.cli-sin-filtros .cli-lado {
+  display: none;
+}
+
+/* Columna de filtros */
+
+.cli-lado {
+  position: sticky;
+  top: 18px;
+  min-width: 0;
+}
+
+.cli-bloque {
   border-bottom: 1px solid var(--cli-borde);
 }
 
-.cli-filtro {
-  padding: 9px 17px;
+.cli-bloque summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 2px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--cli-texto);
+  cursor: pointer;
+  list-style: none;
+}
+
+/* La flecha por defecto cambia de un navegador a otro: se quita y se
+   pone una propia, que además gira al abrir. */
+.cli-bloque summary::-webkit-details-marker {
+  display: none;
+}
+
+.cli-bloque summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  border-right: 1.5px solid var(--cli-texto-suave);
+  border-bottom: 1.5px solid var(--cli-texto-suave);
+  rotate: 45deg;
+  translate: 0 -2px;
+  transition: rotate .2s ease;
+}
+
+.cli-bloque[open] summary::after {
+  rotate: -135deg;
+  translate: 0 2px;
+}
+
+.cli-bloque summary:focus-visible {
+  outline: 2px solid var(--cli-dorado-claro);
+  outline-offset: -2px;
+}
+
+/* Cuántos filtros hay puestos en este bloque */
+.cli-bloque-puestos {
+  min-width: 17px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--cli-dorado);
+  color: #211c10;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.cli-opciones {
+  padding: 2px 2px 14px;
+}
+
+.cli-opcion {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+  cursor: pointer;
+}
+
+.cli-opcion:hover {
+  color: var(--cli-texto);
+}
+
+.cli-opcion input {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  accent-color: var(--cli-dorado);
+  cursor: pointer;
+}
+
+.cli-opcion-nombre {
+  min-width: 0;
+}
+
+.cli-opcion-cuantas {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--cli-borde);
+}
+
+.cli-limpiar {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--cli-texto-suave);
+  font-family: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.cli-limpiar:hover {
+  color: var(--cli-texto);
+  border-color: var(--cli-texto-suave);
+}
+
+/* La barra de herramientas */
+
+.cli-principal {
+  min-width: 0;
+}
+
+.cli-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 15px;
+  margin-bottom: clamp(18px, 2vw, 28px);
+  border-bottom: 1px solid var(--cli-borde);
+}
+
+.cli-cuenta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+}
+
+.cli-barra-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.cli-boton-filtros {
+  padding: 8px 15px;
   border: 1px solid var(--cli-borde);
   border-radius: 999px;
   background: transparent;
   color: var(--cli-texto-suave);
   font-family: inherit;
-  font-size: 13px;
-  letter-spacing: .2px;
+  font-size: 12.5px;
   cursor: pointer;
-  transition: color .18s ease, border-color .18s ease, background .18s ease;
 }
 
-.cli-filtro:hover {
+.cli-boton-filtros:hover {
   color: var(--cli-texto);
   border-color: var(--cli-texto-suave);
 }
 
-/* El botón de la colección que se está viendo. aria-pressed ya lo dice
-   para quien no ve la pantalla; esto es lo mismo, pero a la vista. */
-.cli-filtro[aria-pressed="true"] {
-  color: #211c10;
-  border-color: var(--cli-dorado);
-  background: var(--cli-dorado);
+.cli-ordenar-rotulo {
+  font-size: 12.5px;
+  color: var(--cli-texto-suave);
 }
 
-.cli-filtro:focus-visible {
+.cli-orden {
+  padding: 8px 10px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 3px;
+  background: var(--cli-panel);
+  color: var(--cli-texto);
+  font-family: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.cli-boton-filtros:focus-visible,
+.cli-orden:focus-visible,
+.cli-limpiar:focus-visible {
   outline: 2px solid var(--cli-dorado-claro);
   outline-offset: 2px;
 }
@@ -84,9 +252,7 @@
 .cli-tarjetas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(22px, 2.4vw, 34px) clamp(16px, 1.8vw, 26px);
-  max-width: 1400px;
-  margin: 0 auto;
+  gap: clamp(22px, 2.2vw, 32px) clamp(14px, 1.5vw, 22px);
 }
 
 .cli-tarjeta {
@@ -114,7 +280,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10% 8%;
+  padding: 9% 7%;
   border-radius: 3px;
   background: #ecebe8;
   overflow: hidden;
@@ -138,11 +304,11 @@
 /* El aviso de la esquina */
 .cli-aviso {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 9px;
+  left: 9px;
   padding: 4px 9px;
   border-radius: 2px;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: .5px;
   text-transform: uppercase;
@@ -166,8 +332,8 @@
 /* El texto de la tarjeta */
 
 .cli-tarjeta-marca {
-  margin-top: 13px;
-  font-size: 11px;
+  margin-top: 12px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 1.6px;
   color: var(--cli-texto-suave);
@@ -179,7 +345,7 @@
   color: var(--cli-texto);
 }
 
-.cli-tarjeta-color {
+.cli-tarjeta-linea {
   margin-top: 2px;
   font-size: 12.5px;
   color: var(--cli-texto-suave);
@@ -215,24 +381,67 @@
   }
 }
 
-/* Medidas de pantalla */
+/* Medidas de pantalla
 
-@media (max-width: 1100px) {
+   Escritorio grande: filtros al lado y cuatro columnas.
+   Escritorio normal: filtros al lado y tres columnas.
+   Tableta: la columna de filtros se estrecha.
+   Teléfono: los filtros pasan a ocupar el ancho entero y empiezan
+   plegados, que es lo que hace catalogo.js al arrancar. */
+
+@media (max-width: 1340px) {
   .cli-tarjetas {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 760px) {
-  .cli-tarjetas {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px 14px;
+@media (max-width: 1080px) {
+  .cli-catalogo-caja {
+    grid-template-columns: 196px minmax(0, 1fr);
   }
 }
 
-@media (max-width: 420px) {
-  .cli-filtro {
-    padding: 8px 14px;
-    font-size: 12.5px;
+@media (max-width: 860px) {
+  .cli-catalogo-caja,
+  .cli-catalogo-caja.cli-sin-filtros {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cli-lado {
+    position: static;
+    padding-bottom: 18px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--cli-borde);
+  }
+
+  .cli-tarjetas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* El botón de los filtros es ahora lo primero de la barra */
+  .cli-boton-filtros {
+    order: -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .cli-barra {
+    gap: 9px;
+  }
+
+  .cli-barra-acciones {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .cli-orden {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .cli-tarjetas {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
