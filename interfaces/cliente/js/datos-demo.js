@@ -21,16 +21,16 @@ function tallasDemo(idVariante, primerSku, agotadas) {
 /* FOTOS: la fotografía de cada modelo. Si una casilla se queda vacía, esa
    zapatilla se dibuja con el SVG. Instrucciones en img/LEEME.md */
 const FOTOS = {
-  1:  "img/nova-luxe-01.jpg",    2:  "img/nova-luxe-02.jpg",
-  3:  "img/nova-luxe-03.jpg",    4:  "img/nova-luxe-04.jpg",
-  5:  "img/nova-luxe-05.jpg",    6:  "img/nova-luxe-06.jpg",
-  7:  "img/nova-luxe-07.jpg",    8:  "img/nova-luxe-08.jpg",
-  9:  "img/nova-luxe-09.jpg",    10: "img/nova-luxe-10.jpg",
-  11: "img/nova-street-01.jpg",  12: "img/nova-street-02.jpg",
-  13: "img/nova-street-03.jpg",  14: "img/nova-street-04.jpg",
-  15: "img/nova-street-05.jpg",  16: "img/nova-street-06.jpg",
-  17: "img/nova-street-07.jpg",  18: "img/nova-street-08.jpg",
-  19: "img/nova-street-09.jpg",  20: "img/nova-street-10.jpg"
+  1:  "img/nova-luxe-01.png",    2:  "img/nova-luxe-02.png",
+  3:  "img/nova-luxe-03.png",    4:  "img/nova-luxe-04.png",
+  5:  "img/nova-luxe-05.png",    6:  "img/nova-luxe-06.png",
+  7:  "img/nova-luxe-07.png",    8:  "img/nova-luxe-08.png",
+  9:  "img/nova-luxe-09.png",    10: "img/nova-luxe-10.png",
+  11: "img/nova-street-01.png",  12: "img/nova-street-02.png",
+  13: "img/nova-street-03.png",  14: "img/nova-street-04.png",
+  15: "img/nova-street-05.png",  16: "img/nova-street-06.png",
+  17: "img/nova-street-07.png",  18: "img/nova-street-08.png",
+  19: "img/nova-street-09.png",  20: "img/nova-street-10.png"
 };
 
 /* Veinte modelos, uno por fotografía. Cada uno tiene un solo acabado.

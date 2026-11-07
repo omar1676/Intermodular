@@ -293,14 +293,17 @@
   }
 }
 
-/* La foto de producto del detalle, cuando el color tiene fotografía. */
+/* La foto del detalle. El archivo mide 560 px: mas alla se ve blanda, asi
+   que se le pone tope y se centra. */
 .cli-escena img.zap {
+  max-width: 680px;
+  margin: 0 auto;
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 8 / 5;
   object-fit: contain;
-  object-position: center;
+  object-position: center bottom;
 }
 
 /* Nombre del modelo, grande y arriba a la izquierda */
