@@ -79,6 +79,121 @@
   animation: cli-acercar .4s cubic-bezier(.2, .7, .3, 1) both;
 }
 
+/* El visor
+
+   La caja de la zapatilla es lo que se mueve; la imagen de dentro se
+   queda con su animación de entrada. Si se moviesen las dos, las dos
+   usarían transform y se pisarían. */
+
+.cli-visor-caja {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transform-origin: center 72%;
+  transition: transform .18s ease-out;
+  will-change: transform;
+}
+
+/* Arrastrar dentro de la escena no debe seleccionar texto ni hacer que
+   el navegador intente desplazar la página con el dedo. */
+.cli-escena {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cli-escena.cli-visor-acercado {
+  cursor: grab;
+}
+
+.cli-escena.cli-visor-acercado:active {
+  cursor: grabbing;
+}
+
+.cli-visor-mandos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  max-width: 680px;
+  margin: 0 auto 6px;
+}
+
+.cli-visor-zoom {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 999px;
+  background: var(--cli-panel);
+}
+
+.cli-visor-zoom button {
+  width: 36px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--cli-texto);
+  font-family: inherit;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cli-visor-zoom button:hover:not(:disabled) {
+  color: var(--cli-dorado-claro);
+}
+
+.cli-visor-zoom button:disabled {
+  color: var(--cli-borde);
+  cursor: default;
+}
+
+.cli-visor-nivel {
+  min-width: 42px;
+  font-size: 12.5px;
+  text-align: center;
+  color: var(--cli-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.cli-visor-reiniciar {
+  font-size: 12.5px;
+}
+
+.cli-visor-zoom button:focus-visible,
+.cli-visor-reiniciar:focus-visible {
+  outline: 2px solid var(--cli-dorado-claro);
+  outline-offset: 2px;
+}
+
+/* La advertencia de que esto no es un giro de 360 grados va aquí, al
+   lado de los mandos, y no escondida en el pie. */
+.cli-visor-nota {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--cli-texto-suave);
+}
+
+.cli-visor-nota strong {
+  color: var(--cli-texto);
+  font-weight: 600;
+}
+
+/* Quien ha pedido menos movimiento no quiere que la foto se tuerza */
+@media (prefers-reduced-motion: reduce) {
+  .cli-visor-caja {
+    transition: none;
+  }
+}
+
 /* Debajo: lo que hay que elegir. Se le pone tope de ancho y se centra,
    porque una fila de tallas de 1180 px de ancho no la lee nadie. */
 
