@@ -287,6 +287,13 @@
   gap: clamp(52px, 5.2vw, 92px) clamp(26px, 3.4vw, 58px);
 }
 
+/* La zapatilla no llena su celda: deja un margen a cada lado. Va en la
+   pieza y no en la imagen para que encojan a la vez la zapatilla, la
+   repisa y el rótulo, y los tres sigan alineados. */
+.cli-muro-portada .cli-pieza {
+  padding: 0 12%;
+}
+
 /* Las piezas son casi el doble de grandes: el rótulo las acompaña */
 .cli-muro-portada .cli-pieza-nombre,
 .cli-muro-portada .cli-pieza-precio,
@@ -307,6 +314,12 @@
   .cli-muro-portada .cli-rejilla {
     grid-template-columns: repeat(2, 1fr);
     gap: 50px 32px;
+  }
+
+  /* Con dos columnas la celda ya es estrecha: menos margen, o la
+     zapatilla se quedaría diminuta. */
+  .cli-muro-portada .cli-pieza {
+    padding: 0 6%;
   }
 }
 
