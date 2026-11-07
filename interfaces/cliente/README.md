@@ -104,7 +104,25 @@ los tres salen del stock o del propio catálogo.**
 
 **Detalle.** La zapatilla va arriba del todo, nada más pasar la cabecera, y
 debajo, en una sola columna, va todo lo que hay que elegir: color, talla,
-cantidad y el botón de añadir. Entra acercándose. Al pulsar un color se redibuja,
+cantidad y el botón de añadir.
+
+Entre medias están los mandos del **visor**: acercar de 1 a 2,5 aumentos en
+pasos de medio, y restablecer. Pasando el ratón por encima —o arrastrando el
+dedo— la fotografía se inclina un poco con perspectiva, como máximo 14 grados
+a los lados y 8 arriba y abajo, y al acercarla ese mismo movimiento la
+desplaza para poder mirar una zona concreta.
+
+**No es un giro de 360 grados y la página lo dice ahí mismo**, al lado de los
+mandos: de cada modelo hay una sola fotografía, de perfil, así que lo que se
+inclina es esa foto. Sirve para verla mejor, no para ver el otro lado.
+
+Es un solo cálculo, `transformacionVisor(zoom, x, y)`, separado del navegador
+para poder comprobarlo sin abrir nada. Una misma posición del puntero mueve
+la inclinación y el desplazamiento, y el desplazamiento se multiplica por
+`(zoom - 1)`, así que a tamaño normal vale cero y la foto no se mueve de su
+sitio. Al cambiar de color el visor vuelve a empezar.
+
+La zapatilla entra acercándose. Al pulsar un color se redibuja,
 se reinicia la talla y vuelve a acercarse. Las tallas sin existencias salen
 tachadas y no se pueden pulsar. El botón de añadir está bloqueado hasta que
 hay una talla elegida.
@@ -124,9 +142,16 @@ reglas de aritmética que caben en una pantalla.
 
 La proporción de cada zapatilla es el ancho de su foto entre su alto, y el
 alto está medido archivo por archivo (`alto` en `datos-demo.js`). Cuanto más
-baja es la proporción, más alta es la zapatilla: caña alta o suela gruesa.
-Así el sistema sabe la silueta de las cien **sin que nadie las clasifique a
+baja es la proporción, más alta se ve la zapatilla: caña alta o suela gruesa.
+Así el sistema estima la silueta de las cien **sin que nadie las clasifique a
 mano**.
+
+**Cuidado con lo que esto es.** Mide el encuadre de la fotografía, no la
+zapatilla: da una pista de la silueta, pero depende también de cómo esté
+hecha la foto y **no es una medida fiable de cómo es el producto de verdad**.
+Aquí sirve para ordenar una sugerencia, que es para lo que da. Para saber de
+verdad cómo es cada modelo haría falta un campo en la base de datos puesto
+por quien lo fabrica. La página lo dice con esas palabras.
 
 ### Tres límites que el código se pone a propósito
 

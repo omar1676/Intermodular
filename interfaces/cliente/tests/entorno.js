@@ -13,6 +13,8 @@ function crearNodo(id) {
     disabled: false,
     value: "",
     dataset: {},
+    // Lo justo para poder comprobar lo que el visor escribe en transform
+    style: {},
     get innerHTML() { return this._html; },
     set innerHTML(v) { this._html = String(v); this._texto = ""; },
     get textContent() { return this._texto || this._html; },
@@ -29,8 +31,11 @@ function crearNodo(id) {
     setAttribute() {},
     removeAttribute() {},
     hasAttribute() { return false; },
+    querySelector() { return null; },
     querySelectorAll() { return []; },
-    closest() { return null; }
+    closest() { return null; },
+    getBoundingClientRect() { return { left: 0, top: 0, width: 0, height: 0 }; },
+    setPointerCapture() {}
   };
 }
 

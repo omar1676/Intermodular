@@ -36,15 +36,20 @@ function pintarZapatilla() {
   const nombre = modeloActual.nombre + " " + variante.color;
   const foto = fotoVariante(variante);
 
-  // Aqui la zapatilla es la imagen principal: lleva texto alternativo
-  if (foto) {
-    escena.innerHTML =
-      '<img class="zap" src="' + textoSeguro(foto) + '"' +
+  // Aqui la zapatilla es la imagen principal: lleva texto alternativo.
+  // Va dentro de una caja propia porque el visor mueve la caja y no la
+  // imagen: la imagen ya tiene su animacion de entrada, que tambien usa
+  // transform, y las dos se pisarian.
+  const dentro = foto
+    ? '<img class="zap" src="' + textoSeguro(foto) + '"' +
       ' alt="Zapatilla ' + textoSeguro(nombre) + '"' +
-      ' data-respaldo="' + variante.id_variante + '">';
-  } else {
-    escena.innerHTML = dibujoDetalle(variante.id_variante);
-  }
+      ' data-respaldo="' + variante.id_variante + '">'
+    : dibujoDetalle(variante.id_variante);
+
+  escena.innerHTML = '<div class="cli-visor-caja" id="cli-visor-caja">' + dentro + "</div>";
+
+  // Cada vez que cambia el color se vuelve a empezar: zoom a 1 y recta
+  reiniciarVisor();
 
   // El nombre del color, debajo del nombre del modelo
   const rotulo = document.getElementById("cli-rotulo-color");
@@ -63,6 +68,182 @@ function pintarZapatilla() {
     void dibujo.offsetWidth;
     dibujo.classList.add("cli-acercando");
   }
+}
+
+/* El visor
+
+   Lo que hace: acercar la fotografía y moverla un poco con perspectiva,
+   para poder mirarla de cerca y desde un lado.
+
+   Lo que NO hace, y conviene decirlo: no es un giro de 360 grados. De
+   cada zapatilla tenemos una sola fotografía, de perfil, así que lo que
+   se inclina es esa foto. Sirve para verla mejor, no para ver el otro
+   lado de la zapatilla, porque el otro lado no existe en el proyecto. */
+
+const VISOR_ZOOM_MIN = 1;
+const VISOR_ZOOM_MAX = 2.5;
+const VISOR_PASO = 0.5;
+
+// Cuánto se inclina como mucho, en grados
+const VISOR_GIRO_LADO = 14;
+const VISOR_GIRO_ALTO = 8;
+
+let visorZoom = 1;
+let visorX = 0;   // posición del puntero, de -0.5 a 0.5
+let visorY = 0;
+
+/* El cálculo, separado del navegador para poder comprobarlo.
+
+   Una sola posición de puntero mueve dos cosas a la vez: la inclinación
+   y, si está acercada, el desplazamiento. El desplazamiento se multiplica
+   por (zoom - 1), así que a tamaño normal vale cero y la imagen no se
+   mueve de su sitio. */
+function transformacionVisor(zoom, x, y) {
+  const giroY = (x * 2 * VISOR_GIRO_LADO).toFixed(2);
+  const giroX = (-y * 2 * VISOR_GIRO_ALTO).toFixed(2);
+  const moverX = (-x * (zoom - 1) * 170).toFixed(1);
+  const moverY = (-y * (zoom - 1) * 110).toFixed(1);
+
+  return "perspective(1100px)" +
+    " rotateX(" + giroX + "deg) rotateY(" + giroY + "deg)" +
+    " translate(" + moverX + "px, " + moverY + "px)" +
+    " scale(" + zoom + ")";
+}
+
+// El zoom no se sale de su rango por mucho que se pulse
+function zoomAjustado(valor) {
+  return Math.min(VISOR_ZOOM_MAX, Math.max(VISOR_ZOOM_MIN, Number(valor.toFixed(2))));
+}
+
+function pintarVisor() {
+  const caja = document.getElementById("cli-visor-caja");
+
+  if (caja) {
+    caja.style.transform = transformacionVisor(visorZoom, visorX, visorY);
+  }
+
+  const nivel = document.getElementById("cli-visor-nivel");
+
+  if (nivel) {
+    nivel.textContent = visorZoom.toFixed(1).replace(".", ",") + "×";
+  }
+
+  const menos = document.getElementById("cli-visor-menos");
+  const mas = document.getElementById("cli-visor-mas");
+
+  if (menos) {
+    menos.disabled = visorZoom <= VISOR_ZOOM_MIN;
+  }
+
+  if (mas) {
+    mas.disabled = visorZoom >= VISOR_ZOOM_MAX;
+  }
+
+  // El cursor avisa de que se puede arrastrar solo cuando sirve de algo
+  const escena = document.getElementById("cli-escena");
+
+  if (escena) {
+    escena.classList.toggle("cli-visor-acercado", visorZoom > VISOR_ZOOM_MIN);
+  }
+}
+
+function reiniciarVisor() {
+  visorZoom = 1;
+  visorX = 0;
+  visorY = 0;
+  pintarVisor();
+}
+
+function cambiarZoom(paso) {
+  visorZoom = zoomAjustado(visorZoom + paso);
+  pintarVisor();
+}
+
+// Quien ha pedido menos movimiento no quiere que la foto se tuerza sola
+function sinMovimiento() {
+  return !!(window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+}
+
+/* Dónde está el puntero dentro de la escena, de -0.5 a 0.5 en cada eje */
+function posicionEnEscena(escena, evento) {
+  const caja = escena.getBoundingClientRect();
+
+  if (!caja.width || !caja.height) {
+    return null;
+  }
+
+  return {
+    x: Math.min(0.5, Math.max(-0.5, (evento.clientX - caja.left) / caja.width - 0.5)),
+    y: Math.min(0.5, Math.max(-0.5, (evento.clientY - caja.top) / caja.height - 0.5))
+  };
+}
+
+function activarVisor() {
+  const escena = document.getElementById("cli-escena");
+
+  if (!escena) {
+    return;
+  }
+
+  let arrastrando = false;
+
+  escena.addEventListener("pointerdown", function (evento) {
+    arrastrando = true;
+    escena.setPointerCapture(evento.pointerId);
+  });
+
+  escena.addEventListener("pointerup", function () {
+    arrastrando = false;
+  });
+
+  escena.addEventListener("pointercancel", function () {
+    arrastrando = false;
+  });
+
+  /* Con ratón basta con pasar por encima; con el dedo hay que arrastrar,
+     porque en una pantalla táctil no existe el "pasar por encima". */
+  escena.addEventListener("pointermove", function (evento) {
+    if (sinMovimiento()) {
+      return;
+    }
+
+    if (evento.pointerType !== "mouse" && !arrastrando) {
+      return;
+    }
+
+    const sitio = posicionEnEscena(escena, evento);
+
+    if (!sitio) {
+      return;
+    }
+
+    // Arrastrando con el dedo no queremos que la página se mueva detrás
+    if (arrastrando && evento.cancelable) {
+      evento.preventDefault();
+    }
+
+    visorX = sitio.x;
+    visorY = sitio.y;
+    pintarVisor();
+  });
+
+  // Al sacar el ratón, la zapatilla se endereza pero sigue acercada
+  escena.addEventListener("pointerleave", function () {
+    arrastrando = false;
+    visorX = 0;
+    visorY = 0;
+    pintarVisor();
+  });
+
+  document.getElementById("cli-visor-mas")
+    .addEventListener("click", function () { cambiarZoom(VISOR_PASO); });
+
+  document.getElementById("cli-visor-menos")
+    .addEventListener("click", function () { cambiarZoom(-VISOR_PASO); });
+
+  document.getElementById("cli-visor-reiniciar")
+    .addEventListener("click", reiniciarVisor);
 }
 
 // Dibujo de respaldo del detalle, con su etiqueta accesible
@@ -176,6 +357,22 @@ function pintarEstructura() {
   detalle.className = "cli-detalle";
   detalle.innerHTML = `
     <div class="cli-escena" id="cli-escena"></div>
+
+    <div class="cli-visor-mandos">
+      <div class="cli-visor-zoom" role="group" aria-label="Acercar la fotografía">
+        <button type="button" id="cli-visor-menos" aria-label="Alejar">&minus;</button>
+        <span class="cli-visor-nivel" id="cli-visor-nivel" aria-live="polite">1,0&times;</span>
+        <button type="button" id="cli-visor-mas" aria-label="Acercar">+</button>
+      </div>
+      <button class="cli-boton-sec cli-visor-reiniciar" type="button" id="cli-visor-reiniciar">
+        Restablecer
+      </button>
+      <p class="cli-visor-nota">
+        Arrastra sobre la zapatilla para moverla.
+        <strong>No es un giro completo:</strong> de cada modelo tenemos una
+        sola fotografía, de perfil.
+      </p>
+    </div>
 
     <div class="cli-ficha">
       <div class="cli-rotulo-modelo">
@@ -329,6 +526,7 @@ function iniciar() {
     pintarZapatilla();
     actualizar();
     activarEventos();
+    activarVisor();
 
     document.title = "NOVA Sneakers · " + modeloActual.nombre;
 
