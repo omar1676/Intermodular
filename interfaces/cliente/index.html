@@ -10,6 +10,7 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/escaparate.css">
+  <link rel="stylesheet" href="css/catalogo.css">
 </head>
 
 <body class="cli">
@@ -48,6 +49,24 @@
       </div>
     </section>
 
+    <!-- Debajo del expositor, el catálogo: mismo dato, otra manera de
+         enseñarlo. Arriba se expone de una en una; aquí se compara. -->
+    <section class="cli-escaparate" aria-label="Catálogo">
+      <div class="cli-muro cli-muro-catalogo">
+
+        <div class="cli-intro">
+          <h2>Todo el catálogo.</h2>
+          <p id="cli-cuenta-catalogo"></p>
+        </div>
+
+        <div class="cli-filtros" id="cli-filtros" role="group"
+             aria-label="Filtrar por colección"></div>
+
+        <div id="cli-rejilla-catalogo" class="cli-estado">Cargando el catálogo…</div>
+
+      </div>
+    </section>
+
   </main>
 
   <footer class="cli-pie">
@@ -62,6 +81,7 @@
   <script src="js/carro.js"></script>
   <script src="js/piezas.js"></script>
   <script src="js/escaparate.js"></script>
+  <script src="js/catalogo.js"></script>
 
 </body>
 

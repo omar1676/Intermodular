@@ -32,8 +32,9 @@ comprobar("aparecen todos los nombres",
   CATALOGO_DEMO.every(function (m) { return html.includes(m.nombre); }));
 comprobar("aparecen todos los acabados",
   PIEZAS.every(function (p) { return html.includes(">" + p.variante.color + "<"); }));
-comprobar("cada pieza lleva su reclamo",
-  CATALOGO_DEMO.every(function (m) { return html.includes(m.descripcion); }));
+// El reclamo no va en la pieza del escaparate: se lee en la ficha
+comprobar("la pieza no arrastra el reclamo",
+  !html.includes("cli-pieza-reclamo"));
 comprobar("precios con formato español", html.includes(",") && /\d,\d\d/.test(html));
 comprobar("ningún texto 'undefined' o 'NaN'", !/undefined|NaN/.test(html));
 

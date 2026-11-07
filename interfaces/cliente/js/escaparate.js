@@ -14,8 +14,16 @@ function pintarEscaparate(modelos) {
   pintarPiezas(contenedor, destacadas(modelos));
 }
 
-function iniciar() {
+/* Tiene nombre propio porque la portada carga tambien catalogo.js, para
+   el bloque de abajo, y dos funciones iniciar() en la misma pagina se
+   pisarian la una a la otra. */
+function iniciarPortada() {
   const contenedor = document.getElementById("cli-rejilla");
+
+  if (!contenedor) {
+    return;
+  }
+
   const modelos = catalogoParaPintar(contenedor);
 
   if (!modelos) {
@@ -26,4 +34,4 @@ function iniciar() {
   activarClicsDePiezas(contenedor);
 }
 
-iniciar();
+iniciarPortada();

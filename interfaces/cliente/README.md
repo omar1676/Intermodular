@@ -25,8 +25,8 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 | Página | Qué hace |
 |---|---|
-| `index.html` | Portada: los ocho modelos destacados |
-| `catalogo.html` | Catálogo completo: las cien zapatillas, con su reclamo |
+| `index.html` | Portada: el expositor de ocho y, debajo, el catálogo |
+| `catalogo.html` | El mismo catálogo, en su propia página |
 | `producto.html` | Detalle: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
 | `cuenta.html` | Entrar y crear cuenta. **Solo interfaz**: valida, pero no autentica |
@@ -39,16 +39,16 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `css/base.css` | Paleta, cabecera, pie, botones y avisos |
 | `css/escaparate.css` | Pared, repisas y rejilla de la portada |
 | `css/producto.css` | Escena del detalle, colores, tallas y cantidad |
-| `css/catalogo.css` | Lo que el catálogo hace distinto del escaparate |
+| `css/catalogo.css` | Tarjetas y filtro del catálogo comercial |
 | `css/paginas.css` | Carrito, cuenta y Mis pedidos |
 | `js/datos-demo.js` | Tabla `FOTOS` y catálogo ficticio: modelos, colores, tallas y stock |
 | `js/zapatilla-svg.js` | Dibujo SVG de la zapatilla |
 | `js/api.js` | Única puerta de acceso a los datos, más utilidades comunes |
 | `js/carro.js` | Carrito: añadir, cambiar, quitar, totales y contador |
 | `js/pedidos-datos.js` | Pedidos de ejemplo y creación de pedidos de demostración |
-| `js/piezas.js` | Dibuja las zapatillas del catálogo, para quien las necesite |
-| `js/escaparate.js` | Dibuja la portada: elige las marcadas como destacado |
-| `js/catalogo.js` | Dibuja el catálogo completo |
+| `js/piezas.js` | Dibuja las zapatillas: pieza de expositor y tarjeta de catálogo |
+| `js/escaparate.js` | Dibuja el expositor: elige las marcadas como destacado |
+| `js/catalogo.js` | Dibuja el catálogo y lo filtra por colección |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
 | `js/cuenta.js` | Pestañas y validación de los formularios |
@@ -56,14 +56,32 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 
 ## Qué hace cada pantalla
 
-**Portada.** Ocho zapatillas sobre una pared gris, en dos filas de cuatro.
-Son las que el catálogo marca con `destacado`. Al señalar o enfocar una
-**se enciende su repisa**; las demás se quedan apagadas. Desde aquí no se
-va al catálogo: para eso está el menú.
+**Portada.** Tiene dos partes, y se nota a la primera que son distintas.
 
-**Catálogo.** Las cien zapatillas, en bloques grandes, cada una con su
-reclamo debajo. Los que no tienen ninguna talla disponible salen atenuados
-y con la palabra «Agotado».
+Arriba, **el expositor**: ocho zapatillas sobre una pared gris, en dos filas
+de cuatro y muy separadas. Son las que el catálogo marca con `destacado`. Al
+señalar o enfocar una **se enciende su repisa**; las demás se quedan apagadas.
+
+Debajo, **el catálogo**: las cien, en tarjetas de cuatro por fila sobre un
+bloque claro, con marca, modelo, acabado y precio. Arriba se expone de una en
+una; aquí se comparan.
+
+**Catálogo.** Lo mismo que el bloque de abajo de la portada, en su propia
+página, para llegar desde el menú. Es el mismo código: las dos páginas cargan
+`catalogo.js` y tienen los mismos tres huecos.
+
+Se filtra por colección con los botones de arriba, que salen de la lista
+`COLECCIONES` y no de una lista escrita a mano en el HTML. El recuento de
+debajo del título cuenta lo que hay en pantalla.
+
+Cada tarjeta puede llevar un aviso en la esquina. **Ninguno está inventado:
+los tres salen del stock o del propio catálogo.**
+
+| Aviso | Cuándo |
+|---|---|
+| Agotado | Ninguna talla con existencias. La foto se apaga y el precio sale tachado |
+| Últimas tallas | Quedan tres tallas o menos |
+| Novedad | Está marcada con `destacado`, que es lo mismo que la pone en el expositor |
 
 **Detalle.** La zapatilla entra acercándose. Al pulsar un color se redibuja,
 se reinicia la talla y vuelve a acercarse. Las tallas sin existencias salen
