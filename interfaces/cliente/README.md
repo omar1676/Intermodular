@@ -26,7 +26,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | Página | Qué hace |
 |---|---|
 | `index.html` | Portada: los ocho modelos destacados |
-| `catalogo.html` | Catálogo completo: los veinte modelos, con su reclamo |
+| `catalogo.html` | Catálogo completo: las cien zapatillas, con su reclamo |
 | `producto.html` | Detalle: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
 | `cuenta.html` | Entrar y crear cuenta. **Solo interfaz**: valida, pero no autentica |
@@ -61,7 +61,7 @@ Son las que el catálogo marca con `destacado`. Al señalar o enfocar una
 **se enciende su repisa**; las demás se quedan apagadas. Desde aquí no se
 va al catálogo: para eso está el menú.
 
-**Catálogo.** Los veinte modelos, en bloques grandes, cada uno con su
+**Catálogo.** Las cien zapatillas, en bloques grandes, cada una con su
 reclamo debajo. Los que no tienen ninguna talla disponible salen atenuados
 y con la palabra «Agotado».
 
@@ -187,13 +187,18 @@ modelos -> variantes (color) -> producto_sku (talla + sku) -> existencias
 
 ### Atención: ahora mismo la web y el SQL **no** coinciden
 
-La base de datos tiene siete modelos; la web tiene veinte, uno por cada
-fotografía de producto. **Seis de los veinte conservan el nombre y el
-precio exactos del SQL**: Origin, Velocity, Eclipse, Archive, Aura y Pulse.
-Los otros catorce son datos de demostración que la base de datos todavía
-no tiene.
+La base de datos tiene siete modelos; la web tiene cien, uno por cada
+fotografía de producto. **Seis de los cien conservan el nombre y el precio
+exactos del SQL**: Origin, Velocity, Eclipse, Archive, Aura y Pulse. Los
+otros noventa y cuatro son datos de demostración que la base de datos
+todavía no tiene.
 
-**Pendiente para el equipo:** añadir esos catorce modelos a
+Las cien están repartidas en seis colecciones —Luxe, Street, Hombre, Mujer,
+Unisex y Casual—. La colección
+de cada zapatilla sale del nombre de su archivo de foto, así que no hay
+forma de que una acabe en la equivocada.
+
+**Pendiente para el equipo:** añadir esos noventa y cuatro modelos a
 `acceso-datos/sql/05_datos_prueba.sql` para que las dos partes vuelvan a
 cuadrar. Desde la web no se toca ningún `.sql`.
 

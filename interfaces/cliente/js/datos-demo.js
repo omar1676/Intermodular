@@ -18,213 +18,376 @@ function tallasDemo(idVariante, primerSku, agotadas) {
   return tallas;
 }
 
-/* FOTOS: la fotografía de cada modelo. Si una casilla se queda vacía, esa
-   zapatilla se dibuja con el SVG. Instrucciones en img/LEEME.md */
-const FOTOS = {
-  1:  "img/nova-luxe-01.png",    2:  "img/nova-luxe-02.png",
-  3:  "img/nova-luxe-03.png",    4:  "img/nova-luxe-04.png",
-  5:  "img/nova-luxe-05.png",    6:  "img/nova-luxe-06.png",
-  7:  "img/nova-luxe-07.png",    8:  "img/nova-luxe-08.png",
-  9:  "img/nova-luxe-09.png",    10: "img/nova-luxe-10.png",
-  11: "img/nova-street-01.png",  12: "img/nova-street-02.png",
-  13: "img/nova-street-03.png",  14: "img/nova-street-04.png",
-  15: "img/nova-street-05.png",  16: "img/nova-street-06.png",
-  17: "img/nova-street-07.png",  18: "img/nova-street-08.png",
-  19: "img/nova-street-09.png",  20: "img/nova-street-10.png"
-};
+/* Las seis colecciones del catálogo. La clave es la misma palabra que
+   lleva el nombre del archivo de la foto, así que no hay manera de que
+   una zapatilla acabe en la colección equivocada. */
+const COLECCIONES = [
+  { clave: "luxe",   nombre: "Luxe" },
+  { clave: "street", nombre: "Street" },
+  { clave: "hombre", nombre: "Hombre" },
+  { clave: "mujer",  nombre: "Mujer" },
+  { clave: "unisex", nombre: "Unisex" },
+  { clave: "casual", nombre: "Casual" }
+];
 
-/* Veinte modelos, uno por fotografía. Cada uno tiene un solo acabado.
+/* Cien zapatillas, una por fotografía, cada una con un solo acabado.
 
    Seis conservan el nombre y el precio exactos de 05_datos_prueba.sql:
-   Origin, Velocity, Eclipse, Archive, Aura y Pulse. Los otros catorce son
-   datos de demostración de esta web y la base de datos todavía no los
-   tiene. Está explicado en el README.
+   Origin, Velocity, Eclipse, Archive, Aura y Pulse. Las otras noventa y
+   cuatro son datos de demostración de esta web y la base de datos todavía
+   no las tiene. Está explicado en el README.
 
-   Los colores hex no están inventados: salen de medir el color dominante
-   de cada fotografía, para que la muestra del detalle y el dibujo de
-   respaldo se parezcan a la foto.
+   Los hex no están inventados: salen de medir el color dominante, el de
+   sombra y el de la suela en la propia fotografía, para que la muestra de
+   color y el dibujo de respaldo se parezcan a la foto. El método está en
+   img/LEEME.md.
 
-   "destacado" es lo único que decide qué sale en la portada. */
-const CATALOGO_DEMO = [
-  {
-    id_modelo: 1, nombre: "NOVA Onyx", precio_base: 139.90, activo: true, destacado: false,
-    descripcion: "Negro. No hay mucho más que explicar.",
-    variantes: [{
-      id_variante: 1, color: "Negro", suplemento_precio: 0,
-      hex: "#232220", hex2: "#12110f", suela: "#1b1b1b",
-      tallas: tallasDemo(1, 1, [40])
-    }]
-  },
-  {
-    id_modelo: 2, nombre: "NOVA Origin", precio_base: 79.99, activo: true, destacado: true,
-    descripcion: "La primera que te pones. La última de la que te cansas.",
-    variantes: [{
-      id_variante: 2, color: "Hueso", suplemento_precio: 0,
-      hex: "#ded3c5", hex2: "#c3b6a4", suela: "#efe9df",
-      tallas: tallasDemo(2, 6)
-    }]
-  },
-  {
-    id_modelo: 3, nombre: "NOVA Field", precio_base: 124.90, activo: true, destacado: true,
-    descripcion: "Para los sábados que empiezan sin plan.",
-    variantes: [{
-      id_variante: 3, color: "Oliva", suplemento_precio: 0,
-      hex: "#3c3623", hex2: "#272316", suela: "#b5804a",
-      tallas: tallasDemo(3, 11, [44])
-    }]
-  },
-  {
-    id_modelo: 4, nombre: "NOVA Harbor", precio_base: 149.90, activo: true, destacado: true,
-    descripcion: "Sube el tobillo. Baja el ruido.",
-    variantes: [{
-      id_variante: 4, color: "Marino", suplemento_precio: 0,
-      hex: "#36363e", hex2: "#202129", suela: "#1d1d22",
-      tallas: tallasDemo(4, 16)
-    }]
-  },
-  {
-    id_modelo: 5, nombre: "NOVA Dune", precio_base: 119.90, activo: true, destacado: false,
-    descripcion: "El color de las cosas que duran.",
-    variantes: [{
-      id_variante: 5, color: "Arena", suplemento_precio: 0,
-      hex: "#9c816b", hex2: "#715947", suela: "#efe7da",
-      tallas: tallasDemo(5, 21, [40, 41])
-    }]
-  },
-  {
-    id_modelo: 6, nombre: "NOVA Drift", precio_base: 109.90, activo: true, destacado: false,
-    descripcion: "Sin cordones y sin prisa.",
-    variantes: [{
-      id_variante: 6, color: "Perla", suplemento_precio: 0,
-      hex: "#cfc9c6", hex2: "#a9a29e", suela: "#e9e6e2",
-      tallas: tallasDemo(6, 26)
-    }]
-  },
-  {
-    id_modelo: 7, nombre: "NOVA Ember", precio_base: 134.90, activo: true, destacado: true,
-    descripcion: "Un color que no pasa desapercibido, y lo sabe.",
-    variantes: [{
-      id_variante: 7, color: "Burdeos", suplemento_precio: 0,
-      hex: "#5b2b2b", hex2: "#361013", suela: "#2e1a17",
-      tallas: tallasDemo(7, 31)
-    }]
-  },
-  {
-    id_modelo: 8, nombre: "NOVA Court", precio_base: 112.90, activo: true, destacado: false,
-    descripcion: "Hecha para que te pregunten dónde la compraste.",
-    variantes: [{
-      id_variante: 8, color: "Marfil", suplemento_precio: 0,
-      hex: "#ded2c5", hex2: "#2f4a39", suela: "#efe9df",
-      tallas: tallasDemo(8, 36, [43])
-    }]
-  },
-  {
-    id_modelo: 9, nombre: "NOVA Slate", precio_base: 142.90, activo: true, destacado: false,
-    descripcion: "Gris, pero nunca discreta.",
-    variantes: [{
-      id_variante: 9, color: "Grafito", suplemento_precio: 0,
-      hex: "#3a3939", hex2: "#242323", suela: "#1f1f1f",
-      tallas: tallasDemo(9, 41)
-    }]
-  },
-  {
-    id_modelo: 10, nombre: "NOVA Linen", precio_base: 117.90, activo: true, destacado: false,
-    descripcion: "La que te pones cuando quieres acertar seguro.",
-    variantes: [{
-      id_variante: 10, color: "Camel", suplemento_precio: 0,
-      hex: "#af9985", hex2: "#8c7765", suela: "#efe7da",
-      tallas: tallasDemo(10, 46)
-    }]
-  },
-  {
-    id_modelo: 11, nombre: "NOVA Velocity", precio_base: 119.90, activo: true, destacado: false,
-    descripcion: "Si la miras parada, no la estás entendiendo.",
-    variantes: [{
-      id_variante: 11, color: "Coral", suplemento_precio: 0,
-      hex: "#e4dfe0", hex2: "#b9b4b5", suela: "#f1efe9",
-      tallas: tallasDemo(11, 51)
-    }]
-  },
-  {
-    id_modelo: 12, nombre: "NOVA Archive", precio_base: 109.90, activo: true, destacado: true,
-    descripcion: "Del dos mil, pero sin nostalgia.",
-    variantes: [{
-      id_variante: 12, color: "Blanco", suplemento_precio: 0,
-      hex: "#e5e2df", hex2: "#bdbab5", suela: "#f1efe9",
-      tallas: tallasDemo(12, 56, [40])
-    }]
-  },
-  {
-    id_modelo: 13, nombre: "NOVA Vector", precio_base: 127.90, activo: true, destacado: false,
-    descripcion: "Los que llegan tarde no la llevan.",
-    variantes: [{
-      id_variante: 13, color: "Lima", suplemento_precio: 0,
-      hex: "#232325", hex2: "#111113", suela: "#3a3a3c",
-      tallas: tallasDemo(13, 61)
-    }]
-  },
-  {
-    id_modelo: 14, nombre: "NOVA Marina", precio_base: 104.90, activo: true, destacado: false,
-    descripcion: "Para los días que no piden nada especial.",
-    variantes: [{
-      id_variante: 14, color: "Crema", suplemento_precio: 0,
-      hex: "#d2c5b7", hex2: "#243a52", suela: "#ece4d8",
-      tallas: tallasDemo(14, 66, [44])
-    }]
-  },
-  {
-    id_modelo: 15, nombre: "NOVA Pulse", precio_base: 114.90, activo: true, destacado: true,
-    descripcion: "Enciende la calle y se va.",
-    variantes: [{
-      id_variante: 15, color: "Violeta", suplemento_precio: 0,
-      hex: "#2a1540", hex2: "#0a090c", suela: "#2f2f37",
-      tallas: tallasDemo(15, 71)
-    }]
-  },
-  {
-    id_modelo: 16, nombre: "NOVA Aura", precio_base: 99.99, activo: true, destacado: false,
-    descripcion: "Pesa tan poco que se te olvida.",
-    variantes: [{
-      id_variante: 16, color: "Salvia", suplemento_precio: 0,
-      hex: "#b9b7ad", hex2: "#94928a", suela: "#eceae4",
-      tallas: tallasDemo(16, 76)
-    }]
-  },
-  {
-    // Agotada entera, a proposito, para que se vea como lo avisa la web
-    id_modelo: 17, nombre: "NOVA Ridge", precio_base: 121.90, activo: true, destacado: false,
-    descripcion: "Unos centímetros más. Nadie tiene por qué saberlo.",
-    variantes: [{
-      id_variante: 17, color: "Negro", suplemento_precio: 0,
-      hex: "#232322", hex2: "#111110", suela: "#cfc4b7",
-      tallas: tallasDemo(17, 81, [40, 41, 42, 43, 44])
-    }]
-  },
-  {
-    id_modelo: 18, nombre: "NOVA Cobalt", precio_base: 118.90, activo: true, destacado: true,
-    descripcion: "Azul de los que se ven desde el otro lado de la acera.",
-    variantes: [{
-      id_variante: 18, color: "Azul", suplemento_precio: 0,
-      hex: "#2a4fb5", hex2: "#16307a", suela: "#e8e7ea",
-      tallas: tallasDemo(18, 86)
-    }]
-  },
-  {
-    id_modelo: 19, nombre: "NOVA Terrace", precio_base: 106.90, activo: true, destacado: false,
-    descripcion: "La que acaba en todas las fotos del grupo.",
-    variantes: [{
-      id_variante: 19, color: "Niebla", suplemento_precio: 0,
-      hex: "#d2c5b6", hex2: "#3f5a42", suela: "#ece4d8",
-      tallas: tallasDemo(19, 91, [42])
-    }]
-  },
-  {
-    id_modelo: 20, nombre: "NOVA Eclipse", precio_base: 129.99, activo: true, destacado: true,
-    descripcion: "Oscura por fuera. Lo demás es cosa tuya.",
-    variantes: [{
-      id_variante: 20, color: "Ciruela", suplemento_precio: 0,
-      hex: "#3a1b2c", hex2: "#0c080b", suela: "#2a2024",
-      tallas: tallasDemo(20, 96)
-    }]
-  }
+   "agotadas" son las tallas sin existencias, puestas a mano para que la
+   web tenga qué avisar. "destacado" es lo único que decide qué sale en la
+   portada, y son ocho. */
+const FICHAS = [
+  // Luxe
+  { foto: "nova-luxe-01", nombre: "NOVA Onyx", precio: 139.90,
+    color: "Negro", hex: "#262626", hex2: "#181718", suela: "#262626", agotadas: [40],
+    reclamo: "Negro. No hay mucho más que explicar." },
+  { foto: "nova-luxe-02", nombre: "NOVA Origin", precio: 79.99,
+    color: "Hueso", hex: "#e3d7ca", hex2: "#d5c7ba", suela: "#d5c7ba", destacado: true,
+    reclamo: "La primera que te pones. La última de la que te cansas." },
+  { foto: "nova-luxe-03", nombre: "NOVA Field", precio: 124.90,
+    color: "Oliva", hex: "#332c19", hex2: "#433c26", suela: "#875836", agotadas: [44], destacado: true,
+    reclamo: "Para los sábados que empiezan sin plan." },
+  { foto: "nova-luxe-04", nombre: "NOVA Harbor", precio: 149.90,
+    color: "Marino", hex: "#282a33", hex2: "#383b44", suela: "#25262b", destacado: true,
+    reclamo: "Sube el tobillo. Baja el ruido." },
+  { foto: "nova-luxe-05", nombre: "NOVA Dune", precio: 119.90,
+    color: "Arena", hex: "#967864", hex2: "#876956", suela: "#dbc8ba", agotadas: [40, 41],
+    reclamo: "El color de las cosas que duran." },
+  { foto: "nova-luxe-06", nombre: "NOVA Drift", precio: 109.90,
+    color: "Perla", hex: "#b3aba7", hex2: "#a39b97", suela: "#c2bcb8",
+    reclamo: "Sin cordones y sin prisa." },
+  { foto: "nova-luxe-07", nombre: "NOVA Ember", precio: 134.90,
+    color: "Burdeos", hex: "#3a1517", hex2: "#482426", suela: "#372724", destacado: true,
+    reclamo: "Un color que no pasa desapercibido, y lo sabe." },
+  { foto: "nova-luxe-08", nombre: "NOVA Court", precio: 112.90,
+    color: "Marfil", hex: "#e3d8ca", hex2: "#d5c7ba", suela: "#d5c7ba", agotadas: [43],
+    reclamo: "Hecha para que te pregunten dónde la compraste." },
+  { foto: "nova-luxe-09", nombre: "NOVA Slate", precio: 142.90,
+    color: "Grafito", hex: "#595655", hex2: "#484646", suela: "#383737",
+    reclamo: "Gris, pero nunca discreta." },
+  { foto: "nova-luxe-10", nombre: "NOVA Linen", precio: 117.90,
+    color: "Camel", hex: "#c7b7a7", hex2: "#bba795", suela: "#b29b88",
+    reclamo: "La que te pones cuando quieres acertar seguro." },
+
+  // Street
+  { foto: "nova-street-01", nombre: "NOVA Velocity", precio: 119.90,
+    color: "Coral", hex: "#e8e5e6", hex2: "#d9d5d7", suela: "#bab5b6",
+    reclamo: "Si la miras parada, no la estás entendiendo." },
+  { foto: "nova-street-02", nombre: "NOVA Archive", precio: 109.90,
+    color: "Blanco", hex: "#e9e6e4", hex2: "#dad7d4", suela: "#c9c3bc", agotadas: [40], destacado: true,
+    reclamo: "Del dos mil, pero sin nostalgia." },
+  { foto: "nova-street-03", nombre: "NOVA Vector", precio: 127.90,
+    color: "Lima", hex: "#060607", hex2: "#272728", suela: "#969698",
+    reclamo: "Los que llegan tarde no la llevan." },
+  { foto: "nova-street-04", nombre: "NOVA Marina", precio: 104.90,
+    color: "Crema", hex: "#d6c8b9", hex2: "#e3d7c8", suela: "#c7b9a9", agotadas: [44],
+    reclamo: "Para los días que no piden nada especial." },
+  { foto: "nova-street-05", nombre: "NOVA Pulse", precio: 114.90,
+    color: "Violeta", hex: "#050506", hex2: "#181718", suela: "#262526", destacado: true,
+    reclamo: "Enciende la calle y se va." },
+  { foto: "nova-street-06", nombre: "NOVA Aura", precio: 99.99,
+    color: "Salvia", hex: "#c6c5bb", hex2: "#d5d5ca", suela: "#c2bdb6",
+    reclamo: "Pesa tan poco que se te olvida." },
+  { foto: "nova-street-07", nombre: "NOVA Ridge", precio: 121.90,
+    color: "Negro", hex: "#181818", hex2: "#252525", suela: "#252525", agotadas: [40, 41, 42, 43, 44],
+    reclamo: "La que no necesita presentarse." },
+  { foto: "nova-street-08", nombre: "NOVA Cobalt", precio: 118.90,
+    color: "Azul", hex: "#d7d6d9", hex2: "#c7c5c9", suela: "#c7c5c9", destacado: true,
+    reclamo: "Azul de los que se ven desde el otro lado de la acera." },
+  { foto: "nova-street-09", nombre: "NOVA Terrace", precio: 106.90,
+    color: "Niebla", hex: "#c5bdb7", hex2: "#b3aba8", suela: "#d5c6b8", agotadas: [42],
+    reclamo: "La que acaba en todas las fotos del grupo." },
+  { foto: "nova-street-10", nombre: "NOVA Eclipse", precio: 129.99,
+    color: "Ciruela", hex: "#060505", hex2: "#191617", suela: "#282526", destacado: true,
+    reclamo: "Oscura por fuera. Lo demás es cosa tuya." },
+
+  // Hombre
+  { foto: "nova-hombre-01", nombre: "NOVA Atlas", precio: 134.90,
+    color: "Marino y hueso", hex: "#181a24", hex2: "#262a34", suela: "#262a34",
+    reclamo: "Se lleva bien con todo lo que ya tienes." },
+  { foto: "nova-hombre-02", nombre: "NOVA Regent", precio: 128.90,
+    color: "Crema y negro", hex: "#e5dcd2", hex2: "#d3c7bc", suela: "#d3c7bc", agotadas: [40],
+    reclamo: "Discreta hasta que te fijas en los detalles." },
+  { foto: "nova-hombre-03", nombre: "NOVA Sterling", precio: 139.90,
+    color: "Marino y crema", hex: "#252935", hex2: "#353945", suela: "#d5c7b8",
+    reclamo: "La de los lunes que quieres empezar bien." },
+  { foto: "nova-hombre-04", nombre: "NOVA Oxford", precio: 152.90,
+    color: "Negro y arena", hex: "#060506", hex2: "#362926", suela: "#c3bcb5", agotadas: [44],
+    reclamo: "Cuero de verdad y cremallera a un lado." },
+  { foto: "nova-hombre-05", nombre: "NOVA Mercer", precio: 124.90,
+    color: "Arena y negro", hex: "#d4c5b6", hex2: "#c9baa8", suela: "#c9baa8",
+    reclamo: "Un clásico al que no le hace falta explicarse." },
+  { foto: "nova-hombre-06", nombre: "NOVA Clayton", precio: 118.90,
+    color: "Crema y negro", hex: "#d6ccc2", hex2: "#766557", suela: "#bdb2a7",
+    reclamo: "Ligera de color y ligera de verdad." },
+  { foto: "nova-hombre-07", nombre: "NOVA Hudson", precio: 142.90,
+    color: "Marino y crema", hex: "#161924", hex2: "#252937", suela: "#c8b8a7", agotadas: [41],
+    reclamo: "Para quien mira los zapatos antes que la cara." },
+  { foto: "nova-hombre-08", nombre: "NOVA Barrow", precio: 131.90,
+    color: "Crema y negro", hex: "#e3d8cb", hex2: "#d2c8bc", suela: "#ccc3b8",
+    reclamo: "Se pone sola los días de prisa." },
+  { foto: "nova-hombre-09", nombre: "NOVA Warden", precio: 156.90,
+    color: "Marino y arena", hex: "#282a34", hex2: "#383a44", suela: "#c3b7ab", agotadas: [40, 44],
+    reclamo: "Caña alta, intenciones claras." },
+  { foto: "nova-hombre-10", nombre: "NOVA Thatcher", precio: 126.90,
+    color: "Marino y crema", hex: "#272a35", hex2: "#363a44", suela: "#c3b8ab",
+    reclamo: "El término medio que casi nadie encuentra." },
+  { foto: "nova-hombre-11", nombre: "NOVA Summit", precio: 148.90,
+    color: "Marino y crema", hex: "#262a37", hex2: "#343947", suela: "#25252a",
+    reclamo: "Hecha para el camino largo." },
+  { foto: "nova-hombre-12", nombre: "NOVA Granville", precio: 144.90,
+    color: "Marino y blanco", hex: "#242a35", hex2: "#ebe3d9", suela: "#c5b9a8", agotadas: [42],
+    reclamo: "Volumen abajo, calma arriba." },
+  { foto: "nova-hombre-13", nombre: "NOVA Sheridan", precio: 137.90,
+    color: "Negro y blanco", hex: "#252529", hex2: "#353439", suela: "#252529",
+    reclamo: "Va rápida incluso parada." },
+  { foto: "nova-hombre-14", nombre: "NOVA Ashford", precio: 122.90,
+    color: "Arena y marino", hex: "#d4c7ba", hex2: "#e2d7ca", suela: "#d4c7ba",
+    reclamo: "La que se lleva bien con los vaqueros de siempre." },
+  { foto: "nova-hombre-15", nombre: "NOVA Belmont", precio: 146.90,
+    color: "Negro y blanco", hex: "#030306", hex2: "#262936", suela: "#c3bbb7",
+    reclamo: "Nada discreta, y es a propósito." },
+  { foto: "nova-hombre-16", nombre: "NOVA Winslow", precio: 133.90,
+    color: "Marino y blanco", hex: "#232b37", hex2: "#ece7e4", suela: "#ece7e4", agotadas: [43],
+    reclamo: "Cómoda de un modo que se nota al tercer día." },
+  { foto: "nova-hombre-17", nombre: "NOVA Radcliff", precio: 129.90,
+    color: "Marino y crema", hex: "#252a34", hex2: "#191c25", suela: "#252a34",
+    reclamo: "Verde donde nadie lo espera." },
+  { foto: "nova-hombre-18", nombre: "NOVA Kingsley", precio: 151.90,
+    color: "Grafito y blanco", hex: "#373836", hex2: "#040605", suela: "#c6bcb4",
+    reclamo: "Para los que no visten de gris." },
+  { foto: "nova-hombre-19", nombre: "NOVA Oakham", precio: 127.90,
+    color: "Marino y crema", hex: "#191c25", hex2: "#dcd2c6", suela: "#d4c7ba", agotadas: [40, 41],
+    reclamo: "Campo y ciudad, sin cambiarse." },
+  { foto: "nova-hombre-20", nombre: "NOVA Concord", precio: 159.90,
+    color: "Negro y arena", hex: "#070505", hex2: "#191516", suela: "#292526",
+    reclamo: "La más bestia de la colección." },
+
+  // Mujer
+  { foto: "nova-mujer-01", nombre: "NOVA Amalia", precio: 119.90,
+    color: "Arena y burdeos", hex: "#d3c7ba", hex2: "#e2d7cb", suela: "#c4b7a9",
+    reclamo: "Dorado justo donde hace falta." },
+  { foto: "nova-mujer-02", nombre: "NOVA Colette", precio: 124.90,
+    color: "Arena y teja", hex: "#d4c6ba", hex2: "#ece2d9", suela: "#d4c6ba",
+    reclamo: "Sube un poco sin que se note." },
+  { foto: "nova-mujer-03", nombre: "NOVA Verona", precio: 129.90,
+    color: "Crema y chocolate", hex: "#e6d7c8", hex2: "#d8c7b7", suela: "#955b34", agotadas: [44],
+    reclamo: "La suela de caramelo lo cambia todo." },
+  { foto: "nova-mujer-04", nombre: "NOVA Margot", precio: 138.90,
+    color: "Arena y burdeos", hex: "#d3c7bb", hex2: "#c4b8aa", suela: "#c4b8aa",
+    reclamo: "Caña alta y cremallera dorada." },
+  { foto: "nova-mujer-05", nombre: "NOVA Celeste", precio: 126.90,
+    color: "Arena y teja", hex: "#d5c6ba", hex2: "#694446", suela: "#d5c6ba", agotadas: [40],
+    reclamo: "Para los días en que todo tiene que salir bien." },
+  { foto: "nova-mujer-06", nombre: "NOVA Odette", precio: 114.90,
+    color: "Crema y cuero", hex: "#d5cbc3", hex2: "#c6bcb4", suela: "#c6bcb4",
+    reclamo: "Tan sencilla que combina sola." },
+  { foto: "nova-mujer-07", nombre: "NOVA Seraphine", precio: 132.90,
+    color: "Arena y burdeos", hex: "#d5c5ba", hex2: "#c7b6aa", suela: "#d5c5ba",
+    reclamo: "Burdeos de los serios." },
+  { foto: "nova-mujer-08", nombre: "NOVA Lucerne", precio: 121.90,
+    color: "Arena y burdeos", hex: "#d7c8b9", hex2: "#e4d7c7", suela: "#d7c8b9", agotadas: [41, 42],
+    reclamo: "Rosa sin pedir permiso." },
+  { foto: "nova-mujer-09", nombre: "NOVA Mirabel", precio: 118.90,
+    color: "Crema y teja", hex: "#d7cbc3", hex2: "#e5dad4", suela: "#d2c5bd",
+    reclamo: "Se nota ligera desde el primer paso." },
+  { foto: "nova-mujer-10", nombre: "NOVA Josefa", precio: 116.90,
+    color: "Crema y cuero", hex: "#e3d6c7", hex2: "#d5c6b7", suela: "#d5c6b7",
+    reclamo: "La cremallera no es por prisa, es por gusto." },
+  { foto: "nova-mujer-11", nombre: "NOVA Vivienne", precio: 134.90,
+    color: "Rosa y ciruela", hex: "#e4dad7", hex2: "#d6c9c5", suela: "#c7bab6",
+    reclamo: "Un lila que no se repite en todo el día." },
+  { foto: "nova-mujer-12", nombre: "NOVA Aurelie", precio: 128.90,
+    color: "Crema y burdeos", hex: "#ebe2da", hex2: "#d3c6bb", suela: "#d3c6bb", agotadas: [43],
+    reclamo: "Dorado, burdeos y nada más que añadir." },
+  { foto: "nova-mujer-13", nombre: "NOVA Rosalind", precio: 131.90,
+    color: "Arena y ciruela", hex: "#d4c4bb", hex2: "#e4dbd7", suela: "#c6bbb6",
+    reclamo: "Para andar mucho y verse poco cansada." },
+  { foto: "nova-mujer-14", nombre: "NOVA Bellamy", precio: 127.90,
+    color: "Crema y ciruela", hex: "#e3d6c9", hex2: "#d5c6ba", suela: "#d5c6ba",
+    reclamo: "Ciruela, que es el morado de las adultas." },
+  { foto: "nova-mujer-15", nombre: "NOVA Clarise", precio: 142.90,
+    color: "Ciruela y blanco", hex: "#562739", hex2: "#e5dad4", suela: "#d7cac4", agotadas: [40, 41, 42, 43, 44],
+    reclamo: "La que se ve antes que tú." },
+  { foto: "nova-mujer-16", nombre: "NOVA Ninette", precio: 122.90,
+    color: "Crema y teja", hex: "#e5dad5", hex2: "#d7cac4", suela: "#cabbb4",
+    reclamo: "Suave por fuera y por dentro." },
+  { foto: "nova-mujer-17", nombre: "NOVA Soleil", precio: 125.90,
+    color: "Arena y burdeos", hex: "#d3c6bc", hex2: "#e2d7cb", suela: "#eae2da",
+    reclamo: "El dorado en su sitio exacto." },
+  { foto: "nova-mujer-18", nombre: "NOVA Esmee", precio: 136.90,
+    color: "Rosa y negro", hex: "#e4d9d7", hex2: "#553648", suela: "#d5cac8", agotadas: [44],
+    reclamo: "Para quien el beige se le queda corto." },
+  { foto: "nova-mujer-19", nombre: "NOVA Valentine", precio: 120.90,
+    color: "Crema y ciruela", hex: "#e6dbd3", hex2: "#d9ccc2", suela: "#d5c7bc",
+    reclamo: "Discreta de lejos, no tanto de cerca." },
+  { foto: "nova-mujer-20", nombre: "NOVA Lumen", precio: 139.90,
+    color: "Arena y negro", hex: "#d5c6ba", hex2: "#e4d6c9", suela: "#d5c6ba",
+    reclamo: "Brilla sin hacer ruido." },
+
+  // Unisex
+  { foto: "nova-unisex-01", nombre: "NOVA Axis", precio: 109.90,
+    color: "Crema y oliva", hex: "#dcd2c8", hex2: "#3a382a", suela: "#c4b8aa",
+    reclamo: "Una sola zapatilla para dos armarios." },
+  { foto: "nova-unisex-02", nombre: "NOVA Meridian", precio: 112.90,
+    color: "Crema y oliva", hex: "#e5dcd3", hex2: "#d3c7bb", suela: "#d3c7bb",
+    reclamo: "Verde oliva, que nunca falla." },
+  { foto: "nova-unisex-03", nombre: "NOVA Compass", precio: 118.90,
+    color: "Arena y negro", hex: "#d4c8ba", hex2: "#e2d8ca", suela: "#d4c8ba", agotadas: [40],
+    reclamo: "La que se lleva igual de bien a todas partes." },
+  { foto: "nova-unisex-04", nombre: "NOVA Beacon", precio: 126.90,
+    color: "Arena y negro", hex: "#c5b8a9", hex2: "#d4c7ba", suela: "#c5b8a9",
+    reclamo: "Caña alta sin ponerse seria." },
+  { foto: "nova-unisex-05", nombre: "NOVA Nomad", precio: 114.90,
+    color: "Arena y oliva", hex: "#d5c6b9", hex2: "#c7b8a8", suela: "#d5c6b9",
+    reclamo: "Para quien no se queda quieto." },
+  { foto: "nova-unisex-06", nombre: "NOVA Transit", precio: 111.90,
+    color: "Crema y tabaco", hex: "#dcd3c9", hex2: "#857668", suela: "#c3b8ab", agotadas: [42, 43],
+    reclamo: "Del metro a la calle sin despeinarse." },
+  { foto: "nova-unisex-07", nombre: "NOVA Tandem", precio: 116.90,
+    color: "Arena y negro", hex: "#d4c7b9", hex2: "#c6b9a9", suela: "#c6b9a9",
+    reclamo: "Dos pies, ninguna duda." },
+  { foto: "nova-unisex-08", nombre: "NOVA Lattice", precio: 121.90,
+    color: "Crema y marino", hex: "#e3d8ca", hex2: "#d4c8ba", suela: "#d4c8ba",
+    reclamo: "Se entiende de un vistazo." },
+  { foto: "nova-unisex-09", nombre: "NOVA Orbit", precio: 113.90,
+    color: "Arena y chocolate", hex: "#d2c7bc", hex2: "#3a3429", suela: "#bdb3a7",
+    reclamo: "Da vueltas todo el día y aguanta." },
+  { foto: "nova-unisex-10", nombre: "NOVA Prism", precio: 117.90,
+    color: "Arena y chocolate", hex: "#c8b8a6", hex2: "#d5c6b8", suela: "#bba895", agotadas: [44],
+    reclamo: "Cambia de color según le dé la luz." },
+  { foto: "nova-unisex-11", nombre: "NOVA Vertex", precio: 134.90,
+    color: "Grafito y hueso", hex: "#393835", hex2: "#dad3cb", suela: "#292827",
+    reclamo: "El cierre de rueda no es un adorno." },
+  { foto: "nova-unisex-12", nombre: "NOVA Cadence", precio: 128.90,
+    color: "Crema y oliva", hex: "#e4dbd3", hex2: "#d3c7bb", suela: "#c3b8ab",
+    reclamo: "Verde y ciruela, que no es combinación fácil." },
+  { foto: "nova-unisex-13", nombre: "NOVA Current", precio: 131.90,
+    color: "Chocolate y crema", hex: "#3b3527", hex2: "#b4a79a", suela: "#bdb2a7",
+    reclamo: "Para el barro y para después." },
+  { foto: "nova-unisex-14", nombre: "NOVA Signal", precio: 123.90,
+    color: "Crema y marino", hex: "#e2d6ca", hex2: "#d4c7bb", suela: "#d4c7bb", agotadas: [40],
+    reclamo: "Se ve desde lejos, y está bien así." },
+  { foto: "nova-unisex-15", nombre: "NOVA Circuit", precio: 136.90,
+    color: "Grafito y hueso", hex: "#353537", hex2: "#d4cbc4", suela: "#c5bcb5",
+    reclamo: "Dorado en la suela, que es donde nadie lo pone." },
+  { foto: "nova-unisex-16", nombre: "NOVA Radius", precio: 119.90,
+    color: "Arena y oliva", hex: "#cbc3b9", hex2: "#dad3c9", suela: "#b5a799",
+    reclamo: "Un verde apagado que descansa la vista." },
+  { foto: "nova-unisex-17", nombre: "NOVA Tangent", precio: 124.90,
+    color: "Arena y negro", hex: "#d3c6bb", hex2: "#c5b7a9", suela: "#d3c6bb",
+    reclamo: "Ligera por fuera, firme por debajo." },
+  { foto: "nova-unisex-18", nombre: "NOVA Spectrum", precio: 129.90,
+    color: "Oliva y hueso", hex: "#45463a", hex2: "#c4bcb5", suela: "#c4bcb5",
+    reclamo: "La que rompe el beige de toda la colección." },
+  { foto: "nova-unisex-19", nombre: "NOVA Parallel", precio: 122.90,
+    color: "Arena y marino", hex: "#d5c6b7", hex2: "#e6dcd2", suela: "#d5c6b7", agotadas: [41],
+    reclamo: "Dos franjas y poco más. Suficiente." },
+  { foto: "nova-unisex-20", nombre: "NOVA Equinox", precio: 138.90,
+    color: "Negro y crema", hex: "#262a26", hex2: "#353935", suela: "#c5b9a8",
+    reclamo: "Ni verano ni invierno: sirve para los dos." },
+
+  // Casual
+  { foto: "nova-casual-01", nombre: "NOVA Sunday", precio: 99.90,
+    color: "Crema y negro", hex: "#dad3c8", hex2: "#242b37", suela: "#bcb4a7",
+    reclamo: "Para el domingo que empieza tarde." },
+  { foto: "nova-casual-02", nombre: "NOVA Willow", precio: 104.90,
+    color: "Crema y oliva", hex: "#ebe2d8", hex2: "#d4c7ba", suela: "#c5b8a9",
+    reclamo: "Verde suave, día tranquilo." },
+  { foto: "nova-casual-03", nombre: "NOVA Cove", precio: 112.90,
+    color: "Marino y crema", hex: "#272a34", hex2: "#c8baa7", suela: "#c8baa7", agotadas: [43],
+    reclamo: "Se pone sin pensar y acierta." },
+  { foto: "nova-casual-04", nombre: "NOVA Cedar", precio: 118.90,
+    color: "Marino y crema", hex: "#242a36", hex2: "#151a26", suela: "#ccc2b8",
+    reclamo: "Marino y cuero, la pareja de siempre." },
+  { foto: "nova-casual-05", nombre: "NOVA Juniper", precio: 107.90,
+    color: "Arena y chocolate", hex: "#d8c7b6", hex2: "#e5d7c6", suela: "#d8c7b6",
+    reclamo: "La que sobrevive a todos los planes." },
+  { foto: "nova-casual-06", nombre: "NOVA Pebble", precio: 102.90,
+    color: "Crema y chocolate", hex: "#dbd2ca", hex2: "#c7bdb3", suela: "#c3b8ab", agotadas: [40, 44],
+    reclamo: "Gris piedra, nada más." },
+  { foto: "nova-casual-07", nombre: "NOVA Barley", precio: 121.90,
+    color: "Marino y crema", hex: "#181a24", hex2: "#262936", suela: "#c5b9a9",
+    reclamo: "Cuero marrón y nada de prisa." },
+  { foto: "nova-casual-08", nombre: "NOVA Clover", precio: 109.90,
+    color: "Crema y negro", hex: "#e3d6ca", hex2: "#d5c7b9", suela: "#d5c7b9",
+    reclamo: "Suerte no: costumbre." },
+  { foto: "nova-casual-09", nombre: "NOVA Hollow", precio: 115.90,
+    color: "Marino y crema", hex: "#191c23", hex2: "#282b33", suela: "#c4b8a9",
+    reclamo: "La que te ponías el año pasado, pero nueva." },
+  { foto: "nova-casual-10", nombre: "NOVA Meadow", precio: 106.90,
+    color: "Arena y chocolate", hex: "#d6c6b8", hex2: "#c9b8a5", suela: "#bca894",
+    reclamo: "Campo sin salir de la ciudad." },
+  { foto: "nova-casual-11", nombre: "NOVA Harvest", precio: 124.90,
+    color: "Crema y negro", hex: "#e4dad5", hex2: "#d6cac4", suela: "#c8bcb5", agotadas: [42],
+    reclamo: "Mostaza en los ojales. Un detalle tonto que funciona." },
+  { foto: "nova-casual-12", nombre: "NOVA Orchard", precio: 119.90,
+    color: "Crema y negro", hex: "#dcd2c7", hex2: "#242938", suela: "#d4c7ba",
+    reclamo: "Para andar mucho sin pensar en los pies." },
+  { foto: "nova-casual-13", nombre: "NOVA Bramble", precio: 127.90,
+    color: "Oliva y blanco", hex: "#3a3729", hex2: "#484436", suela: "#c7bdb3",
+    reclamo: "Verde de monte con suela de ciudad." },
+  { foto: "nova-casual-14", nombre: "NOVA Lantern", precio: 113.90,
+    color: "Arena y bosque", hex: "#d4c7b7", hex2: "#c7b9a7", suela: "#c7b9a7",
+    reclamo: "Se enciende con el detalle amarillo." },
+  { foto: "nova-casual-15", nombre: "NOVA Wren", precio: 131.90,
+    color: "Crema y violeta", hex: "#252738", hex2: "#353648", suela: "#c5bab6",
+    reclamo: "Violeta, que no lo lleva nadie." },
+  { foto: "nova-casual-16", nombre: "NOVA Thicket", precio: 122.90,
+    color: "Oliva y blanco", hex: "#383729", hex2: "#d3c7bc", suela: "#ccc2b9", agotadas: [41],
+    reclamo: "Discreta arriba, llamativa abajo." },
+  { foto: "nova-casual-17", nombre: "NOVA Veranda", precio: 116.90,
+    color: "Oliva y crema", hex: "#464637", hex2: "#373628", suela: "#d6ccc2",
+    reclamo: "La de las tardes largas." },
+  { foto: "nova-casual-18", nombre: "NOVA Larkspur", precio: 128.90,
+    color: "Crema y negro", hex: "#e3dbd8", hex2: "#020506", suela: "#bbb5b4",
+    reclamo: "Azul verdoso y naranja. Arriesgada, y lo sabe." },
+  { foto: "nova-casual-19", nombre: "NOVA Sycamore", precio: 118.90,
+    color: "Arena y marino", hex: "#b8a797", hex2: "#c7b8a8", suela: "#d5c7b9",
+    reclamo: "Un árbol, una zapatilla, poca explicación." },
+  { foto: "nova-casual-20", nombre: "NOVA Driftwood", precio: 125.90,
+    color: "Chocolate y crema", hex: "#3b3424", hex2: "#2a2417", suela: "#c5b6a9",
+    reclamo: "Madera de deriva: el color que deja el mar." }
 ];
+
+/* De la tabla al modelo que usan las páginas. Hay una fotografía por
+   zapatilla, así que cada modelo tiene exactamente un acabado. */
+const CATALOGO_DEMO = FICHAS.map(function (ficha, indice) {
+  const id = indice + 1;
+
+  return {
+    id_modelo: id,
+    nombre: ficha.nombre,
+    precio_base: ficha.precio,
+    coleccion: ficha.foto.split("-")[1],
+    activo: true,
+    destacado: ficha.destacado === true,
+    descripcion: ficha.reclamo,
+    variantes: [{
+      id_variante: id,
+      color: ficha.color,
+      suplemento_precio: 0,
+      hex: ficha.hex,
+      hex2: ficha.hex2,
+      suela: ficha.suela,
+      tallas: tallasDemo(id, (id - 1) * 5 + 1, ficha.agotadas)
+    }]
+  };
+});
+
+/* FOTOS: la fotografía de cada acabado. Si una casilla se queda vacía, esa
+   zapatilla se dibuja con el SVG. Instrucciones en img/LEEME.md */
+const FOTOS = {};
+
+FICHAS.forEach(function (ficha, indice) {
+  FOTOS[indice + 1] = "img/" + ficha.foto + ".png";
+});

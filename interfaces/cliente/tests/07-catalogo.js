@@ -71,13 +71,19 @@ CATALOGO_DEMO.forEach(function (modelo) {
   const precio = formatearPrecio(precioFinal(modelo, modelo.variantes[0]));
   const agotados = modelo.variantes.filter(colorSinExistencias).length;
 
-  // NOVA Pulse Negro está agotado entero: esa pieza enseña "Agotado", no precio
+  // Un acabado agotado entero enseña "Agotado" en lugar del precio
   comprobar("precio de " + modelo.nombre + " (" + precio + ")",
     html.includes(precio) || agotados === modelo.variantes.length);
 });
 
+// Cuantas piezas van con el aviso lo dice el catálogo, no un número a mano
+const sinNada = CATALOGO_DEMO.filter(function (modelo) {
+  return modelo.variantes.every(colorSinExistencias);
+}).length;
+
 const agotadas = (html.match(/cli-pieza-agotado/g) || []).length;
-comprobar("una sola pieza agotada", agotadas === 1, agotadas);
+comprobar("tantos avisos de agotado como acabados sin existencias (" + sinNada + ")",
+  agotadas === sinNada, agotadas);
 
 console.log("\n=== ESTADO DE LA PÁGINA ===");
 

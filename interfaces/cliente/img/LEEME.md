@@ -1,76 +1,102 @@
 # Fotografías de las zapatillas
 
-Aquí van las fotos. La web ya está montada: **solo hay que dejar el
-archivo en esta carpeta y escribir su nombre en un sitio.**
+Cien fotografías, una por zapatilla. Cada archivo es un modelo del
+catálogo y el nombre del archivo dice también a qué colección pertenece.
 
-## Qué hacer
+| Archivos | Colección | Cuántas |
+|---|---|---|
+| `nova-luxe-01` … `-10` | Luxe | 10 |
+| `nova-street-01` … `-10` | Street | 10 |
+| `nova-hombre-01` … `-20` | Hombre | 20 |
+| `nova-mujer-01` … `-20` | Mujer | 20 |
+| `nova-unisex-01` … `-20` | Unisex | 20 |
+| `nova-casual-01` … `-20` | Casual | 20 |
 
-1. Deja la foto aquí, en `interfaces/cliente/img/`.
-2. Abre `interfaces/cliente/js/datos-demo.js` y busca la tabla `FOTOS`,
-   que está arriba del todo. Escribe el nombre del archivo en la línea
-   del color que corresponda:
+Peso total: **14,5 MB**, a 440 px de ancho y con transparencia.
 
-```js
-const FOTOS = {
-  1:  "img/origin-blanco.png",   // NOVA Origin · Blanco
-  2:  "",                        // NOVA Origin · Negro
-  ...
-};
-```
+## Cómo se preparan
 
-Nada más. No hay que tocar el CSS ni ningún otro archivo.
+Llegan en PNG **ya recortadas**, con el fondo transparente, a unos 2000 px
+de ancho y 2 MB cada una. Aquí solo se hacen dos cosas:
 
-Se pueden ir poniendo de una en una: lo que quede en blanco se sigue
-dibujando en SVG. Y si un nombre está mal escrito o el archivo no está,
-la web lo detecta y dibuja la zapatilla en su lugar, así que nunca
-aparece el icono de imagen rota.
+1. **Recortar a la zapatilla.** Se busca la caja que contiene todo lo que
+   no es transparente, se deja un margen de 4 px y se tira el resto. Así
+   todas quedan encuadradas igual aunque en el original la zapatilla
+   estuviera más a un lado.
+2. **Reducir a 440 px de ancho**, con interpolación bicúbica. Al reescalar
+   hay que decirle a GDI+ que repita el borde en espejo; si no, deja media
+   fila de píxeles oscuros alrededor de la silueta.
 
-## Cómo deben ser las fotos
+No hace falta quitar ningún fondo: **ya vienen sin él**. Antes sí hacía
+falta y el método está contado al final de este archivo, por si vuelven a
+llegar fotos con el recuadro blanco.
+
+### Por qué 440 px y no más
+
+PNG con canal alfa comprime mucho peor que JPEG. A 560 px las cien pesaban
+23 MB; a 440 px pesan 14,5 MB y en pantalla no se nota, porque en la
+rejilla se ven a unos 300 px y en la ficha a 440.
+
+### Los colores de cada zapatilla
+
+En `datos-demo.js` cada zapatilla lleva tres colores (`hex`, `hex2`,
+`suela`). **No están puestos a ojo: se miden sobre la propia fotografía.**
+Se cuentan los píxeles opacos en cubos de color y se coge el cubo más
+repetido de la parte de arriba (el cuerpo), el siguiente que se distinga
+de él (la sombra) y el más repetido de la franja de abajo (la suela).
+Luego se promedian de verdad los píxeles de ese cubo, para que no salga
+el color del centro del cubo sino el real.
+
+Sirven para dos cosas: la muestra de color de la ficha y el dibujo SVG de
+respaldo. Si se parecen a la foto, los dos quedan bien.
+
+El **nombre** del acabado («Arena y burdeos») sale de clasificar esos
+mismos colores por tono, luminosidad y saturación, y luego se revisa a
+ojo sobre una hoja de contactos. Las veinte primeras conservan el nombre
+de color que ya tenían.
+
+## Cómo deben ser las fotos nuevas
 
 | | |
 |---|---|
-| Formato | PNG o WebP **con el fondo recortado** (transparente) |
+| Formato | PNG **con el fondo recortado** (transparente) |
 | Encuadre | De perfil, todas mirando al mismo lado |
-| Tamaño | Alrededor de 1200 × 600 px |
+| Tamaño | 1200 px de ancho o más; aquí se reducen solas |
 | Escala | Parecida entre ellas, para que no salga una gigante y otra diminuta |
-| Apoyo | La suela, pegada al borde de abajo de la imagen: así se apoya en la repisa |
+| Apoyo | La suela abajo del todo: así se apoya en la repisa |
 
 El fondo transparente es lo más importante. Una foto con fondo blanco
 sobre la pared gris se ve como un recuadro pegado y estropea el
 escaparate entero.
 
-## De dónde sacarlas
+Las proporciones pueden variar: van de 1,64 a 2,59 de ancho entre alto. El
+CSS las mete en una caja fija de 8/5 con `object-fit: contain` y
+`object-position: center bottom`. Como la caja es más alta que la foto más
+estrecha, **todas llenan el ancho y apoyan a la misma altura**: las de caña
+alta salen más altas, que es justo lo que pasa con las zapatillas de
+verdad.
 
-**Lo mejor: hacerlas nosotros.** Con el móvil, la zapatilla de perfil
-contra una pared lisa y buena luz. Luego se le quita el fondo (Paint de
-Windows tiene «Quitar fondo», y también vale una web de recorte). Así no
-hay ningún problema de derechos y son fotos de verdad.
+## Cómo añadir una zapatilla
 
-**Cuidado con los bancos de imágenes gratuitos.** Casi todas las fotos
-de zapatillas que hay en Pexels, Unsplash o Pixabay son de marcas
+1. Deja la foto aquí, con el nombre `nova-<coleccion>-NN.png`.
+2. Añade su fila a la tabla `FICHAS` de `js/datos-demo.js`. El `id`, el
+   `id_variante`, los SKU y la ruta de la foto **se calculan solos** a
+   partir de la posición en la tabla.
+
+No hay que tocar el CSS ni ningún otro archivo. Si el archivo no está o
+el nombre está mal escrito, la web lo detecta y dibuja la zapatilla en
+SVG, así que nunca aparece el icono de imagen rota.
+
+## Derechos
+
+Las cien fotografías llevan únicamente la marca **NOVA**, que es la del
+proyecto. No hay ningún logotipo ni elemento de marcas reales.
+
+**Cuidado con los bancos de imágenes gratuitos.** Casi todas las fotos de
+zapatillas que hay en Pexels, Unsplash o Pixabay son de marcas
 reconocibles, con el logotipo a la vista. El enunciado del proyecto
-prohíbe usar marcas y logotipos ajenos, así que no valen aunque la
-licencia de la foto sea libre.
-
-## Las doce fotos que faltan
-
-| id | Zapatilla | Archivo sugerido |
-|---|---|---|
-| 1 | NOVA Origin · Blanco | `origin-blanco.png` |
-| 2 | NOVA Origin · Negro | `origin-negro.png` |
-| 3 | NOVA Velocity · Rojo | `velocity-rojo.png` |
-| 4 | NOVA Velocity · Azul | `velocity-azul.png` |
-| 5 | NOVA Eclipse · Negro | `eclipse-negro.png` |
-| 6 | NOVA Eclipse · Gris | `eclipse-gris.png` |
-| 7 | NOVA Archive · Blanco | `archive-blanco.png` |
-| 8 | NOVA Archive · Beige | `archive-beige.png` |
-| 9 | NOVA Aura · Rosa | `aura-rosa.png` |
-| 10 | NOVA Aura · Crema | `aura-crema.png` |
-| 11 | NOVA Pulse · Verde | `pulse-verde.png` |
-| 12 | NOVA Pulse · Negro | `pulse-negro.png` |
-
-No hacen falta las doce para empezar. Con seis, una por modelo, el
-escaparate ya cambia por completo.
+prohíbe usar marcas ajenas, así que no valen aunque la licencia de la
+foto sea libre.
 
 ## nova-logo.png
 
@@ -91,38 +117,25 @@ Está duplicado a propósito, para que la web de clientes funcione sola sin
 depender de la carpeta del panel de administración. Cuando se junten las
 ramas habrá que decidir si las dos usan la misma copia.
 
-## Estado actual
-
-**Las veinte casillas de `FOTOS` están llenas.** Cada modelo tiene su
-fotografía y la web no dibuja ningún SVG mientras eso siga así.
-
-### Cómo se prepararon
-
-Llegaron a 1254 × 1254 en PNG, 1,9 MB cada una, 37 MB en total, sobre un
-fondo casi blanco y con su sombra.
-
-1. **Se les quita el fondo por contigüidad**, empezando por los bordes de
-   la imagen. Solo se borra lo que es claro (luminosidad 228 o más) **y**
-   neutro (menos de 12 puntos entre el canal más alto y el más bajo).
-   Lo de la contigüidad importa: una zapatilla color crema no se agujerea
-   porque su blanco no toca el borde, y lo de neutro también, porque el
-   crema es cálido y el relleno se para en él.
-2. **El borde se suaviza** con la media del vecindario, y a los píxeles a
-   medias se les descuenta el blanco que traían mezclado. Sin eso queda
-   un halo claro alrededor de la silueta.
-3. **Se recorta a la zapatilla** y se reduce a 560 px de ancho.
-
-Resultado: 5,1 MB las veinte, con transparencia. Pesan más que los JPEG
-que había antes (1,1 MB) porque PNG con canal alfa comprime peor. Es el
-precio de que se apoyen en la repisa en vez de ir dentro de un recuadro
-blanco.
-
-Las zapatillas quedan con proporciones distintas, así que el CSS las mete
-en una caja fija de 8/5 con `object-fit: contain` y `object-position:
-center bottom`: todas apoyan a la misma altura y los rótulos quedan
-alineados.
-
-### El dibujo SVG no sobra
+## El dibujo SVG no sobra
 
 Si una foto se borra o no carga, esa zapatilla vuelve a dibujarse sola.
 Hay pruebas que lo comprueban vaciando `FOTOS` a propósito.
+
+## Apéndice: quitar un fondo blanco
+
+Esto **ya no se usa**, porque las fotos llegan recortadas. Queda escrito
+por si vuelven a llegar con el recuadro.
+
+Un umbral de claridad a secas no vale: agujerea las zapatillas color
+crema, porque su color es casi tan claro como el fondo. Hay que **rellenar
+desde los bordes de la imagen hacia dentro** y parar al tocar la
+zapatilla, borrando un píxel solo cuando es claro (luminosidad 228 o más)
+**y** neutro (menos de 12 puntos entre el canal más alto y el más bajo).
+Lo de la contigüidad evita agujerear la crema, porque su blanco no toca el
+borde; lo de neutro también, porque el crema es cálido y el relleno se
+para en él.
+
+Después, el borde se suaviza con la media del vecindario y a los píxeles a
+medias se les descuenta el blanco que traían mezclado. Sin eso queda un
+halo claro alrededor de la silueta.
