@@ -96,14 +96,33 @@ ramas habrá que decidir si las dos usan la misma copia.
 **Las veinte casillas de `FOTOS` están llenas.** Cada modelo tiene su
 fotografía y la web no dibuja ningún SVG mientras eso siga así.
 
-Las fotos son de 800 × 800, JPEG, y pesan 55 KB de media: 1,1 MB las
-veinte. Vinieron a 1254 × 1254 en PNG, 1,9 MB cada una, y se redujeron
-antes de entrar al repositorio.
+### Cómo se prepararon
 
-Los fondos venían con blancos distintos, de 239 a 254, y en una rejilla
-se veían como baldosas desparejadas. Se igualaron todos a 246 con una
-ganancia suave por imagen, sin recortar nada.
+Llegaron a 1254 × 1254 en PNG, 1,9 MB cada una, 37 MB en total, sobre un
+fondo casi blanco y con su sombra.
 
-El dibujo SVG **no sobra**: si una foto se borra o no carga, esa
-zapatilla vuelve a dibujarse sola. Hay pruebas que lo comprueban
-vaciando `FOTOS` a propósito.
+1. **Se les quita el fondo por contigüidad**, empezando por los bordes de
+   la imagen. Solo se borra lo que es claro (luminosidad 228 o más) **y**
+   neutro (menos de 12 puntos entre el canal más alto y el más bajo).
+   Lo de la contigüidad importa: una zapatilla color crema no se agujerea
+   porque su blanco no toca el borde, y lo de neutro también, porque el
+   crema es cálido y el relleno se para en él.
+2. **El borde se suaviza** con la media del vecindario, y a los píxeles a
+   medias se les descuenta el blanco que traían mezclado. Sin eso queda
+   un halo claro alrededor de la silueta.
+3. **Se recorta a la zapatilla** y se reduce a 560 px de ancho.
+
+Resultado: 5,1 MB las veinte, con transparencia. Pesan más que los JPEG
+que había antes (1,1 MB) porque PNG con canal alfa comprime peor. Es el
+precio de que se apoyen en la repisa en vez de ir dentro de un recuadro
+blanco.
+
+Las zapatillas quedan con proporciones distintas, así que el CSS las mete
+en una caja fija de 8/5 con `object-fit: contain` y `object-position:
+center bottom`: todas apoyan a la misma altura y los rótulos quedan
+alineados.
+
+### El dibujo SVG no sobra
+
+Si una foto se borra o no carga, esa zapatilla vuelve a dibujarse sola.
+Hay pruebas que lo comprueban vaciando `FOTOS` a propósito.

@@ -105,12 +105,13 @@
   transition: transform .35s ease;
 }
 
-/* Las fotografías de producto son cuadradas. Con contain no se deforman
-   aunque alguna llegue con otra proporción. */
+/* Las fotografías vienen recortadas sin fondo y cada una con su propia
+   proporción. La caja es fija para que todas apoyen a la misma altura y
+   los rótulos queden alineados; contain impide que se deformen. */
 .cli-pieza img.zap {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 8 / 5;
   object-fit: contain;
-  object-position: center;
+  object-position: center bottom;
 }
 
 /* La repisa: metacrilato traslucido */
@@ -118,7 +119,7 @@
   position: relative;
   z-index: 1;
   display: block;
-  width: 80%;
+  width: 94%;
   height: 7px;
   margin: -10px auto 0;
   border-radius: 1px 1px 2px 2px;
