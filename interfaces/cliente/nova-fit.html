@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Omar">
+  <title>NOVA Sneakers · NOVA Fit</title>
+  <meta name="description" content="NOVA Fit: recomendación orientativa de zapatillas NOVA Sneakers. Omar.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/escaparate.css">
+  <link rel="stylesheet" href="css/nova-fit.css">
+</head>
+
+<body class="cli">
+
+  <p class="cli-aviso-demo">
+    Tienda de demostración: no se realizan
+    pagos ni envíos reales
+  </p>
+
+  <header class="cli-cabecera">
+    <a class="cli-logo" href="index.html">
+      <img src="img/nova-logo.png" alt="NOVA Sneakers" width="480" height="160">
+    </a>
+    <nav class="cli-nav" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="nova-fit.html" aria-current="page">NOVA Fit</a>
+      <a href="carrito.html">Carrito <span class="cli-globo" data-contador-carro>0</span></a>
+      <a href="pedidos.html">Mis pedidos</a>
+      <a href="cuenta.html">Cuenta</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="cli-escaparate" aria-label="NOVA Fit">
+      <div class="cli-muro cli-muro-fit">
+
+        <div class="cli-intro">
+          <h1>NOVA Fit</h1>
+          <p>Dinos tres cosas y te proponemos cuatro modelos del catálogo.</p>
+        </div>
+
+        <!-- Los tonos los escribe nova-fit.js, para que la paleta no esté
+             en dos sitios a la vez. -->
+        <form class="cli-fit-formulario" id="cli-fit-formulario">
+
+          <div class="cli-fit-campos">
+
+            <div class="cli-fit-campo">
+              <label for="cli-altura">Altura</label>
+              <div class="cli-fit-unidad">
+                <input type="number" id="cli-altura" min="120" max="230" step="1"
+                       inputmode="numeric" placeholder="175">
+                <span>cm</span>
+              </div>
+            </div>
+
+            <div class="cli-fit-campo">
+              <label for="cli-peso">Peso</label>
+              <div class="cli-fit-unidad">
+                <input type="number" id="cli-peso" min="30" max="200" step="1"
+                       inputmode="numeric" placeholder="70">
+                <span>kg</span>
+              </div>
+            </div>
+
+          </div>
+
+          <fieldset class="cli-fit-campo cli-fit-tonos-campo">
+            <legend>Tono de piel</legend>
+            <div class="cli-tonos" id="cli-tonos"></div>
+          </fieldset>
+
+          <div class="cli-fit-enviar">
+            <button class="cli-boton" type="submit" id="cli-fit-buscar">
+              Encontrar mi modelo
+            </button>
+            <p class="cli-fit-aviso" id="cli-fit-aviso" role="alert"></p>
+          </div>
+
+        </form>
+
+        <p class="cli-fit-letra-pequena">
+          <strong>Las recomendaciones son orientativas.</strong> Salen de unas
+          reglas sencillas escritas en <code>js/nova-fit.js</code>: ni deducimos
+          tu talla de calzado ni decimos nada sobre tu cuerpo, y ningún color
+          queda descartado por el tono que elijas. Lo que has escrito
+          <strong>no sale de este navegador</strong>: no se guarda en ninguna
+          base de datos ni se envía a ningún sitio, y desaparece al cerrar la
+          pestaña. Puedes ver <a href="catalogo.html">las cien zapatillas del
+          catálogo</a> cuando quieras.
+        </p>
+
+        <div class="cli-fit-salida" id="cli-fit-salida" hidden>
+          <h2 class="cli-fit-titulo-resultados" id="cli-fit-titulo-resultados"></h2>
+          <ul class="cli-fit-lista" id="cli-fit-resultados"></ul>
+          <p class="cli-fit-repetir">
+            ¿No te convencen? Cambia los datos y vuelve a pulsar
+            «Encontrar mi modelo».
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cli-pie">
+    NOVA Sneakers · Sneaker Factory · Omar<br>
+    Las imágenes de las zapatillas son propias de este proyecto y llevan solo
+    la marca NOVA: no se usa ninguna marca ni fotografía de terceros.
+  </footer>
+
+  <script src="js/datos-demo.js"></script>
+  <script src="js/zapatilla-svg.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/carro.js"></script>
+  <script src="js/piezas.js"></script>
+  <script src="js/nova-fit.js"></script>
+
+</body>
+
+</html>

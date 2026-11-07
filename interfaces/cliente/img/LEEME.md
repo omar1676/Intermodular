@@ -34,8 +34,21 @@ llegar fotos con el recuadro blanco.
 ### Por qué 440 px y no más
 
 PNG con canal alfa comprime mucho peor que JPEG. A 560 px las cien pesaban
-23 MB; a 440 px pesan 14,5 MB y en pantalla no se nota, porque en la
-rejilla se ven a unos 300 px y en la ficha a 440.
+23 MB; a 440 px pesan 14,5 MB y en pantalla casi no se nota, porque en la
+rejilla se ven a unos 300 px.
+
+En la ficha del producto sí se estiran: ahí la foto llega a 560 px, un
+27 % más de lo que mide el archivo. En una fotografía de degradados
+suaves no se aprecia, y la alternativa era guardar 8 MB más en el
+repositorio para una sola página.
+
+### El alto también está en los datos
+
+Cada zapatilla lleva en `datos-demo.js` el campo `alto`, que es el alto en
+píxeles de su fotografía ya reducida. No es decoración: **NOVA Fit saca de
+ahí la proporción de la zapatilla**, que es lo que distingue una de caña
+alta o suela gruesa de una de perfil bajo. Sale de medir el archivo, no de
+clasificar las cien a mano.
 
 ### Los colores de cada zapatilla
 
