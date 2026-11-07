@@ -27,6 +27,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 |---|---|
 | `index.html` | Portada: el expositor de ocho y, debajo, el catálogo |
 | `catalogo.html` | El mismo catálogo, en su propia página |
+| `nova-fit.html` | NOVA Fit: cuatro modelos propuestos según tres datos |
 | `producto.html` | Detalle: colores, tallas con stock, cantidad y añadir al carrito |
 | `carrito.html` | Cambiar cantidades, quitar líneas, vaciar y finalizar el pedido |
 | `cuenta.html` | Entrar y crear cuenta. **Solo interfaz**: valida, pero no autentica |
@@ -40,6 +41,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `css/escaparate.css` | Pared, repisas y rejilla de la portada |
 | `css/producto.css` | Escena del detalle, colores, tallas y cantidad |
 | `css/catalogo.css` | Columna de filtros, barra y tarjetas del catálogo |
+| `css/nova-fit.css` | Formulario, paleta de tonos y tarjetas de NOVA Fit |
 | `css/paginas.css` | Carrito, cuenta y Mis pedidos |
 | `js/datos-demo.js` | Tabla `FOTOS` y catálogo ficticio: modelos, colores, tallas y stock |
 | `js/zapatilla-svg.js` | Dibujo SVG de la zapatilla |
@@ -49,6 +51,7 @@ Y abrir la dirección que indique (normalmente `http://localhost:3000`).
 | `js/piezas.js` | Dibuja las zapatillas: pieza de expositor y tarjeta de catálogo |
 | `js/escaparate.js` | Dibuja el expositor: elige las marcadas como destacado |
 | `js/catalogo.js` | Dibuja el catálogo, lo filtra y lo ordena |
+| `js/nova-fit.js` | Las reglas de NOVA Fit y su pantalla |
 | `js/producto.js` | Dibuja el detalle |
 | `js/carrito.js` | Dibuja el carrito |
 | `js/cuenta.js` | Pestañas y validación de los formularios |
@@ -105,6 +108,43 @@ cantidad y el botón de añadir. Entra acercándose. Al pulsar un color se redib
 se reinicia la talla y vuelve a acercarse. Las tallas sin existencias salen
 tachadas y no se pueden pulsar. El botón de añadir está bloqueado hasta que
 hay una talla elegida.
+
+**NOVA Fit.** Pides altura, peso y un tono de piel de una paleta de seis, y
+la página propone **cuatro zapatillas de las cien**, cada una con su foto, su
+precio, el porqué y el enlace a su ficha.
+
+No hay inteligencia artificial ni ninguna llamada a internet: son cuatro
+reglas de aritmética que caben en una pantalla.
+
+| De dónde sale | Qué hace |
+|---|---|
+| Altura y peso | Proponen una **proporción** de zapatilla, de 1,70 a 2,60 |
+| Tono de piel | Puntúa el **contraste** y la **gama** de color del acabado |
+| `destacado` | Cinco puntos de propina, para desempatar |
+
+La proporción de cada zapatilla es el ancho de su foto entre su alto, y el
+alto está medido archivo por archivo (`alto` en `datos-demo.js`). Cuanto más
+baja es la proporción, más alta es la zapatilla: caña alta o suela gruesa.
+Así el sistema sabe la silueta de las cien **sin que nadie las clasifique a
+mano**.
+
+### Tres límites que el código se pone a propósito
+
+No son buenas intenciones escritas en un comentario: **hay pruebas que los
+comprueban** y que fallan si alguien los rompe.
+
+1. **No se deduce la talla de calzado.** El motor no lee ninguna talla salvo
+   para saber si queda alguna; la altura y el peso solo mueven la proporción.
+2. **No se dice nada del cuerpo de nadie.** Los textos hablan de la zapatilla.
+   Una prueba revisa las frases de 25 combinaciones de datos buscando
+   palabras sobre el físico, y falla si aparece alguna.
+3. **Ningún color queda descartado por el tono.** El tono solo ordena: la
+   puntuación nunca resta hasta sacar a nadie, y la página enlaza al catálogo
+   completo.
+
+Lo que se escribe **no sale del navegador**: no se guarda en `localStorage`,
+no se envía a ningún sitio y no hay una sola dirección de internet en el
+archivo. También hay pruebas de eso.
 
 **Carrito.** Cambiar cantidades, quitar una línea (con animación de salida),
 vaciar y finalizar. El máximo por línea es el stock de esa talla, con tope

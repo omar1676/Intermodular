@@ -1,0 +1,337 @@
+/* NOVA Sneakers · NOVA Fit · Omar */
+
+/* Reutiliza el muro y la cabecera del escaparate. Aquí solo va lo que es
+   propio de esta página: el formulario, la paleta de tonos y las
+   tarjetas de resultado. */
+
+.cli-muro-fit {
+  background: var(--cli-fondo);
+}
+
+.cli-muro-fit .cli-intro {
+  max-width: 980px;
+  margin-bottom: clamp(22px, 2.6vw, 36px);
+}
+
+.cli-muro-fit .cli-intro h1 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.cli-muro-fit .cli-intro p {
+  margin-top: 9px;
+  font-size: 14px;
+  color: var(--cli-texto-suave);
+}
+
+/* El formulario */
+
+.cli-fit-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: clamp(18px, 2.4vw, 34px);
+  max-width: 980px;
+  padding: clamp(20px, 2.6vw, 30px);
+  border: 1px solid var(--cli-borde);
+  border-radius: 6px;
+  background: var(--cli-panel);
+}
+
+.cli-fit-campos {
+  display: flex;
+  gap: 14px;
+}
+
+.cli-fit-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.cli-fit-campo > label,
+.cli-fit-campo > legend {
+  padding: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--cli-texto-suave);
+}
+
+/* El número y su unidad, dentro de la misma caja */
+.cli-fit-unidad {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 4px;
+  background: var(--cli-fondo);
+}
+
+.cli-fit-unidad input {
+  width: 74px;
+  padding: 11px 0;
+  border: 0;
+  background: none;
+  color: var(--cli-texto);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.cli-fit-unidad input:focus {
+  outline: none;
+}
+
+.cli-fit-unidad:focus-within {
+  border-color: var(--cli-dorado);
+}
+
+.cli-fit-unidad span {
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+}
+
+/* La paleta de tonos */
+
+.cli-tonos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.cli-tono {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cli-tono-muestra {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .22);
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+
+.cli-tono:hover .cli-tono-muestra {
+  transform: scale(1.08);
+}
+
+.cli-tono.cli-activo .cli-tono-muestra {
+  box-shadow: 0 0 0 2px var(--cli-panel), 0 0 0 4px var(--cli-dorado);
+}
+
+/* El nombre solo se enseña al elegido: la paleta se lee por el color,
+   y seis rótulos a la vez la ensucian. Para quien no ve la pantalla
+   siguen estando en el title y en aria-pressed. */
+.cli-tono-nombre {
+  font-size: 10.5px;
+  letter-spacing: .4px;
+  color: transparent;
+}
+
+.cli-tono.cli-activo .cli-tono-nombre {
+  color: var(--cli-texto-suave);
+}
+
+.cli-tono:focus-visible {
+  outline: 2px solid var(--cli-dorado-claro);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* El botón */
+
+.cli-fit-enviar {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-left: auto;
+}
+
+.cli-fit-aviso {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--cli-cancelado);
+}
+
+.cli-fit-aviso:empty {
+  display: none;
+}
+
+/* La letra pequeña: tiene que leerse, no esconderse */
+
+.cli-fit-letra-pequena {
+  max-width: 980px;
+  margin: 16px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--cli-texto-suave);
+}
+
+.cli-fit-letra-pequena strong {
+  color: var(--cli-texto);
+}
+
+.cli-fit-letra-pequena code {
+  font-size: 12px;
+  color: var(--cli-dorado-claro);
+}
+
+/* Los resultados */
+
+.cli-fit-salida {
+  margin-top: clamp(32px, 4vw, 54px);
+  padding-top: clamp(24px, 3vw, 38px);
+  border-top: 1px solid var(--cli-borde);
+}
+
+.cli-fit-titulo-resultados {
+  margin: 0 0 clamp(18px, 2.2vw, 28px);
+  font-size: clamp(15px, 1.8vw, 19px);
+  font-weight: 600;
+  color: var(--cli-texto);
+}
+
+.cli-fit-lista {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(18px, 2vw, 28px);
+  max-width: 1400px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cli-fit-tarjeta {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--cli-borde);
+  border-radius: 6px;
+  background: var(--cli-panel);
+  animation: cli-entrar .5s ease both;
+}
+
+.cli-fit-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9% 7%;
+  border-radius: 3px;
+  background: #ecebe8;
+}
+
+.cli-fit-tarjeta .zap {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.cli-fit-nombre {
+  margin: 13px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.cli-fit-color {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--cli-texto-suave);
+}
+
+.cli-fit-precio {
+  margin: 7px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cli-dorado-claro);
+}
+
+/* El porqué: es lo que distingue NOVA Fit de una rejilla cualquiera */
+.cli-fit-motivo {
+  margin: 10px 0 14px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--cli-texto-suave);
+}
+
+/* El enlace a la ficha se pega abajo, para que las cuatro tarjetas
+   terminen a la misma altura aunque el motivo ocupe líneas distintas */
+.cli-fit-tarjeta .cli-boton-sec {
+  margin-top: auto;
+  text-align: center;
+}
+
+.cli-fit-repetir {
+  margin: clamp(22px, 2.6vw, 34px) 0 0;
+  font-size: 13px;
+  color: var(--cli-texto-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cli-fit-tarjeta {
+    animation: none;
+  }
+
+  .cli-tono:hover .cli-tono-muestra {
+    transform: none;
+  }
+}
+
+/* Medidas de pantalla */
+
+@media (max-width: 1080px) {
+  .cli-fit-lista {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .cli-fit-formulario {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cli-fit-enviar {
+    margin-left: 0;
+  }
+
+  .cli-fit-enviar .cli-boton {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 460px) {
+  .cli-fit-campos {
+    flex-direction: column;
+  }
+
+  .cli-fit-unidad input {
+    width: 100%;
+  }
+
+  .cli-fit-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
