@@ -171,17 +171,18 @@ function actualizar() {
 function pintarEstructura() {
   const detalle = document.getElementById("cli-detalle");
 
+  // La zapatilla va arriba del todo, pegada a la cabecera, y todo lo que
+  // hay que elegir (color, talla, cantidad y el boton) va debajo.
   detalle.className = "cli-detalle";
   detalle.innerHTML = `
-    <div class="cli-columna-escena">
+    <div class="cli-escena" id="cli-escena"></div>
+
+    <div class="cli-ficha">
       <div class="cli-rotulo-modelo">
         <h1>${textoSeguro(modeloActual.nombre)}</h1>
         <p id="cli-rotulo-color"></p>
       </div>
-      <div class="cli-escena" id="cli-escena"></div>
-    </div>
 
-    <div class="cli-ficha">
       <p class="cli-ficha-precio" id="cli-precio"></p>
       <p class="cli-ficha-desc">${textoSeguro(modeloActual.descripcion)}</p>
 
