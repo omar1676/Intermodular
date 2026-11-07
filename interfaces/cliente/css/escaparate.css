@@ -222,11 +222,6 @@
   color: var(--cli-texto-suave);
 }
 
-/* El reclamo de marketing solo lo enseña el catálogo */
-.cli-pieza-reclamo {
-  display: none;
-}
-
 /* Un color entero sin existencias */
 .cli-pieza-agotado {
   flex-shrink: 0;
