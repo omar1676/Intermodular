@@ -88,18 +88,39 @@ function imagenDePieza(variante) {
             data-respaldo="${variante.id_variante}">`;
 }
 
+// Cuántas tallas de un acabado se pueden comprar ahora mismo
+function tallasDisponibles(variante) {
+  return variante.tallas.filter(function (talla) {
+    return talla.stock > 0;
+  }).length;
+}
+
+/* En qué situación está un acabado. Lo usan el aviso de la tarjeta y el
+   filtro de disponibilidad, para que los dos digan lo mismo siempre. */
+function estadoDeExistencias(variante) {
+  const disponibles = tallasDisponibles(variante);
+
+  if (disponibles === 0) {
+    return "agotado";
+  }
+
+  if (disponibles <= 3) {
+    return "ultimas";
+  }
+
+  return "disponible";
+}
+
 /* El aviso de la esquina. No hay ninguno inventado: los tres salen de
    datos que ya existen. Si no toca ninguno, la tarjeta va limpia. */
 function avisoDePieza(pieza) {
-  if (colorSinExistencias(pieza.variante)) {
+  const estado = estadoDeExistencias(pieza.variante);
+
+  if (estado === "agotado") {
     return { texto: "Agotado", clase: "cli-aviso-agotado" };
   }
 
-  const disponibles = pieza.variante.tallas.filter(function (talla) {
-    return talla.stock > 0;
-  }).length;
-
-  if (disponibles <= 3) {
+  if (estado === "ultimas") {
     return { texto: "Últimas tallas", clase: "cli-aviso-ultimas" };
   }
 
@@ -108,6 +129,13 @@ function avisoDePieza(pieza) {
   }
 
   return null;
+}
+
+// El nombre de pantalla de una colección: "casual" -> "Casual"
+function nombreDeColeccion(clave) {
+  const encontrada = COLECCIONES.find(function (c) { return c.clave === clave; });
+
+  return encontrada ? encontrada.nombre : String(clave);
 }
 
 // "NOVA Origin" se parte en marca y modelo, como en cualquier tienda
@@ -147,7 +175,7 @@ function tarjetaHtml(pieza, posicion) {
       </span>
       <span class="cli-tarjeta-marca">${textoSeguro(nombre.marca)}</span>
       <span class="cli-tarjeta-nombre">${textoSeguro(nombre.modelo)}</span>
-      <span class="cli-tarjeta-color">${textoSeguro(variante.color)}</span>
+      <span class="cli-tarjeta-linea">${textoSeguro(nombreDeColeccion(modelo.coleccion))} · ${textoSeguro(variante.color)}</span>
       <span class="cli-tarjeta-precio">${formatearPrecio(precioFinal(modelo, variante))}</span>
     </button>`;
 }
